@@ -1,0 +1,23 @@
+html body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-image: linear-gradient(to right, #868f96 0%, #596164 100%);
+}
+
+.ReactCodeMirror {
+  text-align: left;
+}
+
+.ui.inverted.segment.nav {
+  position: fixed;
+  border-radius: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0;
+  z-index: 5;
+}
+.grid {
+  text-align: left;
+}
