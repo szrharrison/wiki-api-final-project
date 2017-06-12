@@ -8,7 +8,7 @@ class ApiWikiSerializer < ActiveModel::Serializer
     object.account_id.to_s
   end
   def pages
-    object.pages.all_deep.map do |page|
+    object.pages.all.map do |page|
       {
         id: page.id.to_s,
         name: page.name,
