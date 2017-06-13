@@ -1,6 +1,7 @@
 const initialState = {
   isFetching: false,
-  loggedIn: false
+  isRefreshing: false,
+  loggedIn: false,
 }
 
 function authReducer(state = initialState, action) {
@@ -8,34 +9,56 @@ function authReducer(state = initialState, action) {
     case 'LOG_IN':
       return {
         ...state,
-        loggedIn: true
+        loggedIn: true,
+        username: action.username
       }
     case 'LOG_OUT':
       return {
         ...state,
-        loggedIn: false
+        loggedIn: false,
+        username: ''
       }
     case 'REQUEST_LOG_IN':
       return {
         ...state,
         isFetching: true
       }
+    case 'RECEIVE_LOG_IN_ERROR':
+      return {
+        ...state,
+        isFetching: false,
+        status: action.status,
+        receivedAt: action.receivedAt,
+        error: action.error
+      }
     case 'RECEIVE_LOG_IN':
-      const returnState = {
+      return {
         ...state,
         isFetching: false,
         status: action.status,
         receivedAt: action.receivedAt
       }
-      if ( action.status === 'error' ) {
-        return {
-          ...returnState,
-          error: action.error
-        }
-      }
+    case 'REQUEST_ACCOUNT_REFRESH':
       return {
-        ...returnState,
-        username: action.username
+        ...state,
+        isRefreshing: true
+      }
+    case 'RECEIVE_ACCOUNT_REFRESH_ERROR':
+      return {
+        ...state,
+        isRefreshing: false,
+        status: action.status,
+        receivedAt: action.receivedAt,
+        error: action.error
+      }
+    case 'RECEIVE_ACCOUNT_REFRESH':
+      return {
+        ...state,
+        isRefreshing: false,
+        status: action.status,
+        receivedAt: action.receivedAt,
+        firstName: action.first_name,
+        lastName: action.last_name
       }
     default:
       return state

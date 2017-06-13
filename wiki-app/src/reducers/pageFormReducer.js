@@ -3,7 +3,7 @@ const initialState = {
   slug: '',
   dataset_type: '',
   dataset: {},
-  jsonView: false,
+  jsonView: true,
   id: '',
   relative_path: '',
   isFetching: false
@@ -20,10 +20,13 @@ function pageFormReducer(state = initialState, action) {
       return {
         ...state,
         title: action.title,
-        id: action.id,
         dataset_type: action.dataset_type,
         dataset: action.dataset,
         relative_path: action.relative_path,
+        status: action.status,
+        slug: action.slug,
+        parentPath: action.parentPath,
+        subPageSlugs: action.sub_page_slugs,
         isFetching: false
       }
     case 'TOGGLE_JSON':
@@ -35,7 +38,7 @@ function pageFormReducer(state = initialState, action) {
       if(action.status) {
         return {
           ...state,
-          status: 'error',
+          status: 'error in json',
           error: action.error
         }
       }

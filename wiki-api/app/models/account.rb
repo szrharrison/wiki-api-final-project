@@ -38,7 +38,7 @@ class Account
   has_many :api_wikis, validate: false do
     def pages
       @target.each_with_object([]) do |wiki, acc|
-        wiki.pages.each do |page|
+        wiki.pages.all.each do |page|
           acc << page
         end
       end

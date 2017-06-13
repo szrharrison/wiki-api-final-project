@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get '/api_wikis/:slug', to: 'api_wikis#show'
       get '/pages/*relative_path', to: 'pages#show'
       post '/auth', to: 'auth#create'
+      get '/auth', to: 'auth#show'
       post '/signup', to: 'sign_up#create'
     end
   end

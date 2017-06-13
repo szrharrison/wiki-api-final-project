@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { Form, Message, Grid } from 'semantic-ui-react'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 
-import { fetchSignUp } from '../actions'
+import connectedWithRoutes from '../hocs/connectedWithRoutes'
+import { fetchSignUp } from '../actions/signUpActions'
 
 class SignUpForm extends Component {
   constructor(props) {
@@ -36,7 +35,6 @@ class SignUpForm extends Component {
   }
 
   render() {
-    // console.log(this.props.error);
     const { username, password, first_name, last_name } = this.state
     return (
       <Grid centered columns={3}>
@@ -105,4 +103,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignUpForm))
+export default connectedWithRoutes(mapStateToProps, mapDispatchToProps)(SignUpForm)

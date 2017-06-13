@@ -1,5 +1,5 @@
 class PageSerializer < ActiveModel::Serializer
-  attributes :id, :name, :relative_path, :sub_page_slugs, :data_type, :dataset
+  attributes :id, :name, :relative_path, :sub_page_slugs, :data_type, :dataset, :parent
 
   def id
     object.id.to_s
@@ -13,7 +13,7 @@ class PageSerializer < ActiveModel::Serializer
     if object.has_no_parent?
       object.api_wiki.slug
     else
-      object.parent_page.slug
+      object.parent_page.relative_path
     end
   end
 

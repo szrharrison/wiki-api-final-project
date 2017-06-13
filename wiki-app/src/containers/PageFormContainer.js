@@ -1,16 +1,42 @@
 import React, { Component } from 'react'
-import { Header, Grid, Loader, Segment, Dimmer } from 'semantic-ui-react'
+import { Grid, Loader, Segment, Dimmer } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import { fetchPage } from '../actions'
 import isAuthenticated from '../hocs/isAuthenticated'
 
-import DatasetJsonEditor from '../components/datset/DatasetJsonEditor'
-import PageFormSidebar from '../components/PageFormSidebar'
+import DatasetJsonEditor from '../components/dataset/DatasetJsonEditor'
+import PageFormSidebar from '../components/dataset/PageFormSidebar'
+import PageBreadcrumbs from '../components/dataset/PageBreadcrumbs'
+
+
 
 class PageFormContainer extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      basicAutocompletion: false,
+      liveAutocompletion: false,
+      snippets: false,
+      fontSize: 14
+    }
+  }
+
   componentDidMount() {
     this.props.fetchPage(this.props.match.params.relativePath)
+  }
+
+  setFontSize = (fontSize) => {
+    this.setState({
+      fontSize: parseInt(fontSize,10)
+    })
+  }
+
+  setBoolean = (name, value) => {
+    this.setState({
+      [name]: value
+    })
   }
 
   render() {
@@ -23,9 +49,14 @@ class PageFormContainer extends Component {
       )
     } else {
       dataView = (
-        <Segment inverted>
-          <Header as='h2' content={this.props.title} />
-          {this.props.jsonView? <DatasetJsonEditor /> : 'null'}
+        <Segment inverted className='dataset-editor'>
+          <PageBreadcrumbs />
+          {this.props.jsonView? <DatasetJsonEditor
+            fontSize={this.state.fontSize}
+            basicAutocompletion={this.state.basicAutocompletion}
+            liveAutocompletion={this.state.liveAutocompletion}
+            snippets={this.state.snippets}
+                                /> : 'null'}
         </Segment>
       )
     }
@@ -33,7 +64,14 @@ class PageFormContainer extends Component {
       <div>
         <Grid>
           <Grid.Column width={5}>
-            <PageFormSidebar />
+            <PageFormSidebar
+              handleFontSize={this.setFontSize}
+              handleBoolean={this.setBoolean}
+              fontSize={this.state.fontSize}
+              basicAutocompletion={this.state.basicAutocompletion}
+              liveAutocompletion={this.state.liveAutocompletion}
+              snippets={this.state.snippets}
+            />
           </Grid.Column>
           <Grid.Column width={11}>
             {dataView}
@@ -57,4 +95,4 @@ function mapDispatchToProps( dispatch, ownProps ) {
   }
 }
 
-export default isAuthenticated(connect(mapStateToProps, mapDispatchToProps)(PageFormContainer))
+export default connect(mapStateToProps, mapDispatchToProps)(isAuthenticated(PageFormContainer))

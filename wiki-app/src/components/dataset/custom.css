@@ -1,0 +1,6 @@
+.ReactCodeMirror {
+  text-align: left;
+}
+.CodeMirror {
+  height: calc(100vh - 135px);
+}

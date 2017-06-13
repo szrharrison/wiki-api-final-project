@@ -6,14 +6,17 @@ export function toggleJson() {
   }
 }
 
-export function receivePage(options) {
+export function receivePage(data) {
   return {
     type: 'RECEIVE_PAGE',
-    title: options.name,
-    id: options.id,
-    dataset_type: options.data_type,
-    dataset: options.dataset,
-    relative_path: options.relative_path,
+    title: data.name,
+    id: data.id,
+    dataset_type: data.data_type,
+    dataset: data.dataset,
+    relative_path: data.relative_path,
+    sub_page_slugs: data.sub_page_slugs,
+    parentPath: data.parent,
+    slug: data.slug,
     status: 'success',
     receivedAt: Date.now()
   }

@@ -1,8 +1,9 @@
-import { logIn } from '../api'
+import { logIn, refreshAccount } from '../api'
 
-export function logInAction() {
+export function logInAction(username) {
   return {
-    type: 'LOG_IN'
+    type: 'LOG_IN',
+    username: username
   }
 }
 
@@ -35,14 +36,14 @@ export function fetchLogIn(account, history) {
 
 export function logInError( error ) {
   return {
-    type: 'RECEIVE_LOG_IN',
+    type: 'RECEIVE_LOG_IN_ERROR',
     status: 'error',
     error,
     receivedAt: Date.now()
   }
 }
 
-export function requestLogIn( account ) {
+export function requestLogIn() {
   return {
     type: 'REQUEST_LOG_IN'
   }
@@ -52,11 +53,55 @@ export function receiveLogIn( data ) {
   return function (dispatch) {
     localStorage.setItem('jwt', data.token)
     localStorage.setItem('user', data.account.username)
-    dispatch(logInAction())
+    dispatch(logInAction(data.account.username))
     dispatch({
       type: 'RECEIVE_LOG_IN',
       status: 'success',
-      username: data.account.username,
+      receivedAt: Date.now()
+    })
+  }
+}
+
+export function fetchAccountRefresh() {
+  return function (dispatch) {
+
+    dispatch(requestAccountRefresh())
+
+    return refreshAccount()
+      .then( data => {
+        if(data.error) {
+          dispatch(accountRefreshError(data.error))
+        } else {
+          dispatch(receiveAccountRefresh(data))
+          return data
+        }
+      })
+  }
+}
+
+export function accountRefreshError( error ) {
+  return {
+    type: 'RECEIVE_ACCOUNT_REFRESH_ERROR',
+    status: 'error',
+    error,
+    receivedAt: Date.now()
+  }
+}
+
+export function requestAccountRefresh() {
+  return {
+    type: 'REQUEST_ACCOUNT_REFRESH'
+  }
+}
+
+export function receiveAccountRefresh( data ) {
+  return function (dispatch) {
+    dispatch(logInAction(data.username))
+    dispatch({
+      type: 'RECEIVE_ACCOUNT_REFRESH',
+      status: 'success',
+      first_name: data.first_name,
+      last_name: data.last_name,
       receivedAt: Date.now()
     })
   }

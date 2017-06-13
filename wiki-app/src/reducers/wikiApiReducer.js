@@ -1,6 +1,8 @@
 const initialState = {
   wikiApis: [],
-  isFetching: false
+  wikiApi: {},
+  isFetching: false,
+  areFetching: false
 }
 
 function wikiApiReducer(state = initialState, action) {
@@ -8,20 +10,38 @@ function wikiApiReducer(state = initialState, action) {
     case 'REQUEST_WIKI_APIS':
       return {
         ...state,
-        isFetching: true
+        areFetching: true
+      }
+    case 'RECEIVE_WIKI_APIS_ERROR':
+      return {
+        ...state,
+        status: 'error',
+        areFetching: false,
+        error: action.error
       }
     case 'RECEIVE_WIKI_APIS':
-      if(action.status) {
-        return {
-          ...state,
-          status: 'error',
-          isFetching: false,
-          error: action.error
-        }
-      }
       return {
         ...state,
         wikiApis: action.apiWikis,
+        areFetching: false,
+        status: 'success'
+      }
+    case 'REQUEST_WIKI_API':
+      return {
+        ...state,
+        isFetching: true
+      }
+    case 'RECEIVE_WIKI_API_ERROR':
+      return {
+        ...state,
+        status: 'error',
+        isFetching: false,
+        error: action.error
+      }
+    case 'RECEIVE_WIKI_API':
+      return {
+        ...state,
+        wikiApi: action.apiWiki,
         isFetching: false,
         status: 'success'
       }

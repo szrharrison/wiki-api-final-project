@@ -22,12 +22,18 @@ class Page
 
   has_many :sub_pages, class_name: 'Page', inverse_of: 'parent_page', dependent: :destroy, validate: false, autosave: true do
     def slugs
-      @target.map { |image| image.slug  }
+      tries ||= 3
+      @target.map { |page| page.slug  }
+    rescue TypeError
+      tries -= 1
+      if tries > 0
+        retry
+      end
     end
 
     def get_by_slug(slug)
-      @target.select do |image|
-        image.slug == slug
+      @target.select do |page|
+        page.slug == slug
       end
     end
   end

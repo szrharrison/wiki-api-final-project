@@ -20,7 +20,7 @@ class ApiWiki
       where(slug: slug)
     end
     def all
-      where(relative_path: /^#{base.slug}/) # NOTE: @base (attr reader => base) is the way to refer to the parent document in a relationship extension method. Equivalent to @target which refers to the array of documents that satisfy the relationship
+      Page.where(relative_path: /^#{base.slug}/) # NOTE: @base (attr reader => base) is the way to refer to the parent document in a relationship extension method. Equivalent to @target which refers to the array of documents that satisfy the relationship
     end
   end
 

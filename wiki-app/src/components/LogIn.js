@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { Form, Message } from 'semantic-ui-react'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 
-import { fetchLogIn } from '../actions'
+import connectedWithRoutes from '../hocs/connectedWithRoutes'
+import { fetchLogIn } from '../actions/authActions'
 
 class LogIn extends Component {
   constructor(props) {
@@ -67,4 +66,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LogIn))
+export default connectedWithRoutes(mapStateToProps, mapDispatchToProps)(LogIn)

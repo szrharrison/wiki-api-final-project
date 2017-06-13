@@ -6,6 +6,14 @@ export function getWikiApis() {
   }).then( resp => resp.json() )
 }
 
+export function getWikiApi(slug) {
+  return fetch(`http://localhost:3000/api/v1/api_wikis/${slug}`, {
+    headers: {
+      'Authorization': localStorage.getItem('jwt')
+    }
+  }).then( resp => resp.json() )
+}
+
 export function getPage(relativePath) {
   return fetch(`http://localhost:3000/api/v1/pages/${relativePath}`, {
     headers: {
@@ -24,6 +32,14 @@ export function logIn(account) {
     body: JSON.stringify( account )
   })
     .then( resp => resp.json() )
+}
+
+export function refreshAccount() {
+  return fetch('http://localhost:3000/api/v1/auth', {
+    headers: {
+      'Authorization': localStorage.getItem('jwt')
+    }
+  }).then( resp => resp.json() )
 }
 
 export function signUp(account) {

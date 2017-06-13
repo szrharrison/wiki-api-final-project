@@ -2,7 +2,7 @@ import React from 'react'
 import { Checkbox } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-import { toggleJson } from '../../actions'
+import { toggleJson } from '../../pageActions'
 
 const DatasetViewSwitcher = (props) => {
   return (

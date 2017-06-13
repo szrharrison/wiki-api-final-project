@@ -6,6 +6,7 @@
     "codemirror": "^5.26.0",
     "format-json-pretty": "^1.0.1",
     "react": "^15.5.4",
+    "react-ace": "^5.0.1",
     "react-codemirror": "^1.0.0",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.5",

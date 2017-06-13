@@ -3,9 +3,7 @@ class Api::V1::PagesController < ApplicationController
   before_action :authorize_account!
   def index
     pages = current_account.api_wikis.pages
-    puts pages
-    binding.pry
-    render json: pages
+    render json: pages, each_serializer: WikiPageSerializer
   end
 
   def show

@@ -1,4 +1,5 @@
 class Api::V1::AuthController < ApplicationController
+  before_action :authorize_account!, only: :show
   def create
     begin
       @account = Account.find_by(username: params[:username])
@@ -12,5 +13,9 @@ class Api::V1::AuthController < ApplicationController
     else
       render json: { error: 'incorrect username or password' }
     end
+  end
+
+  def show
+    render json: current_account
   end
 end
