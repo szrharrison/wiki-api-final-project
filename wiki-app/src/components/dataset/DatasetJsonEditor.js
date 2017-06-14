@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import brace from 'brace'
 import AceEditor from 'react-ace'
 import formatJson from 'format-json-pretty'
 import 'brace/mode/json'
@@ -21,6 +20,7 @@ function DatasetJsonEditor(props)  {
     showLineNumbers: true,
     tabSize: 2,
   }
+
   if((!props.data) || props.isFetching) {
     return null
   } else {

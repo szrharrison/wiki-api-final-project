@@ -11,25 +11,32 @@ const SubPageDropdown = (props) => {
     <Dropdown
       item
       text='Sub Pages'
-      header = 'Scroll for More'
       scrolling
     >
-      { props.title? <Dropdown.Menu>
-        {props.subPageSlugs.map( slug => {
-          const subPagePath = '/' + props.relativePath + '/' + slug
-          return(
-            <Dropdown.Item>
-              <Link
-                to={subPagePath + '/dataset'}
-                onClick={() => props.handleClick(subPagePath)}
-              >
-                {slug}
-              </Link>
-            </Dropdown.Item>
-          )})}
-      </Dropdown.Menu>
+      {
+        props.title
+        ?
+          <Dropdown.Menu>
+            <Dropdown.Header
+              content="Scroll for More"
+            />
+            <Dropdown.Item icon="add" text="Add a new page" />
+            {props.subPageSlugs.map( slug => {
+              const subPagePath = '/' + props.relativePath + '/' + slug
+              return(
+                <Dropdown.Item
+                  key={subPagePath}
+                  as={Link}
+                  to={subPagePath + '/dataset'}
+                  onClick={() => props.handleClick(subPagePath)}
+                >
+                  {slug}
+                </Dropdown.Item>
+              )})}
+          </Dropdown.Menu>
         :
-      null}
+          null
+      }
     </Dropdown>
   )
 }

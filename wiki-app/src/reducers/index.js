@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux'
-import pageFormReducer from './pageFormReducer'
+import pageReducer from './pageReducer'
 import authReducer from './authReducer'
 import wikiApiReducer from './wikiApiReducer'
 import accountReducer from './accountReducer'
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  pageForm: pageFormReducer,
+  pageForm: pageReducer,
   wikiApi: wikiApiReducer,
   account: accountReducer
 })

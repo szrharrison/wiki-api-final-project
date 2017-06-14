@@ -1,4 +1,4 @@
-import { getPage } from '../api'
+import { getPage, createPage, updatePage, deletePage } from '../api'
 
 export function toggleJson() {
   return {
@@ -6,7 +6,7 @@ export function toggleJson() {
   }
 }
 
-export function receivePage(data) {
+function receivePage(data) {
   return {
     type: 'RECEIVE_PAGE',
     title: data.name,
@@ -73,5 +73,53 @@ export function updateDataset(dataString) {
         data
       })
     }
+  }
+}
+
+export function fetchUpdatePage(page) {
+  return function (dispatch) {
+    dispatch(requestUpdatePage())
+
+    return updatePage(page)
+      .then( data => {
+        if(data.error) {
+          dispatch(fetchUpdatePageError(data.error))
+        } else {
+          dispatch(receiveUpdatePage(data))
+          return data
+        }
+      })
+  }
+}
+
+function fetchUpdatePageError(error) {
+  return {
+    type: 'RECEIVE_UPDATE_PAGE_ERROR',
+    status: 'error',
+    error: error,
+    receivedAt: Date.now()
+  }
+}
+
+function receiveUpdatePage(data) {
+  return {
+    type: 'RECEIVE_UPDATE_PAGE',
+    title: data.name,
+    id: data.id,
+    dataset_type: data.data_type,
+    dataset: data.dataset,
+    relative_path: data.relative_path,
+    sub_page_slugs: data.sub_page_slugs,
+    parentPath: data.parent,
+    slug: data.slug,
+    status: 'success',
+    receivedAt: Date.now()
+  }
+}
+
+
+function requestUpdatePage() {
+  return {
+    type: 'REQUEST_UPDATE_PAGE'
   }
 }

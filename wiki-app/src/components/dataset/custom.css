@@ -5,7 +5,7 @@
 }
 .inverted .ui.selection.active.dropdown, .inverted .ui.selection.active.dropdown .menu {
   border-color: #fff;
-  border-top: 1px solid #fff;
+  border-top: 1px solid #fff!important;
 }
 
 .ui.dropdown .menu {
@@ -17,16 +17,26 @@
 }
 .inverted .ui.dropdown .menu>.header {
   color: #fff;
+  padding: 1rem 1.14285714rem 0.75rem;
+  margin: 0;
+  border-bottom: 1px dashed
 }
 
 .ui.secondary.inverted.pointing.menu .active.item {
   color: #fff!important;
 }
+
+.ui.secondary.inverted.pointing.menu .active.selection.item {
+  border-left: 1px solid;
+  border-bottom: 1px solid;
+}
 .ui.vertical.inverted.menu .menu .item, .ui.vertical.inverted.menu .menu .item a:not(.ui) {
   color: #fff!important;
 }
 
-.inverted .ui.dropdown .menu>.item>.description, .inverted .ui.dropdown>.text>.description {
+.inverted .ui.dropdown .menu>.item>.description,
+.inverted .ui.dropdown>.text>.description,
+.inverted .ui.dropdown .menu>.item>.text>.description {
   color: rgba(255, 255, 255, 0.4);
 }
 
@@ -50,6 +60,29 @@
 
 .inverted .menu .ui.slider.checkbox {
   padding: 10px 0;
+}
+
+.inverted .ui.selection.dropdown .menu>.item {
+  border-top-style: dashed;
+}
+
+.inverted .ui.vertical.menu .dropdown.item .menu {
+  border: 1px solid #fff;
+}
+
+.inverted .ui.selection.dropdown .selected.item.addition .text {
+  width: 100%;
+}
+.inverted .ui.selection.dropdown .selected.item.addition .description {
+  float: right;
+}
+
+.inverted .ui.basic.red.label {
+  background-color: #1B1C1D!important;
+}
+
+.ui.basic.red.label {
+  border-top-right-radius: 0;
 }
 
 #json-editor {

@@ -9,7 +9,7 @@ class ApiWiki
   before_validation :set_slug
 
   validates :slug, uniqueness: true
-
+  # validate so that it isn't 'api'
   has_many :pages, validate: false, autosave: true, dependent: :destroy do
     def slugs
       @target.map do |page|

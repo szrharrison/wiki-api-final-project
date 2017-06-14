@@ -51,12 +51,17 @@ class PageFormContainer extends Component {
       dataView = (
         <Segment inverted className='dataset-editor'>
           <PageBreadcrumbs />
-          {this.props.jsonView? <DatasetJsonEditor
-            fontSize={this.state.fontSize}
-            basicAutocompletion={this.state.basicAutocompletion}
-            liveAutocompletion={this.state.liveAutocompletion}
-            snippets={this.state.snippets}
-                                /> : 'null'}
+          {this.props.jsonView
+            ?
+              <DatasetJsonEditor
+                fontSize={this.state.fontSize}
+                basicAutocompletion={this.state.basicAutocompletion}
+                liveAutocompletion={this.state.liveAutocompletion}
+                snippets={this.state.snippets}
+              />
+            :
+              null
+          }
         </Segment>
       )
     }

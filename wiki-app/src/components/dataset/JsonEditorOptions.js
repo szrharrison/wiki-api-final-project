@@ -20,6 +20,7 @@ function JsonEditorOptions(props) {
           search
           selection
           allowAdditions
+          additionLabel={<span className="description">px</span>}
           compact
           item
           minCharacters={0}
@@ -61,19 +62,19 @@ function JsonEditorOptions(props) {
         />
         <Checkbox
           checked={basicAutocompletion}
-          onChange={(e) => props.handleBoolean('basicAutocompletion', e.target.checked)}
+          onChange={(e, checkbox) => {props.handleBoolean('basicAutocompletion', checkbox.checked)}}
           label='Enable Basic Autocomplete'
           slider
         />
         <Checkbox
           checked={liveAutocompletion}
-          onChange={(e) => props.handleBoolean('liveAutocompletion', e.target.checked)}
+          onChange={(e, checkbox) => props.handleBoolean('liveAutocompletion', checkbox.checked)}
           label='Enable Live Autocomplete'
           slider
         />
         <Checkbox
           checked={snippets}
-          onChange={(e) => props.handleBoolean('snippets', e.target.checked)}
+          onChange={(e, checkbox) => props.handleBoolean('snippets', checkbox.checked)}
           label='Enable Snippets'
           slider
         />
