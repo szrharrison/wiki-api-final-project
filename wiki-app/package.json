@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "codemirror": "^5.26.0",
     "format-json-pretty": "^1.0.1",
     "react": "^15.5.4",
     "react-ace": "^5.0.1",

@@ -8,15 +8,19 @@ import { fetchPage } from '../../actions/pageActions'
 const SubPageDropdown = (props) => {
 
   return (
-    <Dropdown item text='Sub Pages'>
-      <Dropdown.Menu>
-        <Dropdown.Header>Scroll for More</Dropdown.Header>
+    <Dropdown
+      item
+      text='Sub Pages'
+      header = 'Scroll for More'
+      scrolling
+    >
+      { props.title? <Dropdown.Menu>
         {props.subPageSlugs.map( slug => {
           const subPagePath = '/' + props.relativePath + '/' + slug
           return(
             <Dropdown.Item>
               <Link
-                to={subPagePath}
+                to={subPagePath + '/dataset'}
                 onClick={() => props.handleClick(subPagePath)}
               >
                 {slug}
@@ -24,6 +28,8 @@ const SubPageDropdown = (props) => {
             </Dropdown.Item>
           )})}
       </Dropdown.Menu>
+        :
+      null}
     </Dropdown>
   )
 }
@@ -32,7 +38,8 @@ function mapStateToProps(state, ownProps) {
   return {
     ...ownProps,
     relativePath: state.pageForm.relative_path,
-    subPageSlugs: state.pageForm.subPageSlugs
+    subPageSlugs: state.pageForm.subPageSlugs,
+    title: state.pageForm.title
   }
 }
 

@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Menu, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 // import DatasetViewSwitcher from './datset/DatasetViewSwitcher'
 import { connect } from 'react-redux'
 
-import SubPageMenu from './SubPageMenu'
+import SubPageDropdown from './SubPageDropdown'
 import JsonEditorOptions from './JsonEditorOptions'
 
-function PageFormSidebar(props) {
+function PageFormSidebar(props)  {
   return (
     <Segment inverted color="black">
       <Menu vertical inverted pointing secondary >
@@ -17,7 +17,7 @@ function PageFormSidebar(props) {
         <Menu.Item name='inbox' active>
           { props.title }
         </Menu.Item>
-        { props.title? <SubPageMenu /> : null }
+        <SubPageDropdown />
 
         <Menu.Item name='dataset-view'>
           {/* <DatasetViewSwitcher /> */}
