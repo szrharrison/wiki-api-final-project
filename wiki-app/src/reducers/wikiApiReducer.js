@@ -1,12 +1,18 @@
 const initialState = {
   wikiApis: [],
   wikiApi: {},
+  viewingWiki: true,
   isFetching: false,
   areFetching: false
 }
 
 function wikiApiReducer(state = initialState, action) {
   switch (action.type) {
+    case 'VIEWING_WIKI':
+      return {
+        ...state,
+        viewingWiki: action.viewingWiki
+      }
     case 'REQUEST_WIKI_APIS':
       return {
         ...state,

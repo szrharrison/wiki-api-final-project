@@ -1,8 +1,9 @@
 import React from 'react'
 import { Dropdown } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
+import { fetchDataset } from '../../actions/datasetActions'
 import { fetchPage } from '../../actions/pageActions'
 
 const SubPageDropdown = (props) => {
@@ -20,13 +21,18 @@ const SubPageDropdown = (props) => {
             <Dropdown.Header
               content="Scroll for More"
             />
-            <Dropdown.Item icon="add" text="Add a new page" />
+            <Dropdown.Item
+              icon="add"
+              text="Add a new page"
+              as={NavLink}
+              to={`/${props.relativePath}/new`}
+            />
             {props.subPageSlugs.map( slug => {
-              const subPagePath = '/' + props.relativePath + '/' + slug
+              const subPagePath = `/${props.relativePath}/${slug}`
               return(
                 <Dropdown.Item
                   key={subPagePath}
-                  as={Link}
+                  as={NavLink}
                   to={subPagePath + '/dataset'}
                   onClick={() => props.handleClick(subPagePath)}
                 >
@@ -44,7 +50,7 @@ const SubPageDropdown = (props) => {
 function mapStateToProps(state, ownProps) {
   return {
     ...ownProps,
-    relativePath: state.pageForm.relative_path,
+    relativePath: state.pageForm.relativePath,
     subPageSlugs: state.pageForm.subPageSlugs,
     title: state.pageForm.title
   }
@@ -52,7 +58,10 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {
-    handleClick: (relativePath) => dispatch(fetchPage(relativePath))
+    handleClick: relativePath => {
+      dispatch(fetchDataset(relativePath))
+      dispatch(fetchPage(relativePath))
+    }
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SubPageDropdown)

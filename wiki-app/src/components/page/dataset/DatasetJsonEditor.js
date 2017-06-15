@@ -10,7 +10,7 @@ import 'brace/ext/searchbox'
 
 import './custom.css'
 
-import { updateDataset } from '../../actions'
+import { updateDataset } from '../../../actions/datasetActions'
 
 function DatasetJsonEditor(props)  {
   const options = {
@@ -50,8 +50,9 @@ function DatasetJsonEditor(props)  {
 function mapStateToProps(state, ownProps) {
   return {
     ...ownProps,
-    data: state.pageForm.dataset,
-    isFetching: state.pageForm.isFetching
+    data: state.dataset.dataset,
+    isFetching: state.dataset.isFetching,
+    isUpdating: state.dataset.isUpdating
   }
 }
 

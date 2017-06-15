@@ -1,5 +1,5 @@
 class PageSerializer < ActiveModel::Serializer
-  attributes :id, :name, :relative_path, :sub_page_slugs, :data_type, :dataset, :parent
+  attributes :id, :name, :relative_path, :sub_page_slugs, :data_type, :parent
 
   def id
     object.id.to_s
@@ -14,17 +14,6 @@ class PageSerializer < ActiveModel::Serializer
       object.api_wiki.slug
     else
       object.parent_page.relative_path
-    end
-  end
-
-  def dataset
-    if !!object.dataset
-      object.dataset.as_json.keys.each_with_object({}) do |key, obj|
-        if key == "_id"
-        else
-          obj[key] = object.dataset[key]
-        end
-      end
     end
   end
 end

@@ -1,11 +1,11 @@
 const initialState = {
   title: '',
   slug: '',
-  dataset_type: '',
+  datasetType: '',
   dataset: {},
   jsonView: true,
   jsonStatus: 'no errors',
-  relative_path: '',
+  relativePath: '',
   isFetching: false
 }
 
@@ -27,13 +27,12 @@ function pageReducer(state = initialState, action) {
       return {
         ...state,
         title: action.title,
-        dataset_type: action.dataset_type,
-        dataset: action.dataset,
-        relative_path: action.relative_path,
+        datasetType: action.datasetType,
+        relativePath: action.relativePath,
         status: action.status,
         slug: action.slug,
         parentPath: action.parentPath,
-        subPageSlugs: action.sub_page_slugs,
+        subPageSlugs: action.subPageSlugs,
         isFetching: false
       }
     case 'REQUEST_UPDATE_PAGE':
@@ -52,32 +51,42 @@ function pageReducer(state = initialState, action) {
       return {
         ...state,
         title: action.title,
-        dataset_type: action.dataset_type,
-        dataset: action.dataset,
-        relative_path: action.relative_path,
+        datasetType: action.datasetType,
+        relativePath: action.relativePath,
         status: action.status,
         slug: action.slug,
         parentPath: action.parentPath,
-        subPageSlugs: action.sub_page_slugs,
+        subPageSlugs: action.subPageSlugs,
         isUpdating: false
+      }
+    case 'REQUEST_CREATE_PAGE':
+      return {
+        ...state,
+        isCreating: true
+      }
+    case 'RECEIVE_CREATE_PAGE_ERROR':
+      return {
+        ...state,
+        errors: action.error,
+        status: action.status,
+        isCreating: false
+      }
+    case 'RECEIVE_CREATE_PAGE':
+      return {
+        ...state,
+        title: action.title,
+        datasetType: action.datasetType,
+        relativePath: action.relativePath,
+        status: action.status,
+        slug: action.slug,
+        parentPath: action.parentPath,
+        subPageSlugs: action.subPageSlugs,
+        isCreating: false
       }
     case 'TOGGLE_JSON':
       return {
         ...state,
         jsonView: !state.jsonView
-      }
-    case 'UPDATE_DATASET':
-      if(action.status) {
-        return {
-          ...state,
-          jsonStatus: 'error in json',
-          error: action.error
-        }
-      }
-      return {
-        ...state,
-        dataset: action.data,
-        jsonStatus: 'no errors',
       }
     default:
       return state

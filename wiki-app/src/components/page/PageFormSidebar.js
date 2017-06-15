@@ -5,24 +5,24 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import SubPageDropdown from './SubPageDropdown'
-import JsonEditorOptions from './JsonEditorOptions'
-import { fetchUpdatePage } from '../../actions/pageActions'
+import JsonEditorOptions from './dataset/JsonEditorOptions'
+import { fetchUpdateDataset } from '../../actions/datasetActions'
 
 function PageFormSidebar(props)  {
   const jsonErrors = props.jsonStatus !== 'no errors'
   const page = {
     name: props.title,
-    relativePath: props.relative_path,
-    dataset: props.dataset
+    relativePath: props.relativePath,
+    parentPath: props.parentPath
   }
   return (
     <Segment inverted color="black">
       <Menu vertical inverted pointing secondary >
         <Menu.Header>
-          { props.parentPath? <Link to={props.parentPath}>{props.parentPath}</Link> : null }
+          { props.parentPath? <Link to={'/' + page.parentPath}>{page.parentPath}</Link> : null }
         </Menu.Header>
-        <Menu.Item name='inbox' active>
-          { props.title }
+        <Menu.Item name='page-name' active>
+          { page.name }
         </Menu.Item>
         <SubPageDropdown />
 
@@ -44,7 +44,7 @@ function PageFormSidebar(props)  {
           icon='save'
           attached='bottom'
           label={jsonErrors ? { basic: true, color: 'red', pointing: 'left', content: 'syntax error' } : null }
-          onClick={() => props.updatePage(page)}
+          onClick={() => props.updateDataset(props.dataset, props.relativePath)}
         />
       </Menu>
     </Segment>
@@ -54,18 +54,19 @@ function PageFormSidebar(props)  {
 function mapStateToProps(state, ownProps) {
   return {
     ...ownProps,
+    username: state.auth.username,
     title: state.pageForm.title,
     slug: state.pageForm.slug,
     parentPath: state.pageForm.parentPath,
-    jsonStatus: state.pageForm.jsonStatus,
-    dataset: state.pageForm.dataset,
-    relative_path: state.pageForm.relative_path
+    jsonStatus: state.dataset.jsonStatus,
+    dataset: state.dataset.dataset,
+    relativePath: state.pageForm.relativePath
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    updatePage: (page) => dispatch(fetchUpdatePage(page))
+    updateDataset: (dataset, relativePath) => dispatch(fetchUpdateDataset(dataset, relativePath))
   }
 }
 

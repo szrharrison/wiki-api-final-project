@@ -9,22 +9,23 @@ function accountReducer(state = initialState, action) {
         ...state,
         isPosting: true
       }
-    case 'RECEIVE_SIGN_UP':
-      const returnState = {
+    case 'RECEIVE_SIGN_UP_ERROR':
+      return {
         ...state,
         status: action.status,
+        error: action.error,
         isPosting: false,
         receivedAt: action.receivedAt
       }
-      if(action.status === 'error') {
-        return {
-          ...returnState,
-          error: action.error
-        }
-      }
+    case 'RECEIVE_SIGN_UP':
       return {
-        ...returnState,
-        username: action.username
+        ...state,
+        status: action.status,
+        username: action.username,
+        firstName: action.firstName,
+        lastName: action.lastName,
+        isPosting: false,
+        receivedAt: action.receivedAt
       }
     default:
       return state

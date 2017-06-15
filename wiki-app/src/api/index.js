@@ -63,11 +63,10 @@ export function createPage(page) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify( { page } )
-  })
+  }).then( resp => resp.json() )
 }
 
 export function updatePage(page) {
-  console.log(page)
   return fetch(`http://localhost:3000/api/v1/pages/${page.relativePath}`, {
     method: 'PATCH',
     headers: {
@@ -76,7 +75,7 @@ export function updatePage(page) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify( { page } )
-  })
+  }).then( resp => resp.json() )
 }
 
 export function deletePage(relativePath) {
@@ -85,5 +84,25 @@ export function deletePage(relativePath) {
     headers: {
       'Authorization': localStorage.getItem('jwt')
     }
-  })
+  }).then( resp => resp.json() )
+}
+
+export function getDataset(relativePath) {
+  return fetch(`http://localhost:3000/api/v1/pages/${relativePath}/dataset`, {
+    headers: {
+      'Authorization': localStorage.getItem('jwt')
+    }
+  }).then( resp => resp.json() )
+}
+
+export function updateDatasetRequest(dataset, relativePath) {
+  return fetch(`http://localhost:3000/api/v1/pages/${relativePath}/dataset`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': localStorage.getItem('jwt'),
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( { dataset })
+  }).then( resp => resp.json() )
 }

@@ -26,7 +26,7 @@ function postSignUp() {
 
 function signUpError(error) {
   return {
-    type: 'RECEIVE_SIGN_UP',
+    type: 'RECEIVE_SIGN_UP_ERROR',
     status: 'error',
     error,
     receivedAt: Date.now()
@@ -42,6 +42,8 @@ function receiveSignUp(data) {
       type: 'RECEIVE_SIGN_UP',
       status: 'success',
       username: data.account.username,
+      firstName: data.account.first_name,
+      lastName: data.account.last_name,
       receivedAt: Date.now()
     })
   }

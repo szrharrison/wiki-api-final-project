@@ -6,23 +6,23 @@ import './App.css';
 import connectedWithRoutes from '../hocs/connectedWithRoutes'
 
 import NavBar from '../components/nav/NavBar'
-import PageFormContainer from './PageFormContainer'
 import PageContainer from './PageContainer'
 import WelcomePage from '../components/WelcomePage'
 import AccountPage from '../components/AccountPage'
 import SignUpForm from '../components/SignUpForm'
-import { logInAction } from '../actions/authActions'
+import { logInAction, fetchAccountRefresh } from '../actions/authActions'
 
 
 class AppContainer extends Component {
 
   componentDidMount() {
     if(!!localStorage.jwt) {
-      this.props.loggedIn(localStorage.username)
+      this.props.refreshAccount()
     }
   }
 
   render() {
+    console.log(this.props)
     return (
       <div className="App">
         <NavBar />
@@ -31,8 +31,7 @@ class AppContainer extends Component {
             <Route exact path="/" component={WelcomePage} />
             <Route exact path="/signup" component={SignUpForm} />
             <Route exact path="/account" component={AccountPage} />
-            <Route exact path="/:slug" component={PageContainer} />
-            <Route path="/:relativePath+/dataset" component={PageFormContainer} />
+            <Route path={':username/:relativePath+'} component={PageContainer} />
           </Switch>
         </Container>
       </div>
@@ -42,15 +41,17 @@ class AppContainer extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    ...ownProps
+    ...ownProps,
+    username: state.auth.username,
+    firstName: state.auth.firstName,
+    lastName: state.auth.lastName
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loggedIn: () => {
-      dispatch(logInAction())
-    }
+    loggedIn: () => dispatch(logInAction()),
+    refreshAccount: () => dispatch(fetchAccountRefresh())
   }
 }
 

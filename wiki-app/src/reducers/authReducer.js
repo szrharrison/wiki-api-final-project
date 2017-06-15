@@ -2,6 +2,7 @@ const initialState = {
   isFetching: false,
   isRefreshing: false,
   loggedIn: false,
+  username: ''
 }
 
 function authReducer(state = initialState, action) {
@@ -36,6 +37,9 @@ function authReducer(state = initialState, action) {
         ...state,
         isFetching: false,
         status: action.status,
+        username: action.username,
+        firstName: action.firstName,
+        lastName: action.lastName,
         receivedAt: action.receivedAt
       }
     case 'REQUEST_ACCOUNT_REFRESH':
@@ -56,9 +60,10 @@ function authReducer(state = initialState, action) {
         ...state,
         isRefreshing: false,
         status: action.status,
-        receivedAt: action.receivedAt,
-        firstName: action.first_name,
-        lastName: action.last_name
+        username: action.username,
+        firstName: action.firstName,
+        lastName: action.lastName,
+        receivedAt: action.receivedAt
       }
     default:
       return state

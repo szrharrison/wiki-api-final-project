@@ -11,9 +11,9 @@ class Page
   validates :name, :slug, :relative_path, presence: true
   validates :api_wiki, presence: true, if: :has_no_parent?
   validates :relative_path, uniqueness: true
+  validates :slug, exclusion: { in: [ "dataset" ] }
 
 
-  before_validation :set_slug
   before_validation :set_relative_path
 
   belongs_to :api_wiki, optional: true

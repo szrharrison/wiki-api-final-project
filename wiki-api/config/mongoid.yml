@@ -1,4 +1,5 @@
 development:
+  adapter: 'mongoid'
   # Configure available database clients. (required)
   clients:
     # Defines the default client. (required)
@@ -11,6 +12,8 @@ development:
       hosts:
         - localhost:27017
       options:
+        read:
+          mode: :primary
         # Change the default write concern. (default = { w: 1 })
         # write:
         #   w: 1

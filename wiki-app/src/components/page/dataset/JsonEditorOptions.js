@@ -86,8 +86,8 @@ function JsonEditorOptions(props) {
 function mapStateToProps(state, ownProps) {
   return {
     ...ownProps,
-    data: state.pageForm.dataset,
-    isFetching: state.pageForm.isFetching
+    data: state.dataset.dataset,
+    isFetching: state.dataset.isFetching
   }
 }
 

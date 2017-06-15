@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       get '/api_wikis/:slug', to: 'api_wikis#show'
       patch '/api_wikis/:slug', to: 'api_wikis#update'
       delete '/api_wikis/:slug', to: 'api_wikis#delete'
+      get '/pages/*relative_path/dataset', to: 'datasets#show'
+      patch '/pages/*relative_path/dataset', to: 'datasets#update'
       get '/pages/*relative_path', to: 'pages#show'
       patch '/pages/*relative_path', to: 'pages#update'
       delete '/pages/*relative_path', to: 'pages#delete'

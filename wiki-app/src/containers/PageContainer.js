@@ -1,52 +1,42 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, Switch, Route } from 'react-router-dom'
 import { Grid, List } from 'semantic-ui-react'
 
 import isAuthenticated from '../hocs/isAuthenticated'
-import { fetchWikiApi } from '../actions/wikiApiActions'
+import connectedWithRoutes from '../hocs/connectedWithRoutes'
+import { fetchPage } from '../actions/pageActions'
+
+import PageFormContainer from './PageFormContainer'
+import PagePage from '../components/page/PagePage'
 
 class PageContainer extends Component {
 
   componentDidMount() {
-    this.props.fetchWikiApi(this.props.match.params.slug)
+    this.props.fetchPage(this.props.match.params.relativePath)
   }
 
 
 
   render() {
-    let pages = null
-    if(this.props.wikiApi.pages) {
-      pages = this.props.wikiApi.pages.map( page => (
-        <List.Item key={page.relative_path}>
-          <Link to={'/' + page.relative_path + '/dataset'}>
-            {page.name}
-          </Link>
-        </List.Item>
-      ))
-    }
+    console.log(this.props)
+
     return (
-      <Grid>
-        <h2>{this.props.wikiApi.name}</h2>
-        <List>
-          {pages}
-        </List>
-      </Grid>
+      <Switch>
+        <Route exact path=':username/:relativePath+' component={PagePage} />
+        <Route path=':username/:relativePath+' component={PageFormContainer} />
+      </Switch>
     )
   }
 }
 
 function mapStateToProps(state, ownProps) {
-  return {
-    ...ownProps,
-    ...state.wikiApi
-  }
+  return ownProps
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {
-    fetchWikiApi: (apiSlug) => dispatch(fetchWikiApi(apiSlug))
+    fetchPage: relativePath => dispatch(fetchPage(relativePath)),
   }
 }
 
-export default isAuthenticated(connect(mapStateToProps, mapDispatchToProps)(PageContainer))
+export default connectedWithRoutes(mapStateToProps, mapDispatchToProps)(isAuthenticated(PageContainer))

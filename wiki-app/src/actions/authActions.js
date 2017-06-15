@@ -56,6 +56,8 @@ export function receiveLogIn( data ) {
     dispatch(logInAction(data.account.username))
     dispatch({
       type: 'RECEIVE_LOG_IN',
+      firstName: data.account.first_name,
+      lastName: data.account.last_name,
       status: 'success',
       receivedAt: Date.now()
     })
@@ -79,6 +81,12 @@ export function fetchAccountRefresh() {
   }
 }
 
+export function requestAccountRefresh() {
+  return {
+    type: 'REQUEST_ACCOUNT_REFRESH'
+  }
+}
+
 export function accountRefreshError( error ) {
   return {
     type: 'RECEIVE_ACCOUNT_REFRESH_ERROR',
@@ -88,20 +96,15 @@ export function accountRefreshError( error ) {
   }
 }
 
-export function requestAccountRefresh() {
-  return {
-    type: 'REQUEST_ACCOUNT_REFRESH'
-  }
-}
-
 export function receiveAccountRefresh( data ) {
   return function (dispatch) {
     dispatch(logInAction(data.username))
     dispatch({
       type: 'RECEIVE_ACCOUNT_REFRESH',
       status: 'success',
-      first_name: data.first_name,
-      last_name: data.last_name,
+      username: data.username,
+      firstName: data.first_name,
+      lastName: data.last_name,
       receivedAt: Date.now()
     })
   }

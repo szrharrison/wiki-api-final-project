@@ -1,9 +1,10 @@
 import { getWikiApis } from '../api'
 import { getWikiApi } from '../api'
 
-function requestWikiApis() {
+export function viewingWiki(boolean) {
   return {
-    type: 'REQUEST_WIKI_APIS'
+    type: 'VIEWING_WIKI',
+    viewingWiki: boolean
   }
 }
 
@@ -23,10 +24,9 @@ export function fetchWikiApis() {
   }
 }
 
-function receiveWikiApis(apiWikis) {
+function requestWikiApis() {
   return {
-    type: 'RECEIVE_WIKI_APIS',
-    apiWikis
+    type: 'REQUEST_WIKI_APIS'
   }
 }
 
@@ -38,9 +38,10 @@ function fetchWikisError(error) {
   }
 }
 
-function requestWikiApi() {
+function receiveWikiApis(apiWikis) {
   return {
-    type: 'REQUEST_WIKI_API'
+    type: 'RECEIVE_WIKI_APIS',
+    apiWikis
   }
 }
 
@@ -60,10 +61,9 @@ export function fetchWikiApi(slug) {
   }
 }
 
-function receiveWikiApi(apiWiki) {
+function requestWikiApi() {
   return {
-    type: 'RECEIVE_WIKI_API',
-    apiWiki
+    type: 'REQUEST_WIKI_API'
   }
 }
 
@@ -72,5 +72,12 @@ function fetchWikiError(error) {
     type: 'RECEIVE_WIKI_API_ERROR',
     status: 'error',
     error
+  }
+}
+
+function receiveWikiApi(apiWiki) {
+  return {
+    type: 'RECEIVE_WIKI_API',
+    apiWiki
   }
 }

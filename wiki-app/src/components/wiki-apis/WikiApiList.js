@@ -10,7 +10,6 @@ import { fetchWikiApis } from '../../actions/wikiApiActions'
 //     a = a.filter(n => n)
 //     const slug = a.pop()
 //     const val=a.shift()
-//     console.log(val, a, slug)
 //     if (a.length === 1) {
 //       collector[val] = {[a[0]]: slug}
 //     }
@@ -26,7 +25,6 @@ class WikiApiList extends Component {
   // const paths = props.wikiApis.map(wikiApi => wikiApi.pages.map( page => page.relative_path ))
   // let collector = [{}, {}]
   // const nestedPaths = paths.map( (wiki, i) => wiki.map( (path) => constructObject(path, collector[i]) ) )
-  // console.log(nestedPaths)
   render() {
     const apis = this.props.wikiApis.map( wikiApi => (
       <Grid.Column key={wikiApi.slug}>

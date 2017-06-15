@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
-import { Grid, Loader, Segment, Dimmer } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-import { fetchPage } from '../actions'
+import { fetchPage } from '../actions/pageActions'
+import { fetchDataset } from '../actions/datasetActions'
 import isAuthenticated from '../hocs/isAuthenticated'
 
-import DatasetJsonEditor from '../components/dataset/DatasetJsonEditor'
-import PageFormSidebar from '../components/dataset/PageFormSidebar'
-import PageBreadcrumbs from '../components/dataset/PageBreadcrumbs'
-
+import PageFormSidebar from '../components/page/PageFormSidebar'
+import DatasetView from '../components/page/dataset/DatasetView'
 
 
 class PageFormContainer extends Component {
@@ -24,7 +23,7 @@ class PageFormContainer extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchPage(this.props.match.params.relativePath)
+    this.props.fetchPageData(this.props.match.params.relativePath)
   }
 
   setFontSize = (fontSize) => {
@@ -40,31 +39,6 @@ class PageFormContainer extends Component {
   }
 
   render() {
-    let dataView
-    if( this.props.isFetching ) {
-      dataView = (
-        <Dimmer active>
-          <Loader size='massive'>Loading</Loader>
-        </Dimmer>
-      )
-    } else {
-      dataView = (
-        <Segment inverted className='dataset-editor'>
-          <PageBreadcrumbs />
-          {this.props.jsonView
-            ?
-              <DatasetJsonEditor
-                fontSize={this.state.fontSize}
-                basicAutocompletion={this.state.basicAutocompletion}
-                liveAutocompletion={this.state.liveAutocompletion}
-                snippets={this.state.snippets}
-              />
-            :
-              null
-          }
-        </Segment>
-      )
-    }
     return (
       <div>
         <Grid>
@@ -79,7 +53,12 @@ class PageFormContainer extends Component {
             />
           </Grid.Column>
           <Grid.Column width={11}>
-            {dataView}
+            <DatasetView
+              fontSize={this.state.fontSize}
+              basicAutocompletion={this.state.basicAutocompletion}
+              liveAutocompletion={this.state.liveAutocompletion}
+              snippets={this.state.snippets}
+            />
           </Grid.Column>
         </Grid>
       </div>
@@ -88,15 +67,15 @@ class PageFormContainer extends Component {
 }
 
 function mapStateToProps( state, ownProps ) {
-  return {
-    ...ownProps,
-    ...state.pageForm
-  }
+  return ownProps
 }
 
 function mapDispatchToProps( dispatch, ownProps ) {
   return {
-    fetchPage: relative_path => dispatch(fetchPage(relative_path)),
+    fetchPageData: relativePath => {
+      dispatch(fetchPage(relativePath))
+      dispatch(fetchDataset(relativePath))
+    }
   }
 }
 
