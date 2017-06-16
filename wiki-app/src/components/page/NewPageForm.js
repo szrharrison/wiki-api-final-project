@@ -10,22 +10,24 @@ import 'brace/ext/searchbox'
 
 import './custom.css'
 
-import { updateDataset } from '../../../actions/datasetActions'
 
-function DatasetJsonEditor(props)  {
-  const options = {
-    enableBasicAutocompletion: props.basicAutocompletion,
-    enableLiveAutocompletion: props.liveAutocompletion,
-    enableSnippets: props.snippets,
-    showLineNumbers: true,
-    tabSize: 2,
+
+class NewPageForm extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      data: {}
+    }
   }
-
-  const value = props.data !== null ? formatJson(props.data) : formatJson( {} )
-
-  if(props.isFetching) {
-    return null
-  } else {
+  render() {
+    const options = {
+      enableBasicAutocompletion: this.props.basicAutocompletion,
+      enableLiveAutocompletion: this.props.liveAutocompletion,
+      enableSnippets: this.props.snippets,
+      showLineNumbers: true,
+      tabSize: 2,
+    }
     return (
       <div>
         <AceEditor
@@ -35,13 +37,13 @@ function DatasetJsonEditor(props)  {
           }}
           theme='monokai'
           name="json-editor"
-          onChange={props.handleChange}
-          fontSize={props.fontSize}
+          onChange={this.props.handleChange}
+          fontSize={this.props.fontSize}
           width='100%'
           showPrintMargin={false}
           showGutter={true}
           highlightActiveLine={true}
-          value={value}
+          value={formatJson(this.state.data)}
           setOptions={options}
         />
       </div>
@@ -64,4 +66,4 @@ function mapDispatchToProps(dispatch, ownProps) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DatasetJsonEditor)
+export default connect(mapStateToProps, mapDispatchToProps)(NewPageForm)

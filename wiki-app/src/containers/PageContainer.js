@@ -12,7 +12,14 @@ import PagePage from '../components/page/PagePage'
 class PageContainer extends Component {
 
   componentDidMount() {
-    this.props.fetchPage(this.props.match.params.relativePath)
+    let pagePath = this.props.match.params.relativePath
+    if(pagePath.endsWith('new')) {
+      pagePath = pagePath.slice(0,-4)
+    }
+    if(pagePath.endsWith('dataset')) {
+      pagePath = pagePath.slice(0,-8)
+    }
+    this.props.fetchPage(pagePath)
   }
 
 

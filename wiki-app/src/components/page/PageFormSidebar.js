@@ -10,19 +10,14 @@ import { fetchUpdateDataset } from '../../actions/datasetActions'
 
 function PageFormSidebar(props)  {
   const jsonErrors = props.jsonStatus !== 'no errors'
-  const page = {
-    name: props.title,
-    relativePath: props.relativePath,
-    parentPath: props.parentPath
-  }
   return (
     <Segment inverted color="black">
       <Menu vertical inverted pointing secondary >
         <Menu.Header>
-          { props.parentPath? <Link to={'/' + page.parentPath}>{page.parentPath}</Link> : null }
+          { props.parentPath? <Link to={'/' + props.parentPath}>{props.parentPath}</Link> : null }
         </Menu.Header>
         <Menu.Item name='page-name' active>
-          { page.name }
+          { props.name }
         </Menu.Item>
         <SubPageDropdown />
 
@@ -55,7 +50,7 @@ function mapStateToProps(state, ownProps) {
   return {
     ...ownProps,
     username: state.auth.username,
-    title: state.pageForm.title,
+    name: state.pageForm.name,
     slug: state.pageForm.slug,
     parentPath: state.pageForm.parentPath,
     jsonStatus: state.dataset.jsonStatus,

@@ -15,10 +15,11 @@ class Page
 
 
   before_validation :set_relative_path
+  before_validation :set_dataset
 
   belongs_to :api_wiki, optional: true
   belongs_to :parent_page, class_name: 'Page', inverse_of: 'sub_pages', optional: true
-  embeds_one :dataset, validate: false
+  embeds_one :dataset
 
   has_many :sub_pages, class_name: 'Page', inverse_of: 'parent_page', dependent: :destroy, validate: false, autosave: true do
     def slugs
@@ -51,13 +52,30 @@ class Page
   end
 
   def set_relative_path
-    if has_no_parent?
-      self.relative_path = self.api_wiki.slug + '/' + self.slug
+    if slug
+      add_relative_path
     else
-      self.relative_path = self.parent_page.relative_path + '/' + self.slug
+      set_slug
+      add_relative_path
     end
   end
+
   def has_no_parent?
-    !self.parent_page?
+    !parent_page?
+  end
+
+  def set_dataset
+    if !dataset
+      self.dataset = Dataset.new()
+    end
+  end
+
+  private
+  def add_relative_path
+    if has_no_parent?
+      self.relative_path = api_wiki.slug + '/' + slug
+    else
+      self.relative_path = parent_page.relative_path + '/' + slug
+    end
   end
 end

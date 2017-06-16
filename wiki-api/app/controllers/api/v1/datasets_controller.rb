@@ -9,12 +9,7 @@ class Api::V1::DatasetsController < ApplicationController
 
   # PATCH api/v1/pages/*relative_path/dataset
   def update
-    @dataset.as_json.keys.each do |field|
-      if (!dataset_params.keys.include?(field)) && field != '_id'
-        @dataset.remove_attribute(field)
-      end
-    end
-    @dataset.update_attributes( dataset_params )
+    @dataset.replace_data(dataset_params)
     if @dataset.save
       render json: @dataset
     else

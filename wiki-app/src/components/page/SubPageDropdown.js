@@ -15,7 +15,7 @@ const SubPageDropdown = (props) => {
       scrolling
     >
       {
-        props.title
+        props.name
           ?
             <Dropdown.Menu>
               <Dropdown.Header
@@ -28,7 +28,7 @@ const SubPageDropdown = (props) => {
                 to={`/${props.relativePath}/new`}
               />
               {props.subPageSlugs.map( slug => {
-              const subPagePath = `/${props.relativePath}/${slug}`
+              const subPagePath = `/${props.username}/${props.relativePath}/${slug}`
                 return(
                   <Dropdown.Item
                     key={subPagePath}
@@ -50,9 +50,10 @@ const SubPageDropdown = (props) => {
 function mapStateToProps(state, ownProps) {
   return {
     ...ownProps,
+    username: state.auth.username,
     relativePath: state.pageForm.relativePath,
     subPageSlugs: state.pageForm.subPageSlugs,
-    title: state.pageForm.title
+    name: state.pageForm.name
   }
 }
 

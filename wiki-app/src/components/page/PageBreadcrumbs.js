@@ -11,8 +11,8 @@ const PageBreadcrumbs = (props) => {
   if( !!props.relativePath && !props.isFetching ) {
     let splitPath = props.relativePath.split('/')
     let breadcrumbs = splitPath.map( (path,i) => {
-      let url = '/' + splitPath.slice(0, i + 1 ).join('/')
-      const relativePath = url
+      const relativePath = splitPath.slice(0, i + 1 ).join('/')
+      let url = `/${props.username}/${relativePath}`
       if( i !== 0 ) {
         url = url + '/dataset'
       }
@@ -39,6 +39,7 @@ const PageBreadcrumbs = (props) => {
 function mapStateToProps( state, ownProps ) {
   return {
     ...ownProps,
+    username: state.auth.username,
     relativePath: state.pageForm.relativePath,
     isFetching: state.pageForm.isFetching
   }

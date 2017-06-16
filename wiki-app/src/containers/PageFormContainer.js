@@ -23,12 +23,7 @@ class PageFormContainer extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.match.params.relativePath)
-    if(!this.props.title) {
-      this.props.fetchPageData(this.props.match.params.relativePath)
-    } else {
-      this.props.fetchDataset(this.props.match.params.relativePath)
-    }
+    this.props.fetchDataset(this.props.match.params.relativePath)
   }
 
   setFontSize = (fontSize) => {

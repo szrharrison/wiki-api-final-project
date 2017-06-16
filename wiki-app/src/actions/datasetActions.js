@@ -1,16 +1,16 @@
 import { getDataset, updateDatasetRequest } from '../api'
 
-export function fetchDataset(relative_path) {
+export function fetchDataset(relativePath) {
   return function (dispatch) {
     dispatch(requestDataset())
 
-    return getDataset(relative_path)
+    return getDataset(relativePath)
       .then( data => {
-        if(data.error) {
-          dispatch(fetchDatasetError(data.error))
-        } else {
-          dispatch(receiveDataset(data))
+        if(!data || !data.error) {
+          dispatch(receiveDataset(data, relativePath))
           return data
+        } else {
+          dispatch(fetchDatasetError(data.error))
         }
       })
   }
@@ -31,11 +31,11 @@ function fetchDatasetError(error) {
   }
 }
 
-function receiveDataset(data) {
+function receiveDataset(data, relativePath) {
   return {
     type: 'RECEIVE_DATASET',
-    dataset: data.data,
-    parentPath: data.parent_path,
+    dataset: data,
+    parentPath: relativePath,
     status: 'success',
     receivedAt: Date.now()
   }
