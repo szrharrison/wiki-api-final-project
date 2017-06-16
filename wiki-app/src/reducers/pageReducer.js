@@ -1,5 +1,5 @@
 const initialState = {
-  title: '',
+  name: '',
   slug: '',
   datasetType: '',
   dataset: {},
@@ -26,7 +26,7 @@ function pageReducer(state = initialState, action) {
     case 'RECEIVE_PAGE':
       return {
         ...state,
-        title: action.title,
+        name: action.name,
         datasetType: action.datasetType,
         relativePath: action.relativePath,
         status: action.status,
@@ -50,7 +50,7 @@ function pageReducer(state = initialState, action) {
     case 'RECEIVE_UPDATE_PAGE':
       return {
         ...state,
-        title: action.title,
+        name: action.name,
         datasetType: action.datasetType,
         relativePath: action.relativePath,
         status: action.status,
@@ -74,7 +74,7 @@ function pageReducer(state = initialState, action) {
     case 'RECEIVE_CREATE_PAGE':
       return {
         ...state,
-        title: action.title,
+        name: action.name,
         datasetType: action.datasetType,
         relativePath: action.relativePath,
         status: action.status,

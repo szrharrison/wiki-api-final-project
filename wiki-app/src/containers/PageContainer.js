@@ -18,13 +18,14 @@ class PageContainer extends Component {
 
 
   render() {
-    console.log(this.props)
-
     return (
-      <Switch>
-        <Route exact path=':username/:relativePath+' component={PagePage} />
-        <Route path=':username/:relativePath+' component={PageFormContainer} />
-      </Switch>
+      <div>
+        <Switch>
+          <Route exact path="/:username/:relativePath+/new" component={PageFormContainer} />
+          <Route exact path="/:username/:relativePath+/dataset" component={PageFormContainer} />
+          <Route exact path='/:username/:relativePath+' component={PagePage} />
+        </Switch>
+      </div>
     )
   }
 }

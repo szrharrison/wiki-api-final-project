@@ -23,7 +23,12 @@ class PageFormContainer extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchPageData(this.props.match.params.relativePath)
+    console.log(this.props.match.params.relativePath)
+    if(!this.props.title) {
+      this.props.fetchPageData(this.props.match.params.relativePath)
+    } else {
+      this.props.fetchDataset(this.props.match.params.relativePath)
+    }
   }
 
   setFontSize = (fontSize) => {
@@ -67,7 +72,10 @@ class PageFormContainer extends Component {
 }
 
 function mapStateToProps( state, ownProps ) {
-  return ownProps
+  return {
+    ...ownProps,
+    title: state.pageForm.title
+  }
 }
 
 function mapDispatchToProps( dispatch, ownProps ) {
@@ -75,7 +83,8 @@ function mapDispatchToProps( dispatch, ownProps ) {
     fetchPageData: relativePath => {
       dispatch(fetchPage(relativePath))
       dispatch(fetchDataset(relativePath))
-    }
+    },
+    fetchDataset: relativePath => dispatch(fetchDataset(relativePath))
   }
 }
 

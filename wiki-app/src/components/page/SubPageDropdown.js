@@ -16,25 +16,25 @@ const SubPageDropdown = (props) => {
     >
       {
         props.title
-        ?
-          <Dropdown.Menu>
-            <Dropdown.Header
-              content="Scroll for More"
-            />
-            <Dropdown.Item
-              icon="add"
-              text="Add a new page"
-              as={NavLink}
-              to={`/${props.relativePath}/new`}
-            />
-            {props.subPageSlugs.map( slug => {
+          ?
+            <Dropdown.Menu>
+              <Dropdown.Header
+                content="Scroll for More"
+              />
+              <Dropdown.Item
+                icon="add"
+                text="Add a new page"
+                as={NavLink}
+                to={`/${props.relativePath}/new`}
+              />
+              {props.subPageSlugs.map( slug => {
               const subPagePath = `/${props.relativePath}/${slug}`
-              return(
-                <Dropdown.Item
-                  key={subPagePath}
-                  as={NavLink}
-                  to={subPagePath + '/dataset'}
-                  onClick={() => props.handleClick(subPagePath)}
+                return(
+                  <Dropdown.Item
+                    key={subPagePath}
+                    as={NavLink}
+                    to={subPagePath + '/dataset'}
+                    onClick={() => props.handleClick(subPagePath)}
                 >
                   {slug}
                 </Dropdown.Item>

@@ -40,7 +40,7 @@ function fetchPageError(error) {
 function receivePage(data) {
   return {
     type: 'RECEIVE_PAGE',
-    title: data.name,
+    name: data.name,
     id: data.id,
     datasetType: data.data_type,
     relativePath: data.relative_path,
@@ -86,7 +86,7 @@ function fetchUpdatePageError(error) {
 function receiveUpdatePage(data) {
   return {
     type: 'RECEIVE_UPDATE_PAGE',
-    title: data.name,
+    name: data.name,
     id: data.id,
     datasetType: data.data_type,
     relativePath: data.relative_path,
@@ -132,7 +132,7 @@ function fetchCreatePageError(error) {
 function receiveCreatePage(data) {
   return {
     type: 'RECEIVE_CREATE_PAGE',
-    title: data.name,
+    name: data.name,
     id: data.id,
     datasetType: data.data_type,
     relativePath: data.relative_path,

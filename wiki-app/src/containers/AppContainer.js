@@ -22,17 +22,14 @@ class AppContainer extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className="App">
         <NavBar />
         <Container>
-          <Switch>
-            <Route exact path="/" component={WelcomePage} />
-            <Route exact path="/signup" component={SignUpForm} />
-            <Route exact path="/account" component={AccountPage} />
-            <Route path={':username/:relativePath+'} component={PageContainer} />
-          </Switch>
+          <Route exact path="/" component={WelcomePage} />
+          <Route exact path="/signup" component={SignUpForm} />
+          <Route exact path="/account" component={AccountPage} />
+          <Route path="/:username/:relativePath+" component={PageContainer} />
         </Container>
       </div>
     );
