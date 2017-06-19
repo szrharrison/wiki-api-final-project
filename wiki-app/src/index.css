@@ -5,6 +5,15 @@ html body {
   background-image: linear-gradient(to right, #868f96 0%, #596164 100%);
 }
 
+a {
+  transition: .25s color ease 0.1s;
+  color: rgba(127, 200, 200, 0.87);
+}
+
+a:hover {
+  color: rgba(127, 200, 200, 0.5);
+}
+
 .ui.inverted.segment.nav {
   position: fixed;
   border-radius: 0;
@@ -17,6 +26,7 @@ html body {
 .ui.pointing.dropdown>.menu:after, .ui.menu .dropdown.item .menu {
   background-color: #1b1c1d;
 }
+
 .grid {
   text-align: left;
 }

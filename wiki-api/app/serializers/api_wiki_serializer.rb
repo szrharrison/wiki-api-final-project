@@ -1,11 +1,11 @@
 class ApiWikiSerializer < ActiveModel::Serializer
-  attributes :id, :account_id, :name, :slug, :pages
+  attributes :id, :owner, :name, :slug, :pages
 
   def id
     object.id.to_s
   end
-  def account_id
-    object.account_id.to_s
+  def owner
+    object.account.username
   end
   def pages
     object.pages.all.map do |page|

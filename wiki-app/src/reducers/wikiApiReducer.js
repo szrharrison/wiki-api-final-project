@@ -1,6 +1,8 @@
 const initialState = {
   wikiApis: [],
-  wikiApi: {},
+  pages: [],
+  name: '',
+  slug: '',
   viewingWiki: true,
   isFetching: false,
   areFetching: false
@@ -28,7 +30,7 @@ function wikiApiReducer(state = initialState, action) {
     case 'RECEIVE_WIKI_APIS':
       return {
         ...state,
-        wikiApis: action.apiWikis,
+        wikiApis: action.wikiApis,
         areFetching: false,
         status: 'success'
       }
@@ -47,7 +49,9 @@ function wikiApiReducer(state = initialState, action) {
     case 'RECEIVE_WIKI_API':
       return {
         ...state,
-        wikiApi: action.apiWiki,
+        name: action.name,
+        slug: action.slug,
+        pages: action.pages,
         isFetching: false,
         status: 'success'
       }

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Checkbox, Dropdown } from 'semantic-ui-react'
 
-import './custom.css'
+import { toggleBoolean, setFontSize } from '../../../actions/pageFormActions'
 
 function JsonEditorOptions(props) {
   const { basicAutocompletion, liveAutocompletion, snippets, fontSize } = props
@@ -86,9 +86,20 @@ function JsonEditorOptions(props) {
 function mapStateToProps(state, ownProps) {
   return {
     ...ownProps,
+    snippets: state.pageForm.snippets,
+    basicAutocompletion: state.pageForm.basicAutocompletion,
+    liveAutocompletion: state.pageForm.liveAutocompletion,
+    fontSize: state.pageForm.fontSize,
     data: state.dataset.dataset,
     isFetching: state.dataset.isFetching
   }
 }
 
-export default connect(mapStateToProps)(JsonEditorOptions)
+function mapDispatchToProps(dispatch, ownProps) {
+  return {
+    handleBoolean: name => dispatch(toggleBoolean(name)),
+    handleFontSize: size => dispatch(setFontSize(size))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(JsonEditorOptions)

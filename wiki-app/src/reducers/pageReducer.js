@@ -32,7 +32,7 @@ function pageReducer(state = initialState, action) {
         status: action.status,
         slug: action.slug,
         parentPath: action.parentPath,
-        subPageSlugs: action.subPageSlugs,
+        subPages: action.subPages,
         isFetching: false
       }
     case 'REQUEST_UPDATE_PAGE':
@@ -56,7 +56,7 @@ function pageReducer(state = initialState, action) {
         status: action.status,
         slug: action.slug,
         parentPath: action.parentPath,
-        subPageSlugs: action.subPageSlugs,
+        subPages: action.subPages,
         isUpdating: false
       }
     case 'REQUEST_CREATE_PAGE':
@@ -80,13 +80,36 @@ function pageReducer(state = initialState, action) {
         status: action.status,
         slug: action.slug,
         parentPath: action.parentPath,
-        subPageSlugs: action.subPageSlugs,
+        subPages: action.subPages,
         isCreating: false
       }
-    case 'TOGGLE_JSON':
+    case 'REQUEST_DELETE_PAGE':
       return {
         ...state,
-        jsonView: !state.jsonView
+        isDeleting: true
+      }
+    case 'RECEIVE_DELETE_PAGE_ERROR':
+      return {
+        ...state,
+        errors: action.error,
+        status: action.status,
+        isDeleting: false
+      }
+    case 'RECEIVE_DELETE_PAGE':
+      return {
+        ...state,
+        name: action.name,
+        relativePath: action.relativePath,
+        status: action.status,
+        slug: action.slug,
+        parentPath: action.parentPath,
+        subPages: action.subPages,
+        isDeleting: false
+      }
+    case 'SET_SLUG':
+      return {
+        ...state,
+        slug: action.slug
       }
     default:
       return state

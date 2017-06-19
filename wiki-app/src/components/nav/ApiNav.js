@@ -12,25 +12,31 @@ const ApiNav = (props) => {
       text="Your Apis"
       pointing
       onClick={() => {
-        if(props.apis.length === 0) {
+        if(!props.apis.length) {
           props.apisClick()
         }
       }}
       loading={props.apisLoading}
-      className='link item'>
+      className='link item'
+    >
       <Dropdown.Menu>
-        {props.apis.map( api => (
-          <Dropdown.Item
-            key={api.slug}
-          >
-            <NavLink
-              to={'/' + api.slug}
-              onClick={() => props.apiLinkClick(api.slug)}
-            >
-              {api.name}
-            </NavLink>
-          </Dropdown.Item>
-        ))}
+        {
+          props.apis
+            ?
+              props.apis.map( api => (
+                <Dropdown.Item
+                  key={api.slug}
+                  as={NavLink}
+                  to={`/${props.username}/${api.slug}`}
+                  onClick={() => props.apiLinkClick(api.slug)}
+                  active={props.location.pathname.startsWith(`/${props.username}/${api.slug}`)}
+                >
+                  {api.name}
+                </Dropdown.Item>
+              ))
+            :
+            null
+        }
       </Dropdown.Menu>
     </Dropdown>
   )
@@ -43,6 +49,7 @@ const ApiNav = (props) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     ...ownProps,
+    username: state.auth.username,
     loggedIn: state.auth.loggedIn,
     apis: state.wikiApi.wikiApis,
     apisLoading: state.wikiApi.areFetching
@@ -51,12 +58,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    apisClick: () => {
-      dispatch(fetchWikiApis())
-    },
-    apiLinkClick: (slug) => {
-      dispatch(fetchWikiApi(slug))
-    }
+    apisClick: () => dispatch(fetchWikiApis()),
+    apiLinkClick: (slug) => dispatch(fetchWikiApi(slug))
   }
 }
 

@@ -3,15 +3,18 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :api_wikis, only: [:index, :create]
-      resources :pages, only: [:index, :create]
+      resources :api_wikis, only: [:index]
+      resources :pages, only: [:index]
 
       get '/api_wikis/:slug', to: 'api_wikis#show'
+      post '/api_wikis', to: 'api_wikis#create'
+      post '/api_wikis/:slug/pages', to: 'api_wikis#create_page'
       patch '/api_wikis/:slug', to: 'api_wikis#update'
       delete '/api_wikis/:slug', to: 'api_wikis#delete'
       get '/pages/*relative_path/dataset', to: 'datasets#show'
       patch '/pages/*relative_path/dataset', to: 'datasets#update'
       get '/pages/*relative_path', to: 'pages#show'
+      post '/pages/*relative_path', to: 'pages#create'
       patch '/pages/*relative_path', to: 'pages#update'
       delete '/pages/*relative_path', to: 'pages#delete'
       post '/auth', to: 'auth#create'
@@ -19,6 +22,8 @@ Rails.application.routes.draw do
       post '/signup', to: 'sign_up#create'
     end
   end
+
+  get '/*relative_path', to: 'pages#show'
 end
 
 # get '/*relative_path', to: ...

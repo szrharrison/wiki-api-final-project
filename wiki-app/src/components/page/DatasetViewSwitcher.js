@@ -16,7 +16,7 @@ const DatasetViewSwitcher = (props) => {
 function mapStateToProps(state, ownProps) {
   return {
     ...ownProps,
-    jsonView: state.pageForm.jsonView
+    jsonView: state.page.jsonView
   }
 }
 

@@ -9,6 +9,10 @@ class Api::V1::DatasetsController < ApplicationController
 
   # PATCH api/v1/pages/*relative_path/dataset
   def update
+    if !dataset_params
+      render json: {}
+      return
+    end
     @dataset.replace_data(dataset_params)
     if @dataset.save
       render json: @dataset
@@ -26,5 +30,6 @@ class Api::V1::DatasetsController < ApplicationController
 
   def dataset_params
     params.require(:dataset).permit!
+  rescue ActionController::ParameterMissing
   end
 end

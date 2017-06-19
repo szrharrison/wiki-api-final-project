@@ -2,43 +2,41 @@ import React from 'react'
 import { Segment, Dimmer, Loader } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-import PageBreadcrumbs from '../PageBreadcrumbs'
+import '../custom.css'
+
+import PageTitle from './PageTitle'
+import PageBreadcrumbs from './PageBreadcrumbs'
 import DatasetJsonEditor from './DatasetJsonEditor'
 
-const DatasetView = (props) => {
+function DatasetView(props) {
   return (
-    <div>
-      { props.isFetching || props.isUpdating
+    <Segment inverted className='dataset-editor'>
+      { props.isFetching
         ?
-          <Dimmer active={props.isFetching}>
+          <Dimmer active>
             <Loader size='massive'>Loading</Loader>
           </Dimmer>
         :
-        <Segment inverted className='dataset-editor'>
+        <div>
+          <PageTitle />
           <PageBreadcrumbs />
           { props.jsonView
             ?
-              <DatasetJsonEditor
-                fontSize={props.fontSize}
-                basicAutocompletion={props.basicAutocompletion}
-                liveAutocompletion={props.liveAutocompletion}
-                snippets={props.snippets}
-              />
+              <DatasetJsonEditor/>
             :
             null
           }
-        </Segment>
+        </div>
       }
-    </div>
+    </Segment>
   )
 }
 
 function mapStateToProps(state, ownProps) {
   return {
     ...ownProps,
-    jsonView: state.pageForm.jsonView,
-    isFetching: state.pageForm.isFetching || state.dataset.isFetching,
-    isUpdating: state.dataset.isUpdating
+    jsonView: state.page.jsonView,
+    isFetching: state.page.isFetching || state.dataset.isFetching
   }
 }
 

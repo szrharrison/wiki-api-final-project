@@ -1,86 +1,42 @@
 import React, { Component } from 'react'
-import { Grid } from 'semantic-ui-react'
-import { connect } from 'react-redux'
+import { Switch, Route } from 'react-router-dom'
 
-import { fetchPage } from '../actions/pageActions'
 import { fetchDataset } from '../actions/datasetActions'
-import isAuthenticated from '../hocs/isAuthenticated'
+import connectedWithRoutes from '../hocs/connectedWithRoutes'
 
-import PageFormSidebar from '../components/page/PageFormSidebar'
 import DatasetView from '../components/page/dataset/DatasetView'
+import NewDatasetView from '../components/page/newDataset/NewDatasetView'
 
 
 class PageFormContainer extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      basicAutocompletion: false,
-      liveAutocompletion: false,
-      snippets: false,
-      fontSize: 14
-    }
-  }
 
   componentDidMount() {
-    this.props.fetchDataset(this.props.match.params.relativePath)
-  }
-
-  setFontSize = (fontSize) => {
-    this.setState({
-      fontSize: parseInt(fontSize,10)
-    })
-  }
-
-  setBoolean = (name, value) => {
-    this.setState({
-      [name]: value
-    })
+    const slug = this.props.match.params.relativePath
+    if(slug.split('/').length > 1) {
+      this.props.fetchDataset(slug)
+    }
   }
 
   render() {
     return (
       <div>
-        <Grid>
-          <Grid.Column width={5}>
-            <PageFormSidebar
-              handleFontSize={this.setFontSize}
-              handleBoolean={this.setBoolean}
-              fontSize={this.state.fontSize}
-              basicAutocompletion={this.state.basicAutocompletion}
-              liveAutocompletion={this.state.liveAutocompletion}
-              snippets={this.state.snippets}
-            />
-          </Grid.Column>
-          <Grid.Column width={11}>
-            <DatasetView
-              fontSize={this.state.fontSize}
-              basicAutocompletion={this.state.basicAutocompletion}
-              liveAutocompletion={this.state.liveAutocompletion}
-              snippets={this.state.snippets}
-            />
-          </Grid.Column>
-        </Grid>
+        <Switch>
+          <Route exact path="/:username/:relativePath+/dataset" component={DatasetView} />
+          <Route exact path="/:username/:relativePath+/new" component={NewDatasetView} />
+        </Switch>
       </div>
     )
   }
 }
 
 function mapStateToProps( state, ownProps ) {
-  return {
-    ...ownProps,
-    title: state.pageForm.title
-  }
+  return ownProps
 }
 
 function mapDispatchToProps( dispatch, ownProps ) {
   return {
-    fetchPageData: relativePath => {
-      dispatch(fetchPage(relativePath))
-      dispatch(fetchDataset(relativePath))
-    },
     fetchDataset: relativePath => dispatch(fetchDataset(relativePath))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(isAuthenticated(PageFormContainer))
+export default connectedWithRoutes(mapStateToProps, mapDispatchToProps)(PageFormContainer)

@@ -11,6 +11,9 @@ class Dataset
         remove_attribute(field)
       end
     end
-    update_attributes( new_data )
+    new_data.keys.each do |key|
+      self[key] = new_data[key]
+    end
+    save
   end
 end

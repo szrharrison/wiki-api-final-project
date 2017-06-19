@@ -1,12 +1,8 @@
 class PageSerializer < ActiveModel::Serializer
-  attributes :id, :name, :relative_path, :sub_page_slugs, :data_type, :parent
+  attributes :id, :name, :relative_path, :data_type, :parent, :slug
 
   def id
     object.id.to_s
-  end
-
-  def sub_page_slugs
-    object.sub_pages.slugs
   end
 
   def parent
@@ -16,4 +12,6 @@ class PageSerializer < ActiveModel::Serializer
       object.parent_page.relative_path
     end
   end
+
+  has_many :sub_pages, each_serializer: :sub_page_serializer
 end

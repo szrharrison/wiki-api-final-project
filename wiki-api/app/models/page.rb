@@ -11,7 +11,7 @@ class Page
   validates :name, :slug, :relative_path, presence: true
   validates :api_wiki, presence: true, if: :has_no_parent?
   validates :relative_path, uniqueness: true
-  validates :slug, exclusion: { in: [ "dataset" ] }
+  validates :slug, exclusion: { in: [ "dataset", "new" ] }
 
 
   before_validation :set_relative_path
@@ -23,13 +23,7 @@ class Page
 
   has_many :sub_pages, class_name: 'Page', inverse_of: 'parent_page', dependent: :destroy, validate: false, autosave: true do
     def slugs
-      tries ||= 3
       @target.map { |page| page.slug  }
-    rescue TypeError
-      tries -= 1
-      if tries > 0
-        retry
-      end
     end
 
     def get_by_slug(slug)

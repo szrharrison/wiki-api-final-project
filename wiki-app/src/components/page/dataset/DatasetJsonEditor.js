@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import AceEditor from 'react-ace'
 import formatJson from 'format-json-pretty'
@@ -8,24 +8,42 @@ import 'brace/snippets/json'
 import 'brace/ext/language_tools'
 import 'brace/ext/searchbox'
 
-import './custom.css'
-
 import { updateDataset } from '../../../actions/datasetActions'
 
-function DatasetJsonEditor(props)  {
-  const options = {
-    enableBasicAutocompletion: props.basicAutocompletion,
-    enableLiveAutocompletion: props.liveAutocompletion,
-    enableSnippets: props.snippets,
-    showLineNumbers: true,
-    tabSize: 2,
+class DatasetJsonEditor extends Component {
+  state = {
+    data: ''
   }
 
-  const value = props.data !== null ? formatJson(props.data) : formatJson( {} )
+  componentDidMount = () => {
+    if(formatJson(this.props.data) !== this.state.data) {
+      this.setState({
+        data: formatJson(this.props.data)
+      })
+    }
 
-  if(props.isFetching) {
-    return null
-  } else {
+    const undo_manager = this.refs.ace.editor.getSession().getUndoManager()
+
+    undo_manager.reset()
+
+    this.refs.ace.editor.getSession().setUndoManager(undo_manager)
+  }
+
+  handleChange = (value) => {
+    this.setState({
+      data: value
+    })
+    this.props.handleChange(value)
+  }
+
+  render() {
+    const options = {
+      enableBasicAutocompletion: this.props.basicAutocompletion,
+      enableLiveAutocompletion: this.props.liveAutocompletion,
+      enableSnippets: this.props.snippets,
+      showLineNumbers: true,
+      tabSize: 2,
+    }
     return (
       <div>
         <AceEditor
@@ -35,13 +53,14 @@ function DatasetJsonEditor(props)  {
           }}
           theme='monokai'
           name="json-editor"
-          onChange={props.handleChange}
-          fontSize={props.fontSize}
+          ref="ace"
+          onChange={this.handleChange}
+          fontSize={this.props.fontSize}
           width='100%'
           showPrintMargin={false}
           showGutter={true}
           highlightActiveLine={true}
-          value={value}
+          value={this.state.data}
           setOptions={options}
         />
       </div>
@@ -52,9 +71,11 @@ function DatasetJsonEditor(props)  {
 function mapStateToProps(state, ownProps) {
   return {
     ...ownProps,
-    data: state.dataset.dataset,
-    isFetching: state.dataset.isFetching,
-    isUpdating: state.dataset.isUpdating
+    snippets: state.pageForm.snippets,
+    basicAutocompletion: state.pageForm.basicAutocompletion,
+    liveAutocompletion: state.pageForm.liveAutocompletion,
+    fontSize: state.pageForm.fontSize,
+    data: state.dataset.dataset
   }
 }
 

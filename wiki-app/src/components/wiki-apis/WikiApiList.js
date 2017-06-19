@@ -1,74 +1,76 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Header, Grid, List } from 'semantic-ui-react'
+import React from 'react'
+import { Accordion } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-import { fetchWikiApis } from '../../actions/wikiApiActions'
+import connectedWithRoutes from '../../hocs/connectedWithRoutes'
+import { fetchWikiApis, fetchWikiApi } from '../../actions/wikiApiActions'
+import WikiApiListItem from './WikiApiListItem'
 
-// function constructObject(relative_path, collector) {
-//     let a = relative_path.split('/')
-//     a = a.filter(n => n)
-//     const slug = a.pop()
-//     const val=a.shift()
-//     if (a.length === 1) {
-//       collector[val] = {[a[0]]: slug}
-//     }
-//     return collector
-// }
+function constructNestedPages(pages, accumulator = {}) {
+  pages.forEach( page => {
+    page.subPages = {}
+    const pageSlugsArray = page.relative_path.split('/')
+    pageSlugsArray.shift()
+    page.pageSlugs = pageSlugsArray.join('/')
+    if(pageSlugsArray.length === 1) {
+      accumulator[pageSlugsArray[0]] = page
+    } else {
+      recursivelyNestPage(page, accumulator)
+    }
+  })
+  return accumulator
+}
 
-class WikiApiList extends Component {
-
-  componentDidMount() {
-    this.props.fetchWikiApis()
+function recursivelyNestPage(page, accumulator) {
+  const pageSlugsArray = page.pageSlugs.split('/')
+  const topLevelSlug = pageSlugsArray[0]
+  if(pageSlugsArray.length === 1) {
+    accumulator[topLevelSlug] = page
+  } else {
+    pageSlugsArray.shift()
+    page.pageSlugs = pageSlugsArray.join('/')
+    recursivelyNestPage(page, accumulator[topLevelSlug]['subPages'])
   }
-
-  // const paths = props.wikiApis.map(wikiApi => wikiApi.pages.map( page => page.relative_path ))
-  // let collector = [{}, {}]
-  // const nestedPaths = paths.map( (wiki, i) => wiki.map( (path) => constructObject(path, collector[i]) ) )
-  render() {
-    const apis = this.props.wikiApis.map( wikiApi => (
-      <Grid.Column key={wikiApi.slug}>
-        <Link to={`/${wikiApi.slug}`}>
-          {wikiApi.name}
-        </Link>
-        <List>
-          {wikiApi.pages.map( page => (
-
-            <List.Item key={page.relative_path}>
-              <List.Icon name='folder' />
-              <List.Content>
-                <List.Header>{page.name}</List.Header>
-                <List.Description>{page.relative_path}</List.Description>
-              </List.Content>
-            </List.Item>
-          ))}
-        </List>
-      </Grid.Column>
-    ))
-    return (
-      <div>
-        <Header as="h2" content="Your APIs"/>
-        <Grid columns='two' divided>
-          <Grid.Row>
-            {apis}
-          </Grid.Row>
-        </Grid>
-      </div>
-    )
-  }
+}
+function WikiApiList(props) {
+  const { wikiApi } = props
+  const pages = constructNestedPages(wikiApi.pages)
+  return (
+    <div>
+      <Link
+        to={`/${props.username}/${wikiApi.slug}`}
+        onClick={() => props.fetchWikiApi(wikiApi.slug)}
+      >
+        {wikiApi.name}
+      </Link>
+      { pages && Object.keys(pages).length
+        ?
+          <Accordion fluid>
+            {Object.keys(pages).map( key => (
+              <WikiApiListItem
+                key={`base-list-${key}`}
+                page={pages[key]}
+              />
+            ))}
+          </Accordion>
+        :
+        null
+      }
+    </div>
+  )
 }
 
 function mapStateToProps(state, ownProps) {
   return {
     ...ownProps,
-    wikiApis: state.wikiApi.wikiApis,
-    areLoading: state.wikiApi.areFetching
+    username: state.auth.username,
   }
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {
-    fetchWikiApis: () => dispatch(fetchWikiApis())
+    fetchWikiApis: () => dispatch(fetchWikiApis()),
+    fetchWikiApi: (slug) => dispatch(fetchWikiApi(slug))
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(WikiApiList)
+export default connectedWithRoutes(mapStateToProps, mapDispatchToProps)(WikiApiList)

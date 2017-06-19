@@ -1,5 +1,4 @@
-import { getWikiApis } from '../api'
-import { getWikiApi } from '../api'
+import { getWikiApis, getWikiApi  } from '../api'
 
 export function viewingWiki(boolean) {
   return {
@@ -38,10 +37,10 @@ function fetchWikisError(error) {
   }
 }
 
-function receiveWikiApis(apiWikis) {
+function receiveWikiApis(wikiApis) {
   return {
     type: 'RECEIVE_WIKI_APIS',
-    apiWikis
+    wikiApis
   }
 }
 
@@ -75,9 +74,11 @@ function fetchWikiError(error) {
   }
 }
 
-function receiveWikiApi(apiWiki) {
+function receiveWikiApi(wikiApi) {
   return {
     type: 'RECEIVE_WIKI_API',
-    apiWiki
+    name: wikiApi.name,
+    slug: wikiApi.slug,
+    pages: wikiApi.pages
   }
 }

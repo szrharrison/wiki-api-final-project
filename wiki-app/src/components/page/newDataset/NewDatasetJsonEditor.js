@@ -1,25 +1,28 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import AceEditor from 'react-ace'
-import formatJson from 'format-json-pretty'
 import 'brace/mode/json'
 import 'brace/theme/monokai'
 import 'brace/snippets/json'
 import 'brace/ext/language_tools'
 import 'brace/ext/searchbox'
 
-import './custom.css'
+import { updateDataset } from '../../../actions/datasetActions'
 
 
 
-class NewPageForm extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      data: {}
-    }
+class NewDatasetJsonEditor extends Component {
+  state = {
+    data: ""
   }
+
+  handleChange = (value) => {
+    this.setState({
+      data: value
+    })
+    this.props.handleChange(value)
+  }
+
   render() {
     const options = {
       enableBasicAutocompletion: this.props.basicAutocompletion,
@@ -37,13 +40,13 @@ class NewPageForm extends Component {
           }}
           theme='monokai'
           name="json-editor"
-          onChange={this.props.handleChange}
+          onChange={this.handleChange}
           fontSize={this.props.fontSize}
           width='100%'
           showPrintMargin={false}
           showGutter={true}
           highlightActiveLine={true}
-          value={formatJson(this.state.data)}
+          value={this.state.data}
           setOptions={options}
         />
       </div>
@@ -55,6 +58,10 @@ function mapStateToProps(state, ownProps) {
   return {
     ...ownProps,
     data: state.dataset.dataset,
+    fontSize: state.pageForm.fontSize,
+    basicAutocompletion: state.pageForm.basicAutocompletion,
+    liveAutocompletion: state.pageForm.liveAutocompletion,
+    snippets: state.pageForm.snippets,
     isFetching: state.dataset.isFetching,
     isUpdating: state.dataset.isUpdating
   }
@@ -66,4 +73,4 @@ function mapDispatchToProps(dispatch, ownProps) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewPageForm)
+export default connect(mapStateToProps, mapDispatchToProps)(NewDatasetJsonEditor)

@@ -34,7 +34,7 @@ function fetchDatasetError(error) {
 function receiveDataset(data, relativePath) {
   return {
     type: 'RECEIVE_DATASET',
-    dataset: data,
+    dataset: data.data,
     parentPath: relativePath,
     status: 'success',
     receivedAt: Date.now()
@@ -47,11 +47,11 @@ export function fetchUpdateDataset(dataset, relativePath) {
 
     return updateDatasetRequest(dataset, relativePath)
       .then( data => {
-        if(data.error) {
-          dispatch(fetchUpdateDatasetError(data.error))
-        } else {
-          dispatch(receiveUpdateDataset(data))
+        if(!data || !data.error) {
+          dispatch(receiveUpdateDataset(data, relativePath))
           return data
+        } else {
+          dispatch(fetchUpdateDatasetError(data.error))
         }
       })
   }
@@ -72,11 +72,11 @@ function fetchUpdateDatasetError(error) {
   }
 }
 
-function receiveUpdateDataset(data) {
+function receiveUpdateDataset(data, parentPath) {
   return {
     type: 'RECEIVE_UPDATE_DATASET',
     dataset: data.data,
-    parentPath: data.parent_path,
+    parentPath: parentPath,
     status: 'success',
     receivedAt: Date.now()
   }

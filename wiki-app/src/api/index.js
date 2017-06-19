@@ -54,8 +54,8 @@ export function signUp(account) {
     .then( resp => resp.json() )
 }
 
-export function createPage(page) {
-  return fetch('http://localhost:3000/api/v1/pages', {
+export function createPage(page, relativePath) {
+  return fetch(`http://localhost:3000/api/v1/pages/${relativePath}`, {
     method: 'POST',
     headers: {
       'Authorization': localStorage.getItem('jwt'),
@@ -66,8 +66,20 @@ export function createPage(page) {
   }).then( resp => resp.json() )
 }
 
-export function updatePage(page) {
-  return fetch(`http://localhost:3000/api/v1/pages/${page.relativePath}`, {
+export function createWikiPage(page, wikiSlug) {
+  return fetch(`http://localhost:3000/api/v1/api_wikis/${wikiSlug}/pages`, {
+    method: 'POST',
+    headers: {
+      'Authorization': localStorage.getItem('jwt'),
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( { page } )
+  }).then( resp => resp.json() )
+}
+
+export function updatePage(page, relativePath) {
+  return fetch(`http://localhost:3000/api/v1/pages/${relativePath}`, {
     method: 'PATCH',
     headers: {
       'Authorization': localStorage.getItem('jwt'),

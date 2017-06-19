@@ -19,16 +19,19 @@ const UserNav = (props) => {
         pointing
       >
         <Dropdown.Menu>
-          <Dropdown.Item>
-            <Link to='/account'>Your Profile</Link>
-          </Dropdown.Item>
-          <Dropdown.Item>
-            <Link to="/"
-              onClick={props.handleLogOut}
-            >
-              Logout
-            </Link>
-          </Dropdown.Item>
+          <Dropdown.Item
+            icon="address card"
+            content="Your Profile"
+            as={Link}
+            to="/account"
+          />
+          <Dropdown.Item
+            icon="log out"
+            content="Logout"
+            as={Link}
+            to="/"
+            onClick={props.handleLogOut}
+          />
         </Dropdown.Menu>
       </Dropdown>
       </Menu.Menu>

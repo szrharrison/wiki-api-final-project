@@ -1,4 +1,4 @@
-import { getPage, createPage, updatePage, deletePage } from '../api'
+import { getPage, createPage, updatePage, deletePage, createWikiPage } from '../api'
 
 export function toggleJson() {
   return {
@@ -44,7 +44,7 @@ function receivePage(data) {
     id: data.id,
     datasetType: data.data_type,
     relativePath: data.relative_path,
-    subPageSlugs: data.sub_page_slugs,
+    subPages: data.sub_pages,
     parentPath: data.parent,
     slug: data.slug,
     status: 'success',
@@ -52,11 +52,11 @@ function receivePage(data) {
   }
 }
 
-export function fetchUpdatePage(page) {
+export function fetchUpdatePage(page, relativePath) {
   return function (dispatch) {
     dispatch(requestUpdatePage())
 
-    return updatePage(page)
+    return updatePage(page, relativePath)
       .then( data => {
         if(data.error) {
           dispatch(fetchUpdatePageError(data.error))
@@ -90,7 +90,7 @@ function receiveUpdatePage(data) {
     id: data.id,
     datasetType: data.data_type,
     relativePath: data.relative_path,
-    subPageSlugs: data.sub_page_slugs,
+    subPages: data.sub_pages,
     parentPath: data.parent,
     slug: data.slug,
     status: 'success',
@@ -98,11 +98,11 @@ function receiveUpdatePage(data) {
   }
 }
 
-export function fetchCreatePage(page) {
+export function fetchCreatePage(page, relativePath) {
   return function (dispatch) {
     dispatch(requestCreatePage())
 
-    return createPage(page)
+    return createPage(page, relativePath)
       .then( data => {
         if(data.error) {
           dispatch(fetchCreatePageError(data.error))
@@ -136,9 +136,69 @@ function receiveCreatePage(data) {
     id: data.id,
     datasetType: data.data_type,
     relativePath: data.relative_path,
-    subPageSlugs: data.sub_page_slugs,
+    subPages: data.sub_pages,
     parentPath: data.parent,
     slug: data.slug,
+    status: 'success',
+    receivedAt: Date.now()
+  }
+}
+
+export function fetchCreateWikiPage(page, wikiSlug) {
+  return function (dispatch) {
+    dispatch(requestCreatePage())
+
+    return createWikiPage(page, wikiSlug)
+      .then( data => {
+        if(data.error) {
+          dispatch(fetchCreatePageError(data.error))
+        } else {
+          dispatch(receiveCreatePage(data))
+          return data
+        }
+      })
+  }
+}
+
+export function fetchDeletePage(page) {
+  return function (dispatch) {
+    dispatch(requestDeletePage())
+
+    return deletePage(page)
+      .then( data => {
+        if(data.error) {
+          dispatch(fetchDeletePageError(data.error))
+        } else {
+          dispatch(receiveDeletePage(data))
+          return data
+        }
+      })
+  }
+}
+
+function requestDeletePage() {
+  return {
+    type: 'REQUEST_DELETE_PAGE'
+  }
+}
+
+function fetchDeletePageError(error) {
+  return {
+    type: 'RECEIVE_DELETE_PAGE_ERROR',
+    status: 'error',
+    error: error,
+    receivedAt: Date.now()
+  }
+}
+
+function receiveDeletePage(data) {
+  return {
+    type: 'RECEIVE_DELETE_PAGE',
+    name: data.name,
+    id: data.id,
+    relativePath: data.relative_path,
+    subPages: data.sub_pages,
+    parentPath: data.parent,
     status: 'success',
     receivedAt: Date.now()
   }

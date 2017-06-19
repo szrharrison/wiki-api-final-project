@@ -2,45 +2,63 @@ import React from 'react'
 import { Menu, Segment, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 // import DatasetViewSwitcher from './datset/DatasetViewSwitcher'
-import { connect } from 'react-redux'
 
+import { fetchPage } from '../../actions/pageActions'
+import connectedWithRoutes from '../../hocs/connectedWithRoutes'
 import SubPageDropdown from './SubPageDropdown'
+import PageSidebarButton from './PageSidebarButton'
 import JsonEditorOptions from './dataset/JsonEditorOptions'
-import { fetchUpdateDataset } from '../../actions/datasetActions'
 
 function PageFormSidebar(props)  {
-  const jsonErrors = props.jsonStatus !== 'no errors'
+  const locationEnding = props.location.pathname.split('/').slice(-1)[0]
+  let sidebarOptions
+  if( locationEnding === 'dataset' || locationEnding === 'new') {
+    sidebarOptions = (
+      <div>
+        <Menu.Item
+          className="link"
+          name="view-page"
+          as={Link}
+          to={props.location.pathname.split('/').slice(0,-1).join('/')}
+        >
+          {/* <DatasetViewSwitcher /> */}
+        </Menu.Item>
+        <JsonEditorOptions />
+        <PageSidebarButton />
+      </div>
+    )
+  } else {
+    sidebarOptions = (
+      <Button
+        as={Link}
+        to={props.location.pathname + '/dataset'}
+        content='Edit Page'
+        icon='edit'
+        attached='bottom'
+      />
+    )
+  }
   return (
-    <Segment inverted color="black">
-      <Menu vertical inverted pointing secondary >
+    <Segment inverted color="black" className="page-sidebar">
+      <Menu vertical inverted pointing secondary fluid >
         <Menu.Header>
-          { props.parentPath? <Link to={'/' + props.parentPath}>{props.parentPath}</Link> : null }
+          { props.parentPath
+            ?
+              <Link
+                to={`/${props.username}/${props.parentPath}`}
+                onClick={() => props.fetchPage(props.parentPath)}
+              >
+                {props.parentPath}
+              </Link>
+            :
+              null
+          }
         </Menu.Header>
-        <Menu.Item name='page-name' active>
+        <Menu.Item className='page-name' active>
           { props.name }
         </Menu.Item>
         <SubPageDropdown />
-
-        <Menu.Item name='dataset-view'>
-          {/* <DatasetViewSwitcher /> */}
-        </Menu.Item>
-        <JsonEditorOptions
-          handleFontSize={props.handleFontSize}
-          handleBoolean={props.handleBoolean}
-          fontSize={props.fontSize}
-          basicAutocompletion={props.basicAutocompletion}
-          liveAutocompletion={props.liveAutocompletion}
-          snippets={props.snippets}
-        />
-        <Button
-          color={ !jsonErrors ? 'green' : 'red' }
-          disabled={jsonErrors}
-          content='Save'
-          icon='save'
-          attached='bottom'
-          label={jsonErrors ? { basic: true, color: 'red', pointing: 'left', content: 'syntax error' } : null }
-          onClick={() => props.updateDataset(props.dataset, props.relativePath)}
-        />
+        {sidebarOptions}
       </Menu>
     </Segment>
   )
@@ -50,19 +68,15 @@ function mapStateToProps(state, ownProps) {
   return {
     ...ownProps,
     username: state.auth.username,
-    name: state.pageForm.name,
-    slug: state.pageForm.slug,
-    parentPath: state.pageForm.parentPath,
-    jsonStatus: state.dataset.jsonStatus,
-    dataset: state.dataset.dataset,
-    relativePath: state.pageForm.relativePath
+    name: state.page.name,
+    parentPath: state.page.parentPath
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    updateDataset: (dataset, relativePath) => dispatch(fetchUpdateDataset(dataset, relativePath))
+    fetchPage: relativePath => dispatch(fetchPage(relativePath))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageFormSidebar)
+export default connectedWithRoutes(mapStateToProps, mapDispatchToProps)(PageFormSidebar)

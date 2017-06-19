@@ -15,6 +15,7 @@
 .inverted .ui.selection.visible.dropdown>.text:not(.default) {
   color: #fff;
 }
+
 .inverted .ui.dropdown .menu>.header {
   color: #fff;
   padding: 1rem 1.14285714rem 0.75rem;
@@ -70,10 +71,10 @@
   border: 1px solid #fff;
 }
 
-.inverted .ui.selection.dropdown .selected.item.addition .text {
+.inverted .ui.selection.dropdown .selected.item.addition .text, .inverted .ui.selection.dropdown .item.addition .text {
   width: 100%;
 }
-.inverted .ui.selection.dropdown .selected.item.addition .description {
+.inverted .ui.selection.dropdown .selected.item.addition .description, .inverted .ui.selection.dropdown .item.addition .description {
   float: right;
 }
 
@@ -87,4 +88,132 @@
 
 #json-editor {
   border: #fff solid 1px;
+}
+
+#slug-editor input {
+  background-color: #1B1C1D;
+  color: #fff;
+  border: 0;
+  padding: 0 2px 2px;
+  vertical-align: middle;
+}
+
+#slug-editor span {
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+  width: auto;
+  white-space: pre;
+  margin: 0 .85714286em 0 0;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 1em;
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  line-height: 1.21428571em;
+}
+
+#slug-editor {
+  position: relative;
+}
+
+#slug-editor input:focus {
+  border-bottom: 1px solid #fff;
+}
+
+#name-editor input {
+  font-size: 1.71428571rem;
+  background-color: #1B1C1D;
+  color: #fff;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid #fff;
+  margin-bottom: 15px;
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  line-height: 1.28571429em;
+  font-weight: 700;
+  padding: 0;
+}
+
+.page-sidebar .ui.vertical.menu .item.page-name {
+  border-bottom: 2px solid;
+  border-right: 0;
+  text-align: center;
+}
+.page-sidebar .ui.vertical.menu .item.page-name:hover {
+  background: #1B1C1D
+}
+
+.ui.secondary.inverted.pointing.menu .item {
+  color: rgba(255,255,255,.9)!important;
+}
+
+.ui.secondary.inverted.pointing.menu .item.link {
+  transition: .25s color ease;
+  color: rgba(127,200,200,.87)!important;
+}
+.ui.secondary.inverted.pointing.menu .item.link:hover {
+  color: rgba(127,200,200,.5)!important;
+}
+
+.dataset-editor.ui.inverted.segment {
+  min-height: 11rem;
+}
+
+.inverted .ui.list .list>a.item i.icon, .inverted .ui.list>a.item i.icon {
+  color: rgba(255,255,255,.4);
+  transition: .25s color ease .1s;
+}
+
+.page-sidebar .ui.menu .item.page-name {
+  user-select: auto;
+}
+
+.inverted .ui.list .list>a.item:hover i.icon, .inverted .ui.list>a.item:hover i.icon {
+  color: rgba(127,200,200,.25);
+}
+
+.ui.inverted.list .list>a.item:hover, .ui.inverted.list>a.item:hover {
+  color: rgba(127,200,200,.5);
+}
+
+.ui.inverted.list .list>.item:hover .description, .ui.inverted.list>.item:hover .description {
+  color: rgba(127,200,200,.5);
+}
+
+.ui.breadcrumb a {
+  color: rgba(127,200,200,.87)
+}
+.ui.breadcrumb a:hover {
+  color: rgba(127,200,200,.5)
+}
+
+.page-sidebar .ui.attached.bottom.button {
+  transition: .25s ease;
+}
+.page-sidebar .ui.attached.bottom.button:hover:not(.green):not(.red):not(.yellow) {
+  background-color: rgba(127,200,200,.5);
+}
+
+.inverted .ui.selection.dropdown .menu>.message {
+  color: #fff;
+}
+
+.ui.dropdown .menu>.item>.label,
+.ui.dropdown>.text>.label {
+    margin-top: 0;
+    margin-left: 0;
+    align-items: center;
+    left: auto;
+    display: flex;
+    margin-right: 0;
+    padding-left: 1em;
+    right: 0;
+    width: auto;
+    bottom: 0;
+    top: 0;
+    position: absolute;
+  }
+
+.ui.secondary.vertical.inverted.pointing.menu {
+  margin-right: 0;
 }
