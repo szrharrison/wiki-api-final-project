@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dropdown, Icon } from 'semantic-ui-react'
+import { Dropdown, Button } from 'semantic-ui-react'
 
 import connectedWithRoutes from '../../hocs/connectedWithRoutes'
 import { fetchDataset } from '../../actions/datasetActions'
@@ -35,10 +35,14 @@ const WikiPageDropdown = (props) => {
     ?
     null
     :
-    <Dropdown.Header onClick={() => props.history.push(`/${props.username}/${props.slug}/new`)}>
-      <Icon name="add"/>
-      Add a Page
-    </Dropdown.Header>
+    <Dropdown.Header
+      as={Button}
+      icon="add"
+      content="Add a Page"
+      attached="top"
+      inverted
+      onClick={() => props.history.push(`/${props.username}/${props.slug}/new`)}
+    />
 
   if(!!options) {
     return (

@@ -3,7 +3,7 @@ class PagesController < ApplicationController
 
   # GET /*relative_path
   def show
-    render json: @page
+    render json: @page, serializer: VisiblePageSerializer
   end
 
   private

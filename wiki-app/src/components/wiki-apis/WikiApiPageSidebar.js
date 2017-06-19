@@ -1,7 +1,7 @@
 import React from 'react'
 import { Menu, Segment } from 'semantic-ui-react'
-import { connect } from 'react-redux'
 
+import connectedWithRoutes from '../../hocs/connectedWithRoutes'
 import WikiPageDropdown from './WikiPageDropdown'
 import WikiPageSidebarButton from './WikiPageSidebarButton'
 
@@ -13,7 +13,12 @@ function WikiApiPageSidebar(props)  {
           { props.name }
         </Menu.Item>
         <WikiPageDropdown />
-        <WikiPageSidebarButton />
+        { props.location.pathname.endsWith('new')
+          ?
+            <WikiPageSidebarButton />
+          :
+          null
+        }
       </Menu>
     </Segment>
   )
@@ -28,4 +33,8 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-export default connect(mapStateToProps)(WikiApiPageSidebar)
+function mapDispatchToProps(dispatch, ownProps) {
+  return ownProps
+}
+
+export default connectedWithRoutes(mapStateToProps, mapDispatchToProps)(WikiApiPageSidebar)

@@ -187,11 +187,28 @@
   color: rgba(127,200,200,.5)
 }
 
-.page-sidebar .ui.attached.bottom.button {
+.page-sidebar .ui.attached.button {
   transition: .25s ease;
 }
-.page-sidebar .ui.attached.bottom.button:hover:not(.green):not(.red):not(.yellow) {
+.page-sidebar .ui.attached.button:focus,
+.page-sidebar .ui.attached.button:hover:not(.green):not(.red):not(.yellow) {
   background-color: rgba(127,200,200,.5);
+  border-left-width: 0;
+  border-right-width: 0;
+  border-top-width: 0;
+  box-shadow: 0 0 !important;
+}
+
+.inverted .ui.vertical.menu .dropdown.item .menu .ui.attached.button {
+  transition: .25s ease;
+}
+.inverted .ui.vertical.menu .dropdown.item .menu .ui.attached.button:focus,
+.inverted .ui.vertical.menu .dropdown.item .menu .ui.attached.button:hover:not(.green):not(.red):not(.yellow) {
+  background-color: rgba(127,200,200,.5);
+  border-left-width: 0;
+  border-right-width: 0;
+  border-top-width: 0;
+  box-shadow: 0 0 !important;
 }
 
 .inverted .ui.selection.dropdown .menu>.message {
