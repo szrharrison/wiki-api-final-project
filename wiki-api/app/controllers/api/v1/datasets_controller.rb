@@ -2,12 +2,12 @@ class Api::V1::DatasetsController < ApplicationController
   before_action :set_page_and_dataset
   before_action :authorize_account!
 
-  # GET api/v1/pages/*relative_path/dataset
+  # GET /api/v1/pages/*relative_path/dataset
   def show
     render json: @dataset
   end
 
-  # PATCH api/v1/pages/*relative_path/dataset
+  # PATCH /api/v1/pages/*relative_path/dataset
   def update
     if !dataset_params
       render json: {}

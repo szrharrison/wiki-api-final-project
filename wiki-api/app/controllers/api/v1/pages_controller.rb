@@ -4,7 +4,7 @@ class Api::V1::PagesController < ApplicationController
 
   # GET /api/v1/pages
   def index
-    pages = current_account.api_wikis.pages
+    pages = @current_account.api_wikis.pages
     render json: pages, each_serializer: WikiPageSerializer
   end
 
