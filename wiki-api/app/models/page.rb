@@ -10,6 +10,7 @@ class Page
 
   validates :name, :slug, :relative_path, presence: true
   validates :api_wiki, presence: true, if: :has_no_parent?
+  validates :parent_page, presence: true, if: :has_no_api_wiki?
   validates :relative_path, uniqueness: true
   validates :slug, exclusion: { in: [ "dataset", "new" ] }
 
@@ -17,9 +18,11 @@ class Page
   before_validation :set_relative_path
   before_validation :set_dataset
 
-  belongs_to :api_wiki, optional: true
-  belongs_to :parent_page, class_name: 'Page', inverse_of: 'sub_pages', optional: true
+  belongs_to :api_wiki, optional: true, index: true
+  belongs_to :parent_page, class_name: 'Page', inverse_of: 'sub_pages', optional: true, index: true
   embeds_one :dataset
+
+  index({ relative_path: 1 }, { unique: true })
 
   has_many :sub_pages, class_name: 'Page', inverse_of: 'parent_page', dependent: :destroy, validate: false, autosave: true do
     def slugs
@@ -29,18 +32,6 @@ class Page
     def get_by_slug(slug)
       @target.select do |page|
         page.slug == slug
-      end
-    end
-  end
-
-  has_many :images, validate: false, autosave: true do
-    def slugs
-      @target.map { |image| image.slug  }
-    end
-
-    def get_by_slug(slug)
-      @target.select do |image|
-        image.slug == slug
       end
     end
   end
@@ -56,6 +47,10 @@ class Page
 
   def has_no_parent?
     !parent_page?
+  end
+
+  def has_no_api_wiki?
+    !api_wiki?
   end
 
   def set_dataset

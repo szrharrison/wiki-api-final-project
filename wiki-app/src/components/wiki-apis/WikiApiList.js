@@ -24,6 +24,7 @@ function constructNestedPages(pages, accumulator = {}) {
 function recursivelyNestPage(page, accumulator) {
   const pageSlugsArray = page.pageSlugs.split('/')
   const topLevelSlug = pageSlugsArray[0]
+  console.log(accumulator, topLevelSlug)
   if(pageSlugsArray.length === 1) {
     accumulator[topLevelSlug] = page
   } else {
@@ -34,7 +35,7 @@ function recursivelyNestPage(page, accumulator) {
 }
 function WikiApiList(props) {
   const { wikiApi } = props
-  const pages = constructNestedPages(wikiApi.pages)
+  const pages = wikiApi.pages ? constructNestedPages(wikiApi.pages) : null
   return (
     <div>
       <Link

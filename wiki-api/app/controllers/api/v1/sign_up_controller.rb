@@ -1,6 +1,7 @@
 class Api::V1::SignUpController < ApplicationController
   before_action :authorize_account!, except: [:create]
 
+  # POST '/signup'
   def create
     if @account = Account.create(account_params)
       token = JWT.encode( {id: @account.id}, ENV['JWT_SECRET'], ENV['JWT_ALGORITHM'])
@@ -8,10 +9,6 @@ class Api::V1::SignUpController < ApplicationController
     else
       render json: { errors: @account.errors.full_messages }
     end
-  end
-
-  def show
-    render json: current_account
   end
 
   private

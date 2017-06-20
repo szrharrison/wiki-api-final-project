@@ -1,17 +1,21 @@
 class Api::V1::ApiWikisController < ApplicationController
   before_action :set_api_wiki, only: [:show, :update, :delete, :create_page]
   before_action :authorize_account!
+
+  # GET /api/v1/api_wikis
   def index
-    render json: current_account.api_wikis
+    render json: @current_account.api_wikis
   end
 
+  # GET /api/v1/api_wikis/:slug
   def show
     render json: @api_wiki
   end
 
+  # POST /api/v1/api_wikis
   def create
     @api_wiki = ApiWiki.new(api_wiki_params)
-    @api_wiki.account = current_account
+    @api_wiki.account = @current_account
     if @api_wiki.save
       render json: @api_wiki
     else
@@ -19,6 +23,7 @@ class Api::V1::ApiWikisController < ApplicationController
     end
   end
 
+  # POST /api/v1/api_wikis/:slug/pages
   def create_page
     api_wiki_page_params = params.require(:page).permit(:name)
     page = @api_wiki.pages.new(api_wiki_page_params)
@@ -30,7 +35,7 @@ class Api::V1::ApiWikisController < ApplicationController
     end
   end
 
-
+  # PATCH /api/v1/api_wikis/:slug
   def update
     @api_wiki.update(api_wiki_params)
     if @api_wiki.valid?
@@ -40,6 +45,7 @@ class Api::V1::ApiWikisController < ApplicationController
     end
   end
 
+  # DELETE /api/v1/api_wikis/:slug
   def delete
     @api_wiki.destroy
     if ApiWiki.find(@api_wiki.id)
