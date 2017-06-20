@@ -10,6 +10,8 @@ class ApiWiki
 
   validates :slug, uniqueness: true, exclusion: { in: [ "api" ] }
 
+  index({slug: 1}, {unique: true})
+
   has_many :pages, validate: false, autosave: true, dependent: :destroy do
     def slugs
       @target.map do |page|
@@ -24,7 +26,7 @@ class ApiWiki
     end
   end
 
-  belongs_to :account
+  belongs_to :account, index: true
 end
 
 # def combine_nested_pages(pages, all=[])

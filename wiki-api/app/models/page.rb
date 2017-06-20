@@ -19,8 +19,10 @@ class Page
   before_validation :set_dataset
 
   belongs_to :api_wiki, optional: true
-  belongs_to :parent_page, class_name: 'Page', inverse_of: 'sub_pages', optional: true
+  belongs_to :parent_page, class_name: 'Page', inverse_of: 'sub_pages', index: true, optional: true
   embeds_one :dataset
+
+  index({relative_path: 1}, {unique: true})
 
   has_many :sub_pages, class_name: 'Page', inverse_of: 'parent_page', dependent: :destroy, validate: false, autosave: true do
     def slugs

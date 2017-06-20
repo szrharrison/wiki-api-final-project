@@ -12,6 +12,8 @@ class Account
   validates :username, uniqueness: { message: "Username already exists"}, presence: true
   validates :password_digest, presence: true
 
+  index({username: 1}, {unique: true})
+
   before_validation :encrypt_password
 
   def authenticate(password)
