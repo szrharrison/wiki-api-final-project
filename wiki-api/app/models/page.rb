@@ -10,6 +10,7 @@ class Page
 
   validates :name, :slug, :relative_path, presence: true
   validates :api_wiki, presence: true, if: :has_no_parent?
+  validates :parent_page, presence: true, if: :has_no_api_wiki?
   validates :relative_path, uniqueness: true
   validates :slug, exclusion: { in: [ "dataset", "new" ] }
 
@@ -33,18 +34,6 @@ class Page
     end
   end
 
-  has_many :images, validate: false, autosave: true do
-    def slugs
-      @target.map { |image| image.slug  }
-    end
-
-    def get_by_slug(slug)
-      @target.select do |image|
-        image.slug == slug
-      end
-    end
-  end
-
   def set_relative_path
     if slug
       add_relative_path
@@ -56,6 +45,10 @@ class Page
 
   def has_no_parent?
     !parent_page?
+  end
+
+  def has_no_api_wiki?
+    !api_wiki?
   end
 
   def set_dataset
