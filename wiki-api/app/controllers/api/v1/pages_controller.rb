@@ -16,7 +16,6 @@ class Api::V1::PagesController < ApplicationController
   # POST /api/v1/pages
   def create
     page = @page.sub_pages.new(page_params)
-    page.set_slug
     if page.save
       render json: page
     else
@@ -27,7 +26,12 @@ class Api::V1::PagesController < ApplicationController
   # PATCH /api/v1/pages/*relative_path
   def update
     @page.update_attributes(page_params)
-
+    if @page.slug_changed?
+      @page.sub_pages.each do |sub_page|
+        sub_page.relative_path = @page.relative_path + '/' + sub_page.slug
+        sub_page.save
+      end
+    end
     if @page.save
       render json: @page
     else
