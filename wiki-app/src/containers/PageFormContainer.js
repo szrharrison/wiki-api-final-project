@@ -11,9 +11,11 @@ import NewDatasetView from '../components/page/newDataset/NewDatasetView'
 class PageFormContainer extends Component {
 
   componentDidMount() {
-    const slug = this.props.match.params.relativePath
-    if(slug.split('/').length > 1) {
-      this.props.fetchDataset(slug)
+    if(!this.props.location.pathname.endsWith('new')){
+      const slug = this.props.match.params.relativePath
+      if(slug.split('/').length > 1) {
+        this.props.fetchDataset(slug)
+      }
     }
   }
 

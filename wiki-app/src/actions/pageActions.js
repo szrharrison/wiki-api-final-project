@@ -41,11 +41,9 @@ function receivePage(data) {
   return {
     type: 'RECEIVE_PAGE',
     name: data.name,
-    id: data.id,
     datasetType: data.data_type,
     relativePath: data.relative_path,
     subPages: data.sub_pages,
-    parentPath: data.parent,
     slug: data.slug,
     status: 'success',
     receivedAt: Date.now()
@@ -87,11 +85,9 @@ function receiveUpdatePage(data) {
   return {
     type: 'RECEIVE_UPDATE_PAGE',
     name: data.name,
-    id: data.id,
     datasetType: data.data_type,
     relativePath: data.relative_path,
     subPages: data.sub_pages,
-    parentPath: data.parent,
     slug: data.slug,
     status: 'success',
     receivedAt: Date.now()
@@ -133,11 +129,9 @@ function receiveCreatePage(data) {
   return {
     type: 'RECEIVE_CREATE_PAGE',
     name: data.name,
-    id: data.id,
     datasetType: data.data_type,
     relativePath: data.relative_path,
     subPages: data.sub_pages,
-    parentPath: data.parent,
     slug: data.slug,
     status: 'success',
     receivedAt: Date.now()
@@ -195,10 +189,8 @@ function receiveDeletePage(data) {
   return {
     type: 'RECEIVE_DELETE_PAGE',
     name: data.name,
-    id: data.id,
     relativePath: data.relative_path,
     subPages: data.sub_pages,
-    parentPath: data.parent,
     status: 'success',
     receivedAt: Date.now()
   }

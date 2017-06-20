@@ -31,7 +31,6 @@ function pageReducer(state = initialState, action) {
         relativePath: action.relativePath,
         status: action.status,
         slug: action.slug,
-        parentPath: action.parentPath,
         subPages: action.subPages,
         isFetching: false
       }
@@ -55,7 +54,6 @@ function pageReducer(state = initialState, action) {
         relativePath: action.relativePath,
         status: action.status,
         slug: action.slug,
-        parentPath: action.parentPath,
         subPages: action.subPages,
         isUpdating: false
       }
@@ -79,7 +77,6 @@ function pageReducer(state = initialState, action) {
         relativePath: action.relativePath,
         status: action.status,
         slug: action.slug,
-        parentPath: action.parentPath,
         subPages: action.subPages,
         isCreating: false
       }
@@ -102,7 +99,6 @@ function pageReducer(state = initialState, action) {
         relativePath: action.relativePath,
         status: action.status,
         slug: action.slug,
-        parentPath: action.parentPath,
         subPages: action.subPages,
         isDeleting: false
       }

@@ -32,12 +32,16 @@ class PageContainer extends Component {
     let pagePath = nextProps.match.params.relativePath
     let pageSlug = pagePath.split('/')
     if(pagePath.endsWith('dataset') || pagePath.endsWith('new')) {
-      pageSlug = pageSlug.slice(0,-1)
+      pageSlug.pop()
     }
     if(pageSlug.length > 1) {
       nextProps.fetchPage(pageSlug.join('/'))
-      this.ShowComponent = PagePage
       this.ShowComponentSidebar = PageFormSidebar
+      if(pagePath.endsWith('new')) {
+        this.ShowComponent = PageFormContainer
+      } else {
+        this.ShowComponent = PagePage
+      }
     } else if(pagePath.endsWith('new')) {
       nextProps.fetchWikiApi(pageSlug[0])
       this.ShowComponent = PageFormContainer
