@@ -32,9 +32,8 @@ function DatasetView(props) {
   )
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
-    ...ownProps,
     jsonView: state.page.jsonView,
     isFetching: state.page.isFetching || state.dataset.isFetching
   }

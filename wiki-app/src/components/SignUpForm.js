@@ -86,16 +86,15 @@ class SignUpForm extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
-    ...ownProps,
     status: state.account.status,
     error: state.account.error,
     loading: state.account.isPosting
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     handleSignUp: (account, history) => {
       dispatch(fetchSignUp(account, history))

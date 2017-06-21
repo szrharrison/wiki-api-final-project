@@ -39,9 +39,8 @@ function PagePage(props) {
   )
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
-    ...ownProps,
     username: state.auth.username,
     name: state.page.name,
     subPages: state.page.subPages,
@@ -50,7 +49,7 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
+function mapDispatchToProps(dispatch) {
   return {
     fetchPage: relativePath => dispatch(fetchPage(relativePath))
   }

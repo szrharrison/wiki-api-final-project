@@ -13,14 +13,13 @@ const DatasetViewSwitcher = (props) => {
   )
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
-    ...ownProps,
     jsonView: state.page.jsonView
   }
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
+function mapDispatchToProps(dispatch) {
   return {
     handleChange: () => dispatch(toggleJson())
   }

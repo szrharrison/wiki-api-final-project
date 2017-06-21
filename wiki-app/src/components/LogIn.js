@@ -49,16 +49,15 @@ class LogIn extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
-    ...ownProps,
     status: state.auth.status,
     error: state.auth.error,
     loading: state.auth.isFetching
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     handleLogin: (account, history) => {
       dispatch(fetchLogIn(account, history))

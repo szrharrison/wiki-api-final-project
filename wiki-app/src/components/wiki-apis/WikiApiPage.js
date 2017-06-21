@@ -23,9 +23,8 @@ const WikiApiPage = (props) => {
   )
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
-    ...ownProps,
     username: state.auth.username,
     name: state.wikiApi.name,
     slug: state.wikiApi.slug,

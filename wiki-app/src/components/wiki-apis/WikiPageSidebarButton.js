@@ -23,9 +23,8 @@ function WikiPageSidebarButton(props)  {
   )
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
-    ...ownProps,
     username: state.auth.username,
     wikiSlug: state.wikiApi.slug,
     jsonStatus: state.dataset.jsonStatus,

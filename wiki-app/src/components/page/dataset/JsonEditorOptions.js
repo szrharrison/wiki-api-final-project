@@ -84,9 +84,8 @@ function JsonEditorOptions(props) {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
-    ...ownProps,
     snippets: state.pageForm.snippets,
     basicAutocompletion: state.pageForm.basicAutocompletion,
     liveAutocompletion: state.pageForm.liveAutocompletion,
@@ -96,7 +95,7 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
+function mapDispatchToProps(dispatch) {
   return {
     handleBoolean: name => dispatch(toggleBoolean(name)),
     handleFontSize: size => dispatch(setFontSize(size))

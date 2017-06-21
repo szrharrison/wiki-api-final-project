@@ -43,9 +43,8 @@ class AccountPage extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
-    ...ownProps,
     username: state.auth.username,
     firstName: state.auth.firstName,
     lastName: state.auth.lastName,

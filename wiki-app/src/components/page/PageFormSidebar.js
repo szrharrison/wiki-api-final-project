@@ -73,9 +73,8 @@ function PageFormSidebar(props)  {
   )
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
-    ...ownProps,
     username: state.auth.username,
     name: state.page.name
   }

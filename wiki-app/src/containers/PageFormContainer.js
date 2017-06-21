@@ -31,14 +31,10 @@ class PageFormContainer extends Component {
   }
 }
 
-function mapStateToProps( state, ownProps ) {
-  return ownProps
-}
-
-function mapDispatchToProps( dispatch, ownProps ) {
+function mapDispatchToProps( dispatch ) {
   return {
     fetchDataset: relativePath => dispatch(fetchDataset(relativePath))
   }
 }
 
-export default connectedWithRoutes(mapStateToProps, mapDispatchToProps)(PageFormContainer)
+export default connectedWithRoutes(null, mapDispatchToProps)(PageFormContainer)

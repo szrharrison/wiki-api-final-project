@@ -74,14 +74,13 @@ class WikiApiListItem extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
-    ...ownProps,
     username: state.auth.username
   }
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
+function mapDispatchToProps(dispatch) {
   return {
     fetchPage: relativePath => dispatch(fetchPage(relativePath))
   }

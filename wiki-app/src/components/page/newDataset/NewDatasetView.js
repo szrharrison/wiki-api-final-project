@@ -61,15 +61,14 @@ class NewDatasetView extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
-    ...ownProps,
     jsonView: state.page.jsonView,
     newName: state.pageForm.newName
   }
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
+function mapDispatchToProps(dispatch) {
   return {
     setNewSlug: slug => dispatch(setNewSlug(slug)),
     setNewName: name => dispatch(setNewName(name))

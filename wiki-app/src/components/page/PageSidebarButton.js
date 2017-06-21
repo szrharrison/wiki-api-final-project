@@ -35,9 +35,8 @@ function PageSidebarButton(props)  {
   )
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
-    ...ownProps,
     username: state.auth.username,
     slug: state.page.slug,
     newSlug: state.pageForm.newSlug,

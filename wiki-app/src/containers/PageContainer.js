@@ -76,15 +76,11 @@ class PageContainer extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
-  return ownProps
-}
-
-function mapDispatchToProps(dispatch, ownProps) {
+function mapDispatchToProps(dispatch) {
   return {
     fetchPage: relativePath => dispatch(fetchPage(relativePath)),
     fetchWikiApi: relativePath => dispatch(fetchWikiApi(relativePath))
   }
 }
 
-export default connectedWithRoutes(mapStateToProps, mapDispatchToProps)(isAuthenticated(PageContainer))
+export default connectedWithRoutes(null, mapDispatchToProps)(isAuthenticated(PageContainer))

@@ -18,7 +18,7 @@ class PageBreadcrumbs extends Component {
       this.input.style.width = inputSize + 'px' // set the width based on the width of the span
     }
   }
-  
+
   componentWillReceiveProps(nextProps) {
     if(!nextProps.newSlug && !this.props.newSlug && (this.props.slug || nextProps.slug)) {
       let slug
@@ -107,9 +107,8 @@ class PageBreadcrumbs extends Component {
   }
 }
 
-function mapStateToProps( state, ownProps ) {
+function mapStateToProps( state ) {
   return {
-    ...ownProps,
     username: state.auth.username,
     relativePath: state.page.relativePath,
     slug: state.page.slug,
@@ -118,7 +117,7 @@ function mapStateToProps( state, ownProps ) {
   }
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
+function mapDispatchToProps(dispatch) {
   return {
     fetchPageData: (relativePath) => {
       dispatch(fetchPage(relativePath))

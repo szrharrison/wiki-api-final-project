@@ -79,9 +79,8 @@ const WikiPageDropdown = (props) => {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
-    ...ownProps,
     username: state.auth.username,
     slug: state.wikiApi.slug,
     pages: state.wikiApi.pages,
@@ -89,7 +88,7 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
+function mapDispatchToProps(dispatch) {
   return {
     fetchPageData: relativePath => {
       dispatch(fetchDataset(relativePath))

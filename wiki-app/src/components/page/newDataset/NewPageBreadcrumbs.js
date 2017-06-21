@@ -75,9 +75,8 @@ class NewPagePageBreadcrumbs extends Component {
   }
 }
 
-function mapStateToProps( state, ownProps ) {
+function mapStateToProps( state ) {
   return {
-    ...ownProps,
     username: state.auth.username,
     relativePath: state.page.relativePath,
     wikiSlug: state.wikiApi.slug,
@@ -86,7 +85,7 @@ function mapStateToProps( state, ownProps ) {
   }
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
+function mapDispatchToProps(dispatch) {
   return {
     fetchPageData: relativePath => {
       dispatch(fetchPage(relativePath))

@@ -53,14 +53,13 @@ function WikiApiList(props) {
   )
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
-    ...ownProps,
     username: state.auth.username,
   }
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
+function mapDispatchToProps(dispatch) {
   return {
     fetchWikiApis: () => dispatch(fetchWikiApis()),
     fetchWikiApi: (slug) => dispatch(fetchWikiApi(slug))

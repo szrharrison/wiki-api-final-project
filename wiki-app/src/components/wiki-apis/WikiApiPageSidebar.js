@@ -39,17 +39,12 @@ function WikiApiPageSidebar(props)  {
   )
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
-    ...ownProps,
     username: state.auth.username,
     name: state.wikiApi.name,
     slug: state.wikiApi.slug,
   }
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
-  return ownProps
-}
-
-export default connectedWithRoutes(mapStateToProps, mapDispatchToProps)(WikiApiPageSidebar)
+export default connectedWithRoutes(mapStateToProps)(WikiApiPageSidebar)

@@ -54,9 +54,8 @@ class NewDatasetJsonEditor extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
-    ...ownProps,
     data: state.dataset.dataset,
     fontSize: state.pageForm.fontSize,
     basicAutocompletion: state.pageForm.basicAutocompletion,
@@ -67,7 +66,7 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
+function mapDispatchToProps(dispatch) {
   return {
     handleChange: (dataString) => dispatch(updateDataset(dataString))
   }

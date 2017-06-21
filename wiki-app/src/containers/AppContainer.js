@@ -36,9 +36,8 @@ class AppContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
-    ...ownProps,
     username: state.auth.username,
     firstName: state.auth.firstName,
     lastName: state.auth.lastName

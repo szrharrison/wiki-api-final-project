@@ -38,15 +38,14 @@ class PageTitle extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
-    ...ownProps,
     newName: state.pageForm.newName,
     name: state.page.name
   }
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
+function mapDispatchToProps(dispatch) {
   return {
     setNewName: name => dispatch(setNewName(name))
   }
