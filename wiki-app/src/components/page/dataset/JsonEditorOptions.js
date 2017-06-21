@@ -12,6 +12,7 @@ function JsonEditorOptions(props) {
     return (
       <div>
         <Dropdown
+          id="font-size"
           name="font-size"
           onChange={ (e, dropdown) => props.handleFontSize(dropdown.value) }
           value={fontSize}

@@ -7,6 +7,7 @@ import { fetchPage } from '../../actions/pageActions'
 
 const SubPageDropdown = (props) => {
   let options = null
+  const isNewPageForm = props.location.pathname.endsWith('new')
   if(props.subPages) {
     options = props.subPages.map( subPage => {
       const subPagePath = `${props.relativePath}/${subPage.slug}`
@@ -24,10 +25,7 @@ const SubPageDropdown = (props) => {
       }
     })
   }
-  const header = props.location.pathname.endsWith('new')
-    ?
-    null
-    :
+  const header = (
     <Dropdown.Header
       as={Button}
       icon="add"
@@ -36,37 +34,42 @@ const SubPageDropdown = (props) => {
       inverted
       onClick={() => props.history.push(`/${props.username}/${props.relativePath}/new`)}
     />
-
-  return (
-    <Dropdown
-      item
-      icon="folder"
-      text="Sub Pages"
-      header={header}
-      button
-      labeled
-      className="icon"
-      scrolling
-      noResultsMessage="No sub pages with that name or slug"
-      search={(options,search) => options.filter(
-        option => {
-          const lSearch = search.toLowerCase()
-          const lOptionText = option.text.toLowerCase()
-          const lOptionValue = option.value.toLowerCase()
-          return lOptionValue.includes(lSearch) || lOptionText.includes(lSearch)
-        }
-      )}
-      fluid
-      selection
-      selectOnBlur={false}
-      onChange={(e, dropdown) => {
-        props.fetchPageData(`${props.relativePath}/${dropdown.value}`)
-        props.history.push(`/${props.username}/${props.relativePath}/${dropdown.value}/dataset`)
-      }}
-      options={options}
-      minCharacters={0}
-    />
   )
+
+  if (isNewPageForm){
+    return null
+  } else {
+    return (
+      <Dropdown
+        item
+        icon="folder"
+        text="Sub Pages"
+        header={header}
+        button
+        labeled
+        className="icon"
+        scrolling
+        noResultsMessage="No sub pages with that name or slug"
+        search={(options,search) => options.filter(
+          option => {
+            const lSearch = search.toLowerCase()
+            const lOptionText = option.text.toLowerCase()
+            const lOptionValue = option.value.toLowerCase()
+            return lOptionValue.includes(lSearch) || lOptionText.includes(lSearch)
+          }
+        )}
+        fluid
+        selection
+        selectOnBlur={false}
+        onChange={(e, dropdown) => {
+          props.fetchPageData(`${props.relativePath}/${dropdown.value}`)
+          props.history.push(`/${props.username}/${props.relativePath}/${dropdown.value}/dataset`)
+        }}
+        options={options}
+        minCharacters={0}
+      />
+    )
+  }
 }
 
 function mapStateToProps(state, ownProps) {

@@ -1,24 +1,21 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { Form } from 'semantic-ui-react'
 
+import connectedWithRoutes from '../../../hocs/connectedWithRoutes'
 import { setNewName } from '../../../actions/pageFormActions'
 
 class PageTitle extends Component {
   componentDidMount() {
-    if(this.props.name) {
+    if(this.props.location.pathname.endsWith('dataset')) {
       this.props.setNewName(this.props.name)
+    } else {
+      this.props.setNewName('')
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if(!nextProps.newName && !this.props.newName && (this.props.name || nextProps.name)) {
-      let name
-      if(this.props.name) {
-        name = this.props.name
-      } else {
-        name = nextProps.name
-      }
+      const name = this.props.name ? this.props.name : nextProps.name
       this.props.setNewName(name)
     }
   }
@@ -55,4 +52,4 @@ function mapDispatchToProps(dispatch, ownProps) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageTitle)
+export default connectedWithRoutes(mapStateToProps, mapDispatchToProps)(PageTitle)

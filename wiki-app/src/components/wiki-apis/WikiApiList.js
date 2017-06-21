@@ -1,6 +1,5 @@
 import React from 'react'
 import { Accordion } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
 
 import connectedWithRoutes from '../../hocs/connectedWithRoutes'
 import { fetchWikiApis, fetchWikiApi } from '../../actions/wikiApiActions'
@@ -37,12 +36,6 @@ function WikiApiList(props) {
   const pages = constructNestedPages(wikiApi.pages)
   return (
     <div>
-      <Link
-        to={`/${props.username}/${wikiApi.slug}`}
-        onClick={() => props.fetchWikiApi(wikiApi.slug)}
-      >
-        {wikiApi.name}
-      </Link>
       { pages && Object.keys(pages).length
         ?
           <Accordion fluid>

@@ -41,14 +41,14 @@
   color: rgba(255, 255, 255, 0.4);
 }
 
-.inverted .ui.menu .ui.dropdown .menu>.item:hover, .inverted .ui.menu .ui.dropdown .menu>.selected.item {
+.inverted .ui.menu .ui.dropdown .menu>.item:hover,
+.inverted .ui.menu .ui.dropdown .menu>.selected.item {
   color: #fff!important;
   background-color: rgba(255, 255, 255, 0.05)!important;
 }
 
-.inverted .ui.menu .ui.dropdown .menu>.item:hover {
-  color: #fff!important;
-  background-color: rgba(255, 255, 255, 0.2)!important;
+.inverted .ui.menu .ui.dropdown .menu>.active.item {
+  background-color: rgba(255, 255, 255, 0.5)!important;
 }
 
 .inverted .menu .ui.slider.checkbox .box, .inverted .menu .ui.slider.checkbox label {
@@ -143,6 +143,10 @@
   background: #1B1C1D
 }
 
+.ui.secondary.inverted.pointing.menu .item.search.selection {
+  margin-top: 10px;
+}
+
 .ui.secondary.inverted.pointing.menu .item {
   color: rgba(255,255,255,.9)!important;
 }
@@ -199,9 +203,14 @@
   box-shadow: 0 0 !important;
 }
 
+.inverted .ui.vertical.menu #font-size .menu {
+  width: 100px;
+}
+
 .inverted .ui.vertical.menu .dropdown.item .menu .ui.attached.button {
   transition: .25s ease;
 }
+
 .inverted .ui.vertical.menu .dropdown.item .menu .ui.attached.button:focus,
 .inverted .ui.vertical.menu .dropdown.item .menu .ui.attached.button:hover:not(.green):not(.red):not(.yellow) {
   background-color: rgba(127,200,200,.5);

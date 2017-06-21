@@ -14,17 +14,23 @@ function PageFormSidebar(props)  {
   let parentPath
   let sidebarOptions
   if( locationEnding === 'dataset' || locationEnding === 'new') {
-    parentPath = props.location.pathname.split('/').slice(2,-1).join('/')
+    parentPath = props.location.pathname.split('/').slice(2,-2).join('/')
     sidebarOptions = (
       <div>
-        <Menu.Item
-          className="link"
-          name="view-page"
-          as={Link}
-          to={props.location.pathname.split('/').slice(0,-2).join('/')}
-        >
-          {/* <DatasetViewSwitcher /> */}
-        </Menu.Item>
+        { locationEnding === 'dataset'
+          ?
+            <Menu.Item
+              className="link"
+              name="view-page"
+              as={Link}
+              to={props.location.pathname.split('/').slice(0,-1).join('/')}
+            >
+              View Page
+            </Menu.Item>
+          :
+          null
+        }
+        {/* <DatasetViewSwitcher /> */}
         <JsonEditorOptions />
         <PageSidebarButton />
       </div>

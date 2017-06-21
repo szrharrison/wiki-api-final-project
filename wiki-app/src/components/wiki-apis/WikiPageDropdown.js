@@ -7,6 +7,7 @@ import { fetchPage } from '../../actions/pageActions'
 
 const WikiPageDropdown = (props) => {
   let options = null
+  const newPageForm = props.location.pathname.endsWith('new')
   if(props.pages) {
     options = props.pages.reduce( (acc, page) => {
       const slugPath = page.relative_path.split('/')
@@ -31,10 +32,7 @@ const WikiPageDropdown = (props) => {
       return acc
     }, [])
   }
-  const header = props.location.pathname.endsWith('new')
-    ?
-    null
-    :
+  const header = (
     <Dropdown.Header
       as={Button}
       icon="add"
@@ -43,8 +41,9 @@ const WikiPageDropdown = (props) => {
       inverted
       onClick={() => props.history.push(`/${props.username}/${props.slug}/new`)}
     />
+  )
 
-  if(!!options) {
+  if(!!options && !newPageForm) {
     return (
       <Dropdown
         item
