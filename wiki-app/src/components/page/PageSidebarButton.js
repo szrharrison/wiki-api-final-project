@@ -9,6 +9,7 @@ function PageSidebarButton(props)  {
   const errors = props.jsonStatus !== 'no errors'
   const locationArray = props.match.params.relativePath.split('/')
   const relativePath = locationArray.slice(0, -1).join('/')
+  const parentPath = locationArray.slice(0, -2).join('/')
   const locationEnding = locationArray.slice(-1)[0]
   const locationSlug = locationArray.slice(-2)[0]
   const errorLabelProps = { basic: true, color: 'red', pointing: 'left', content: 'syntax error' }
@@ -25,10 +26,11 @@ function PageSidebarButton(props)  {
           props.updateDataset(props.dataset, relativePath)
           props.updatePage({name: props.newName, slug: props.newSlug}, relativePath)
           if(locationSlug !== props.newSlug) {
-            props.history.push(`/${props.username}/${props.parentPath}/${props.newSlug}/${locationEnding}`)
+            props.history.push(`/${props.username}/${parentPath}/${props.newSlug}/${locationEnding}`)
           }
         } else if(locationEnding === 'new') {
           props.createPage({ name: props.newName}, relativePath)
+          props.history.push(`/${props.username}/${relativePath}/${props.newSlug}`)
         }
       }}
     />
@@ -40,7 +42,6 @@ function mapStateToProps(state) {
     username: state.auth.username,
     slug: state.page.slug,
     newSlug: state.pageForm.newSlug,
-    parentPath: state.page.parentPath,
     jsonStatus: state.dataset.jsonStatus,
     newName: state.pageForm.newName,
     dataset: state.dataset.dataset

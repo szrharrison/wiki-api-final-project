@@ -38,7 +38,7 @@ function WikiApiList(props) {
     <div>
       { pages && Object.keys(pages).length
         ?
-          <Accordion fluid>
+          <Accordion inverted>
             {Object.keys(pages).map( key => (
               <WikiApiListItem
                 key={`base-list-${key}`}

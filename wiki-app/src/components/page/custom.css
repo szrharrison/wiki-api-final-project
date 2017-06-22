@@ -94,6 +94,8 @@
   background-color: #1B1C1D;
   color: #fff;
   border: 0;
+  border-radius: 0;
+  border-bottom: 1px dashed #fff;
   padding: 0 2px 2px;
   vertical-align: middle;
 }
@@ -114,10 +116,6 @@
 
 #slug-editor {
   position: relative;
-}
-
-#slug-editor input:focus {
-  border-bottom: 1px solid #fff;
 }
 
 #name-editor input {
@@ -242,4 +240,8 @@
 
 .ui.secondary.vertical.inverted.pointing.menu {
   margin-right: 0;
+}
+
+.ui.dropdown .menu>.item>.label, .ui.dropdown>.text>.label {
+  min-width: 60px;
 }

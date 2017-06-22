@@ -17,7 +17,7 @@ const ApiNav = (props) => {
         }
       }}
       loading={props.apisLoading}
-      className='link item'
+      className='item'
     >
       <Dropdown.Menu>
         {

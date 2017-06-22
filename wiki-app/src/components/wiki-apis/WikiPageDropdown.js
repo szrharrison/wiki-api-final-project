@@ -47,6 +47,7 @@ const WikiPageDropdown = (props) => {
     return (
       <Dropdown
         item
+        id="page-sidebar-dropdown"
         icon="folder"
         text="Pages"
         header={header}

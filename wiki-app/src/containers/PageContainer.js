@@ -17,6 +17,7 @@ class PageContainer extends Component {
 
   componentDidMount() {
     let pagePath = this.props.match.params.relativePath
+    console.log(pagePath.split('/').length > 1)
     if( pagePath.split('/').length > 1 ) {
       this.props.fetchPage(pagePath)
       this.ShowComponent = PagePage
@@ -25,6 +26,7 @@ class PageContainer extends Component {
       this.props.fetchWikiApi(pagePath)
       this.ShowComponent = WikiApiPage
       this.ShowComponentSidebar = WikiApiPageSidebar
+      console.log('rendering WikiApiPage')
     }
   }
 
@@ -34,7 +36,7 @@ class PageContainer extends Component {
     if(pagePath.endsWith('dataset') || pagePath.endsWith('new')) {
       pageSlug.pop()
     }
-    if(pageSlug.length > 1) {
+    if(pageSlug.length > 1 && !nextProps.isCreating) {
       nextProps.fetchPage(pageSlug.join('/'))
       this.ShowComponentSidebar = PageFormSidebar
       if(pagePath.endsWith('new')) {
@@ -68,11 +70,17 @@ class PageContainer extends Component {
           <Switch>
             <Route exact path="/:username/:relativePath+/new" component={this.ShowComponent} />
             <Route exact path="/:username/:relativePath+/dataset" component={PageFormContainer} />
-            <Route exact path='/:username/:relativePath+' component={this.ShowComponent} />
+            <Route path='/:username/:relativePath+' component={this.ShowComponent} />
           </Switch>
         </Grid.Column>
       </Grid>
     )
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    isCreating: state.page.isCreating
   }
 }
 
@@ -83,4 +91,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connectedWithRoutes(null, mapDispatchToProps)(isAuthenticated(PageContainer))
+export default connectedWithRoutes(mapStateToProps, mapDispatchToProps)(isAuthenticated(PageContainer))

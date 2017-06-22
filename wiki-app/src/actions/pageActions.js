@@ -154,11 +154,11 @@ export function fetchCreateWikiPage(page, wikiSlug) {
   }
 }
 
-export function fetchDeletePage(page) {
+export function fetchDeletePage(relativePath) {
   return function (dispatch) {
     dispatch(requestDeletePage())
 
-    return deletePage(page)
+    return deletePage(relativePath)
       .then( data => {
         if(data.error) {
           dispatch(fetchDeletePageError(data.error))

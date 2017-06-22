@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Grid, Header, Dimmer, Loader, Segment, List } from 'semantic-ui-react'
-import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { fetchWikiApis } from '../actions/wikiApiActions'
+import { fetchWikiApis, fetchWikiApi } from '../actions/wikiApiActions'
 import isAuthenticated from '../hocs/isAuthenticated'
+import connectedWithRoutes from '../hocs/connectedWithRoutes'
 
 class AccountPage extends Component {
   componentDidMount() {
@@ -13,32 +13,34 @@ class AccountPage extends Component {
 
   render() {
     return (
-      <Grid>
-        <Grid.Row centered>
-          <Header as='h2' content={`Welcome ${this.props.firstName} ${this.props.lastName}`} />
-        </Grid.Row>
-        <Grid.Row centered>
-          { this.props.areFetching || !this.props.wikiApis
-            ?
-              <Dimmer active>
-                <Loader>Loading</Loader>
-              </Dimmer>
-            :
+        <Grid inverted>
+          <Grid.Row centered>
+            <Header as='h2' content={`Welcome ${this.props.firstName} ${this.props.lastName}`} />
+          </Grid.Row>
+          <Grid.Row centered columns='equal' divided>
             <Segment color="black" inverted>
-              <List>
-                {this.props.wikiApis.map( wikiApi => (
-                  <List.Item
-                    key={wikiApi.slug}
-                    as={Link}
-                    to={`/${this.props.username}/${wikiApi.slug}`}
-                    content={wikiApi.name}
-                  />
-                ))}
-              </List>
+              <Header as={'h3'} content='Your Wiki Apis:' />
+              { this.props.areFetching || !this.props.wikiApis
+                ?
+                  <Dimmer active>
+                    <Loader>Loading</Loader>
+                  </Dimmer>
+                :
+                <List>
+                  {this.props.wikiApis.map( wikiApi => (
+                    <List.Item
+                      key={wikiApi.slug}
+                      as={Link}
+                      to={`/${this.props.username}/${wikiApi.slug}`}
+                      content={wikiApi.name}
+                      onClick={() => this.props.fetchWikiApi(wikiApi.slug)}
+                    />
+                  ))}
+                </List>
+              }
             </Segment>
-          }
-        </Grid.Row>
-      </Grid>
+            </Grid.Row>
+        </Grid>
     )
   }
 }
@@ -55,8 +57,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchWikiApis: () => dispatch(fetchWikiApis())
+    fetchWikiApis: () => dispatch(fetchWikiApis()),
+    fetchWikiApi: slug => dispatch(fetchWikiApi(slug))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(isAuthenticated(AccountPage))
+export default connectedWithRoutes(mapStateToProps, mapDispatchToProps)(isAuthenticated(AccountPage))

@@ -12,3 +12,28 @@ input::selection, textarea::selection {
   background-color: rgba(127,200,200,.87);
   color: rgba(0,0,0,.87);
 }
+
+.ui.accordion .accordion {
+  margin-top: 0;
+  margin-left: 1.75rem;
+}
+
+.ui.accordion:not(.styled) .title~.content:not(.ui), .ui.inverted.accordion .title:not(.ui) {
+  padding: 0;
+}
+
+.ui.inverted.accordion .title:not(.ui)>.item>.extra {
+  margin-left: calc(1.18em + .25rem);
+}
+
+.ui.vertical.menu #page-sidebar-dropdown .menu {
+  width: 200%!important;
+}
+
+.ui.padded.grid {
+  margin: 0!important;
+}
+
+.ui[class*="vertically divided"].grid>.row>.column {
+  margin: 0;
+}

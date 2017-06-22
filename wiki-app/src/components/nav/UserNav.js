@@ -15,7 +15,7 @@ const UserNav = (props) => {
     <Menu.Menu position="right">
       <Dropdown
         trigger={trigger}
-        className="link item"
+        className="item"
         pointing
       >
         <Dropdown.Menu>

@@ -42,6 +42,7 @@ const SubPageDropdown = (props) => {
     return (
       <Dropdown
         item
+        id="page-sidebar-dropdown"
         icon="folder"
         text="Sub Pages"
         header={header}

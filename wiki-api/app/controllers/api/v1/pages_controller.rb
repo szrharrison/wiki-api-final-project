@@ -41,11 +41,11 @@ class Api::V1::PagesController < ApplicationController
 
   # DELETE /api/v1/pages/*relative_path
   def delete
-    @page.destroy
     if Page.find(@page.id)
-      render json: { error: 'Sorry, we were unsuccessful in deleting your page' }
-    else
+      @page.destroy
       render json: { message: 'Successfully deleted.' }
+    else
+      render json: { error: 'Sorry, we were unsuccessful in deleting your page' }
     end
   end
 

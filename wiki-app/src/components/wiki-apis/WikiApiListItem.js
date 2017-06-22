@@ -56,7 +56,7 @@ class WikiApiListItem extends Component {
         </Accordion.Title>
         { Object.keys(page.subPages).length
           ?
-            <Accordion.Content active={active} style={{marginLeft: '1.75rem'}}>
+            <Accordion.Content active={active}>
               <Accordion>
                 {Object.keys(page.subPages).map( key => (
                   <WikiApiListItem

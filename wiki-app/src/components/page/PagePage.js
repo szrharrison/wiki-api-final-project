@@ -1,42 +1,111 @@
-import React from 'react'
-import { Header, List, Segment } from 'semantic-ui-react'
+import React, { Component } from 'react'
+import { Header, List, Grid, Button, Modal, Message } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-import { fetchPage } from '../../actions/pageActions'
+import { fetchPage, fetchDeletePage } from '../../actions/pageActions'
 import connectedWithRoutes from '../../hocs/connectedWithRoutes'
 
-function PagePage(props) {
-  let pages = null
-  if(props.subPages) {
-    pages = props.subPages.map( subPage => (
-      <List.Item
-        key={subPage.slug}
-        as={Link}
-        to={`/${props.username}/${props.relativePath}/${subPage.slug}`}
-        onClick={() => props.fetchPage(`${props.relativePath}/${subPage.slug}`)}
-      >
-        <List.Icon name="file" verticalAlign="middle" />
-        <List.Content>
-          <List.Header>{subPage.name}</List.Header>
-          <List.Description>/{subPage.slug}</List.Description>
-        </List.Content>
-      </List.Item>
-    ))
+class PagePage extends Component {
+  state = {
+    open: false
   }
-  return (
-    <Segment inverted>
-      <Header as="h2" content={props.name} />
-      <List inverted animated verticalAlign="middle">
-        <List.Item as={Link} to={`/${props.username}/${props.relativePath}/new`}>
-          <List.Icon name='add' />
+
+  showModal = () => this.setState({ open: true })
+
+  closeModal = () => this.setState({ open: false })
+
+  deletePage = () => {
+    this.setState({ open: false })
+    this.props.deletePage(this.props.relativePath)
+    this.props.history.push(`/${this.props.username}/${this.props.relativePath.split('/').slice(0,-1).join('/')}`)
+  }
+
+  render() {
+    let pages = null
+    if(this.props.subPages) {
+      pages = this.props.subPages.map( subPage => (
+        <List.Item
+          key={subPage.slug}
+          as={Link}
+          to={`/${this.props.username}/${this.props.relativePath}/${subPage.slug}`}
+          onClick={() => this.props.fetchPage(`${this.props.relativePath}/${subPage.slug}`)}
+        >
+          <List.Icon name="file" verticalAlign="middle" />
           <List.Content>
-            Add a page
+            <List.Header>{subPage.name}</List.Header>
+            <List.Description>/{subPage.slug}</List.Description>
           </List.Content>
         </List.Item>
-        {pages}
-      </List>
-    </Segment>
-  )
+        ))
+      }
+      return (
+        <Grid inverted divided="vertically" padded>
+          <Grid.Row  color="black" verticalAlign="middle" columns="equal">
+            <Grid.Column>
+              <Header inverted as="h2" content={this.props.name} />
+            </Grid.Column>
+            <Grid.Column width={3}>
+              <Modal
+                dimmer="blurring"
+                closeIcon="close"
+                trigger={
+                  <Button
+                    color="red"
+                    icon="trash"
+                    content="Delete"
+                    onClick={this.showModal}
+                  />
+                }
+                onClose={this.closeModal}
+                open={this.state.open}
+                basic
+              >
+                <Modal.Header>
+                  {`Are you sure you want to delete ${this.props.name}?`}
+                </Modal.Header>
+                <Modal.Content>
+                  <Modal.Description>
+                    <Message
+                      warning
+                      header="Deleting this page will also delete all of its sub pages."
+                      content={`When you delete ${this.props.name}, all pages that are nested below it will be deleted as well.`}
+                    />
+                  </Modal.Description>
+                </Modal.Content>
+                <Modal.Actions>
+                  <Button
+                    basic
+                    inverted
+                    onClick={this.closeModal}
+                    content="Cancel"
+                  />
+                  <Button
+                    inverted
+                    color="red"
+                    icon="trash"
+                    onClick={this.deletePage}
+                    content="Delete This Page"
+                  />
+                </Modal.Actions>
+              </Modal>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row color="black">
+            <Grid.Column>
+              <List inverted animated verticalAlign="middle">
+                <List.Item as={Link} to={`/${this.props.username}/${this.props.relativePath}/new`}>
+                  <List.Icon name='add' />
+                  <List.Content>
+                    Add a page
+                  </List.Content>
+                </List.Item>
+                {pages}
+              </List>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+    )
+  }
 }
 
 function mapStateToProps(state) {
@@ -51,7 +120,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchPage: relativePath => dispatch(fetchPage(relativePath))
+    fetchPage: relativePath => dispatch(fetchPage(relativePath)),
+    deletePage: relativePath => dispatch(fetchDeletePage(relativePath))
   }
 }
 
