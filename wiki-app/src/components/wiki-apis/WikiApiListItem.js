@@ -49,7 +49,7 @@ class WikiApiListItem extends Component {
                 to={`/${username}/${page.relative_path}`}
                 onClick={() => this.props.fetchPage(page.relative_path)}
               >
-                {page.relative_path}
+                <Icon name='linkify' />{' ' + page.relative_path}
               </Link>
             </Item.Extra>
           </Item>

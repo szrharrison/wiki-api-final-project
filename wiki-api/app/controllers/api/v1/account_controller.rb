@@ -1,18 +1,12 @@
 class Api::V1::AccountController < ApplicationController
   before_action :authorize_account!, except: [:create]
-  before_action :set_account, only: [:update]
 
   # POST '/signup'
   def create
     begin
       account = Account.find_by(username: params[:account][:username])
     rescue Mongoid::Errors::DocumentNotFound
-      if @account = Account.create(
-            username: params[:account][:username],
-            password: params[:account][:password],
-            first_name: params[:account][:last_name],
-            last_name: params[:account][:last_name]
-          )
+      if @account = Account.create(account_params)
         token = JWT.encode( {id: @account.id}, ENV['JWT_SECRET'], ENV['JWT_ALGORITHM'])
         render json: {
           account: {
@@ -31,22 +25,17 @@ class Api::V1::AccountController < ApplicationController
   end
 
   def update
-    @account.update(
-      username: params[:account][:username],
-      first_name: params[:account][:last_name],
-      last_name: params[:account][:last_name]
-    )
+    @current_account.update(account_params)
 
-    if @account.valid?
-      render json: @account
+    if @current_account.save
+      render json: @current_account
     else
-      render json: { error: @account.errors.full_messages }
+      render json: { error: @current_account.errors.full_messages }
     end
   end
 
   private
-
-  def set_account
-    @account = Account.find_by(username: params[:username])
+  def account_params
+    params.require(:account).permit(:username, :password, :first_name, :last_name)
   end
 end

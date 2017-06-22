@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Header, List, Grid, Button, Modal, Message } from 'semantic-ui-react'
+import { Header, List, Grid, Button, Modal, Message, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 import { fetchPage, fetchDeletePage } from '../../actions/pageActions'
@@ -33,7 +33,7 @@ class PagePage extends Component {
           <List.Icon name="file" verticalAlign="middle" />
           <List.Content>
             <List.Header>{subPage.name}</List.Header>
-            <List.Description>/{subPage.slug}</List.Description>
+            <List.Description><Icon name='linkify'/>{'/ ' + subPage.slug}</List.Description>
           </List.Content>
         </List.Item>
         ))
@@ -92,7 +92,7 @@ class PagePage extends Component {
           </Grid.Row>
           <Grid.Row color="black">
             <Grid.Column>
-              <List inverted animated verticalAlign="middle">
+              <List inverted animated selection verticalAlign="middle">
                 <List.Item as={Link} to={`/${this.props.username}/${this.props.relativePath}/new`}>
                   <List.Icon name='add' />
                   <List.Content>

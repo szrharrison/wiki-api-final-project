@@ -17,7 +17,6 @@ class AccountPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('have user info:', !nextProps.newUserInfo.firstName && !this.props.newUserInfo.firstName && (!!this.props.userInfo.firstName || !!nextProps.userInfo.firstName))
     if(!nextProps.newUserInfo.firstName && !this.props.newUserInfo.firstName && (!!this.props.userInfo.firstName || !!nextProps.userInfo.firstName)) {
       const userInfo = !!this.props.userInfo.firstName ? this.props.userInfo : nextProps.userInfo
       this.props.setNewUserValues(userInfo)
@@ -54,11 +53,18 @@ class AccountPage extends Component {
                     <Loader>Loading</Loader>
                   </Dimmer>
                 :
-                <List>
+                <List selection inverted animated>
+                  {/* <List.Item
+                    as={Link}
+                    to={`/${username}/new`}
+                    content="Create a New Wiki"
+                    icon="add"
+                  /> */}
                   {this.props.wikiApis.map( wikiApi => (
                     <List.Item
                       key={wikiApi.slug}
                       as={Link}
+                      icon="linkify"
                       to={`/${username}/${wikiApi.slug}`}
                       content={wikiApi.name}
                       onClick={() => this.props.fetchWikiApi(wikiApi.slug)}
@@ -94,7 +100,7 @@ class AccountPage extends Component {
                   name='username' value={newUserInfo.username}
                   onChange={this.handleChange}
                 />
-                <Form.Button content='Update User Info'/>
+                <Form.Button icon='save' color='green' content='Update User Info'/>
               </Form>
             </Grid.Column>
           </Grid.Row>

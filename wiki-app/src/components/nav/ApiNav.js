@@ -16,8 +16,9 @@ const ApiNav = (props) => {
           props.apisClick()
         }
       }}
+      disabled={props.apisLoading}
       loading={props.apisLoading}
-      className='item'
+      item
     >
       <Dropdown.Menu>
         {

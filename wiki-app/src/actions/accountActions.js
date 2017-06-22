@@ -102,18 +102,18 @@ function receiveUpdateUser(data) {
       type: 'account.RECEIVE_UPDATE_USER',
       status: 'success',
       userInfo: {
-        username: data.account.username,
-        firstName: data.account.first_name,
-        lastName: data.account.last_name
+        username: data.username,
+        firstName: data.first_name,
+        lastName: data.last_name
       },
       receivedAt: Date.now()
     })
     dispatch({
       type: 'auth.RECEIVE_UPDATE_USER',
       userInfo: {
-        username: data.account.username,
-        firstName: data.account.first_name,
-        lastName: data.account.last_name
+        username: data.username,
+        firstName: data.first_name,
+        lastName: data.last_name
       }
     })
   }

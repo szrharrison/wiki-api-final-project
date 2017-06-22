@@ -18,7 +18,7 @@ const SubPageDropdown = (props) => {
         text: subPage.name,
         label: {
           content:`/${subPage.slug}`,
-          tag: true,
+          icon: 'linkify',
           color: 'grey'
         },
         value: subPage.slug

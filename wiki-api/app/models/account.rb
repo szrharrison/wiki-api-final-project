@@ -30,7 +30,9 @@ class Account
   end
 
   def encrypt_password
-    self.password_digest = Password.create(@password)
+    if @password
+      self.password_digest = Password.create(@password)
+    end
   end
 
   def name
