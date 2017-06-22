@@ -76,7 +76,7 @@ class WikiApiListItem extends Component {
 
 function mapStateToProps(state) {
   return {
-    username: state.auth.username
+    username: state.auth.userInfo.username
   }
 }
 

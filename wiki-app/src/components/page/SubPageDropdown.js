@@ -75,7 +75,7 @@ const SubPageDropdown = (props) => {
 
 function mapStateToProps(state) {
   return {
-    username: state.auth.username,
+    username: state.auth.userInfo.username,
     relativePath: state.page.relativePath,
     subPages: state.page.subPages,
     name: state.page.name

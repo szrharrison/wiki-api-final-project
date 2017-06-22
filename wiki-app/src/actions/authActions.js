@@ -2,7 +2,7 @@ import { logIn, refreshAccount } from '../api'
 
 export function logInAction(username) {
   return {
-    type: 'LOG_IN',
+    type: 'auth.LOG_IN',
     username: username
   }
 }
@@ -11,7 +11,7 @@ export function logOut() {
   return function (dispatch) {
     localStorage.clear()
     dispatch({
-      type: 'LOG_OUT'
+      type: 'auth.LOG_OUT'
     })
   }
 }
@@ -36,7 +36,7 @@ export function fetchLogIn(account, history) {
 
 export function logInError( error ) {
   return {
-    type: 'RECEIVE_LOG_IN_ERROR',
+    type: 'auth.RECEIVE_LOG_IN_ERROR',
     status: 'error',
     error,
     receivedAt: Date.now()
@@ -45,7 +45,7 @@ export function logInError( error ) {
 
 export function requestLogIn() {
   return {
-    type: 'REQUEST_LOG_IN'
+    type: 'auth.REQUEST_LOG_IN'
   }
 }
 
@@ -55,10 +55,12 @@ export function receiveLogIn( data ) {
     localStorage.setItem('user', data.account.username)
     dispatch(logInAction(data.account.username))
     dispatch({
-      type: 'RECEIVE_LOG_IN',
-      username: data.account.username,
-      firstName: data.account.first_name,
-      lastName: data.account.last_name,
+      type: 'auth.RECEIVE_LOG_IN',
+      userInfo: {
+        username: data.account.username,
+        firstName: data.account.first_name,
+        lastName: data.account.last_name
+      },
       status: 'success',
       receivedAt: Date.now()
     })
@@ -84,13 +86,13 @@ export function fetchAccountRefresh() {
 
 export function requestAccountRefresh() {
   return {
-    type: 'REQUEST_ACCOUNT_REFRESH'
+    type: 'auth.REQUEST_ACCOUNT_REFRESH'
   }
 }
 
 export function accountRefreshError( error ) {
   return {
-    type: 'RECEIVE_ACCOUNT_REFRESH_ERROR',
+    type: 'auth.RECEIVE_ACCOUNT_REFRESH_ERROR',
     status: 'error',
     error,
     receivedAt: Date.now()
@@ -101,11 +103,13 @@ export function receiveAccountRefresh( data ) {
   return function (dispatch) {
     dispatch(logInAction(data.username))
     dispatch({
-      type: 'RECEIVE_ACCOUNT_REFRESH',
+      type: 'auth.RECEIVE_ACCOUNT_REFRESH',
       status: 'success',
-      username: data.username,
-      firstName: data.first_name,
-      lastName: data.last_name,
+      userInfo: {
+        username: data.username,
+        firstName: data.first_name,
+        lastName: data.last_name
+      },
       receivedAt: Date.now()
     })
   }

@@ -46,7 +46,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     ...ownProps,
     loggedIn: state.auth.loggedIn,
-    username: state.auth.username
+    username: state.auth.userInfo.username
   }
 }
 

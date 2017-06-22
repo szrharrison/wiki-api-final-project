@@ -19,7 +19,8 @@ Rails.application.routes.draw do
       delete '/pages/*relative_path', to: 'pages#delete'
       post '/auth', to: 'auth#create'
       get '/auth', to: 'auth#show'
-      post '/signup', to: 'sign_up#create'
+      post '/account', to: 'account#create'
+      patch '/account', to: 'account#update'
     end
   end
 

@@ -55,7 +55,7 @@ function WikiApiList(props) {
 
 function mapStateToProps(state) {
   return {
-    username: state.auth.username,
+    username: state.auth.userInfo.username,
   }
 }
 

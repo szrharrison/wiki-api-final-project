@@ -2,31 +2,40 @@ const initialState = {
   isFetching: false,
   isRefreshing: false,
   loggedIn: false,
-  username: ''
+  userInfo: {
+    username: '',
+    firstName: '',
+    lastName: ''
+  }
 }
 
 function authReducer(state = initialState, action) {
   switch (action.type) {
-    case 'LOG_IN':
+    case 'auth.LOG_IN':
       return {
         ...state,
         loggedIn: true,
-        username: action.username
+        userInfo: {
+          ...state.userInfo,
+          username: action.username
+        }
       }
-    case 'LOG_OUT':
+    case 'auth.LOG_OUT':
       return {
         ...state,
         loggedIn: false,
-        username: '',
-        firstName: '',
-        lastName: ''
+        userInfo: {
+          username: '',
+          firstName: '',
+          lastName: ''
+        }
       }
-    case 'REQUEST_LOG_IN':
+    case 'auth.REQUEST_LOG_IN':
       return {
         ...state,
         isFetching: true
       }
-    case 'RECEIVE_LOG_IN_ERROR':
+    case 'auth.RECEIVE_LOG_IN_ERROR':
       return {
         ...state,
         isFetching: false,
@@ -34,22 +43,20 @@ function authReducer(state = initialState, action) {
         receivedAt: action.receivedAt,
         error: action.error
       }
-    case 'RECEIVE_LOG_IN':
+    case 'auth.RECEIVE_LOG_IN':
       return {
         ...state,
         isFetching: false,
         status: action.status,
-        username: action.username,
-        firstName: action.firstName,
-        lastName: action.lastName,
+        userInfo: action.userInfo,
         receivedAt: action.receivedAt
       }
-    case 'REQUEST_ACCOUNT_REFRESH':
+    case 'auth.REQUEST_ACCOUNT_REFRESH':
       return {
         ...state,
         isRefreshing: true
       }
-    case 'RECEIVE_ACCOUNT_REFRESH_ERROR':
+    case 'auth.RECEIVE_ACCOUNT_REFRESH_ERROR':
       return {
         ...state,
         isRefreshing: false,
@@ -57,15 +64,23 @@ function authReducer(state = initialState, action) {
         receivedAt: action.receivedAt,
         error: action.error
       }
-    case 'RECEIVE_ACCOUNT_REFRESH':
+    case 'auth.RECEIVE_ACCOUNT_REFRESH':
       return {
         ...state,
         isRefreshing: false,
         status: action.status,
-        username: action.username,
-        firstName: action.firstName,
-        lastName: action.lastName,
+        userInfo: action.userInfo,
         receivedAt: action.receivedAt
+      }
+    case 'auth.RECEIVE_SIGN_UP':
+      return {
+        ...state,
+        userInfo: action.userInfo
+      }
+    case 'auth.RECEIVE_UPDATE_USER':
+      return {
+        ...state,
+        userInfo: action.userInfo
       }
     default:
       return state

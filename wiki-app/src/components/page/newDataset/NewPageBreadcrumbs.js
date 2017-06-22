@@ -77,7 +77,7 @@ class NewPagePageBreadcrumbs extends Component {
 
 function mapStateToProps( state ) {
   return {
-    username: state.auth.username,
+    username: state.auth.userInfo.username,
     relativePath: state.page.relativePath,
     wikiSlug: state.wikiApi.slug,
     isFetching: state.page.isFetching,

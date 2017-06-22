@@ -43,13 +43,26 @@ export function refreshAccount() {
 }
 
 export function signUp(account) {
-  return fetch('http://localhost:3000/api/v1/signup', {
+  return fetch('http://localhost:3000/api/v1/account', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     body: JSON.stringify( { account } )
+  })
+    .then( resp => resp.json() )
+}
+
+export function updateUser(account, username) {
+  return fetch('http://localhost:3000/api/v1/account', {
+    method: 'PATCH',
+    headers: {
+      'Authorization': localStorage.getItem('jwt'),
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( { account, username } )
   })
     .then( resp => resp.json() )
 }

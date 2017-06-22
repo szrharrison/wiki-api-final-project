@@ -38,9 +38,7 @@ class AppContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    username: state.auth.username,
-    firstName: state.auth.firstName,
-    lastName: state.auth.lastName
+    userInfo: state.auth.userInfo
   }
 }
 

@@ -25,7 +25,7 @@ function WikiPageSidebarButton(props)  {
 
 function mapStateToProps(state) {
   return {
-    username: state.auth.username,
+    username: state.auth.userInfo.username,
     wikiSlug: state.wikiApi.slug,
     jsonStatus: state.dataset.jsonStatus,
     newName: state.pageForm.newName,

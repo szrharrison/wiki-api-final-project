@@ -3,7 +3,7 @@ import { Form, Message, Grid, Segment, Header } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 import connectedWithRoutes from '../hocs/connectedWithRoutes'
-import { fetchSignUp } from '../actions/signUpActions'
+import { fetchSignUp } from '../actions/accountActions'
 
 class SignUpForm extends Component {
   state = {

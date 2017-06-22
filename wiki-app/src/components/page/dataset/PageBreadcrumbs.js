@@ -109,7 +109,7 @@ class PageBreadcrumbs extends Component {
 
 function mapStateToProps( state ) {
   return {
-    username: state.auth.username,
+    username: state.auth.userInfo.username,
     relativePath: state.page.relativePath,
     slug: state.page.slug,
     newSlug: state.pageForm.newSlug,
