@@ -16,8 +16,8 @@ import WikiApiPageSidebar from '../components/wiki-apis/WikiApiPageSidebar'
 class PageContainer extends Component {
 
   componentDidMount() {
+
     let pagePath = this.props.match.params.relativePath
-    console.log(pagePath.split('/').length > 1)
     if( pagePath.split('/').length > 1 ) {
       this.props.fetchPage(pagePath)
       this.ShowComponent = PagePage
@@ -26,32 +26,39 @@ class PageContainer extends Component {
       this.props.fetchWikiApi(pagePath)
       this.ShowComponent = WikiApiPage
       this.ShowComponentSidebar = WikiApiPageSidebar
-      console.log('rendering WikiApiPage')
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    let pagePath = nextProps.match.params.relativePath
-    let pageSlug = pagePath.split('/')
-    if(pagePath.endsWith('dataset') || pagePath.endsWith('new')) {
-      pageSlug.pop()
+    const nextPagePath = nextProps.match.params.relativePath
+    let nextPageSlugArray = nextPagePath.split('/')
+    if(nextPagePath.endsWith('dataset') || nextPagePath.endsWith('new')) {
+      nextPageSlugArray.pop()
     }
-    if(pageSlug.length > 1 && !nextProps.isCreating) {
-      nextProps.fetchPage(pageSlug.join('/'))
+    const nextPageSlug = nextPageSlugArray.join('/')
+    const isWiki = nextPageSlugArray.length === 1
+    const isPageAlreadyLoaded = nextPageSlug === nextProps.pagePath
+    const isWikiAlreadyLoaded = nextPageSlug === nextProps.wikiSlug
+    const pageShouldFetch = !isWiki && !isPageAlreadyLoaded && !nextProps.isLoadingPage
+    const wikiShouldFetch = isWiki && !isWikiAlreadyLoaded && !nextProps.isLoadingWiki
+    if( !isWiki ) {
       this.ShowComponentSidebar = PageFormSidebar
-      if(pagePath.endsWith('new')) {
+      this.ShowComponent = PagePage
+      if(nextPagePath.endsWith('new')) {
         this.ShowComponent = PageFormContainer
-      } else {
-        this.ShowComponent = PagePage
       }
-    } else if(pagePath.endsWith('new')) {
-      nextProps.fetchWikiApi(pageSlug[0])
-      this.ShowComponent = PageFormContainer
-      this.ShowComponentSidebar = WikiApiPageSidebar
+      if(pageShouldFetch) {
+        nextProps.fetchPage(nextPageSlug)
+      }
     } else {
-      nextProps.fetchWikiApi(pageSlug[0])
-      this.ShowComponent = WikiApiPage
       this.ShowComponentSidebar = WikiApiPageSidebar
+      this.ShowComponent = WikiApiPage
+      if(nextPagePath.endsWith('new')) {
+        this.ShowComponent = PageFormContainer
+      }
+      if (wikiShouldFetch) {
+        nextProps.fetchWikiApi(nextPageSlug)
+      }
     }
   }
 
@@ -80,7 +87,10 @@ class PageContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    isCreating: state.page.isCreating
+    isLoadingPage: state.page.isCreating || state.page.isUpdating || state.page.isFetching,
+    isLoadingWiki: state.wikiApi.isCreating || state.wikiApi.isUpdating || state.wikiApi.isFetching,
+    wikiSlug: state.wikiApi.slug,
+    pagePath: state.page.relativePath
   }
 }
 
