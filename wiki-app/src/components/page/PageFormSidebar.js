@@ -1,20 +1,30 @@
 import React from 'react'
-import { Menu, Segment, Button } from 'semantic-ui-react'
+import { Menu, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 // import DatasetViewSwitcher from './datset/DatasetViewSwitcher'
 
 import { fetchPage } from '../../actions/pageActions'
+import { fetchWikiApi } from '../../actions/wikiApiActions'
 import connectedWithRoutes from '../../hocs/connectedWithRoutes'
 import SubPageDropdown from './SubPageDropdown'
 import PageSidebarButton from './PageSidebarButton'
 import JsonEditorOptions from './dataset/JsonEditorOptions'
 
-function PageFormSidebar(props)  {
-  const locationEnding = props.location.pathname.split('/').slice(-1)[0]
-  let parentPath
+function PageSidebar(props)  {
+  const location = props.location.pathname.replace(/^\/.+?\//, '')
+  const locationEnding = location.split('/').slice(-1)[0]
+  const relativePathArray = location.split('/')
+  let printedName = props.name
+  if( locationEnding === 'dataset' || locationEnding === 'new') {
+    relativePathArray.pop()
+    if( locationEnding === 'new' ) {
+      printedName = `New Page for ${props.name}`
+    }
+  }
+  const relativePath = relativePathArray.join('/')
+  const parentPath = relativePathArray.slice(0, -1).join('/')
   let sidebarOptions
   if( locationEnding === 'dataset' || locationEnding === 'new') {
-    parentPath = props.location.pathname.split('/').slice(2,-2).join('/')
     sidebarOptions = (
       <div>
         { locationEnding === 'dataset'
@@ -23,7 +33,7 @@ function PageFormSidebar(props)  {
               className="link"
               name="view-page"
               as={Link}
-              to={props.location.pathname.split('/').slice(0,-1).join('/')}
+              to={`/${props.username}/${relativePath}`}
             >
               View Page
             </Menu.Item>
@@ -32,19 +42,7 @@ function PageFormSidebar(props)  {
         }
         {/* <DatasetViewSwitcher /> */}
         <JsonEditorOptions />
-        <PageSidebarButton />
       </div>
-    )
-  } else {
-    parentPath = props.location.pathname.split('/').slice(2,-1).join('/')
-    sidebarOptions = (
-      <Button
-        as={Link}
-        to={props.location.pathname + '/dataset'}
-        content='Edit Page'
-        icon='edit'
-        attached='bottom'
-      />
     )
   }
   return (
@@ -55,7 +53,13 @@ function PageFormSidebar(props)  {
             ?
               <Link
                 to={`/${props.username}/${parentPath}`}
-                onClick={() => props.fetchPage(parentPath)}
+                onClick={() => {
+                  if(parentPath.includes('/')) {
+                    props.fetchPage(parentPath)
+                  } else {
+                    props.fetchWikiApi(parentPath)
+                  }
+                }}
               >
                 {parentPath}
               </Link>
@@ -64,10 +68,11 @@ function PageFormSidebar(props)  {
           }
         </Menu.Header>
         <Menu.Item className='page-name' active>
-          { props.name }
+          { printedName }
         </Menu.Item>
         <SubPageDropdown />
         {sidebarOptions}
+        <PageSidebarButton />
       </Menu>
     </Segment>
   )
@@ -82,8 +87,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchPage: relativePath => dispatch(fetchPage(relativePath))
+    fetchPage: relativePath => dispatch(fetchPage(relativePath)),
+    fetchWikiApi: relativePath => dispatch(fetchWikiApi(relativePath))
   }
 }
 
-export default connectedWithRoutes(mapStateToProps, mapDispatchToProps)(PageFormSidebar)
+export default connectedWithRoutes(mapStateToProps, mapDispatchToProps)(PageSidebar)

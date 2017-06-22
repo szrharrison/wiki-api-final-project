@@ -7,6 +7,7 @@ export function fetchSignUp(account, history) {
 
     return signUp(account)
       .then( data => {
+        console.log(data)
         if(!!data.error) {
           dispatch(signUpError(data.error))
         } else {

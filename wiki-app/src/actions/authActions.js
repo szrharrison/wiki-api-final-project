@@ -56,6 +56,7 @@ export function receiveLogIn( data ) {
     dispatch(logInAction(data.account.username))
     dispatch({
       type: 'RECEIVE_LOG_IN',
+      username: data.account.username,
       firstName: data.account.first_name,
       lastName: data.account.last_name,
       status: 'success',

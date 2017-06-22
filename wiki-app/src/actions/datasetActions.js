@@ -18,13 +18,13 @@ export function fetchDataset(relativePath) {
 
 function requestDataset() {
   return {
-    type: 'REQUEST_DATASET'
+    type: 'dataset.REQUEST_DATASET'
   }
 }
 
 function fetchDatasetError(error) {
   return {
-    type: 'RECEIVE_DATASET_ERROR',
+    type: 'dataset.RECEIVE_DATASET_ERROR',
     status: 'error',
     error: error,
     receivedAt: Date.now()
@@ -33,7 +33,7 @@ function fetchDatasetError(error) {
 
 function receiveDataset(data, relativePath) {
   return {
-    type: 'RECEIVE_DATASET',
+    type: 'dataset.RECEIVE_DATASET',
     dataset: data.data,
     parentPath: relativePath,
     status: 'success',
@@ -59,13 +59,13 @@ export function fetchUpdateDataset(dataset, relativePath) {
 
 function requestUpdateDataset() {
   return {
-    type: 'REQUEST_UPDATE_DATASET'
+    type: 'dataset.REQUEST_UPDATE_DATASET'
   }
 }
 
 function fetchUpdateDatasetError(error) {
   return {
-    type: 'RECEIVE_UPDATE_DATASET_ERROR',
+    type: 'dataset.RECEIVE_UPDATE_DATASET_ERROR',
     status: 'error',
     error: error,
     receivedAt: Date.now()
@@ -74,7 +74,7 @@ function fetchUpdateDatasetError(error) {
 
 function receiveUpdateDataset(data, parentPath) {
   return {
-    type: 'RECEIVE_UPDATE_DATASET',
+    type: 'dataset.RECEIVE_UPDATE_DATASET',
     dataset: data.data,
     parentPath: parentPath,
     status: 'success',
@@ -98,18 +98,24 @@ export function updateDataset(dataString) {
   }
 }
 
-function updateDatasetError(error, data) {
+function updateDatasetError(error) {
+  console.log(error.message)
   return {
-    type: 'UPDATE_DATASET_ERROR',
-    error,
-    jsonStatus: 'syntax error'
+    type: 'pageForm.UPDATE_DATASET_ERROR',
+    error: error.message.replace(/at position \d+$/,'')
   }
 }
 
 function updateDatasetSuccess(data) {
-  return {
-    type: 'UPDATE_DATASET',
-    dataset: data,
-    jsonStatus: 'parseable'
+  return function (dispatch) {
+    dispatch({
+      type: 'dataset.UPDATE_DATASET',
+      dataset: data
+    })
+
+    dispatch({
+      type: 'pageForm.UPDATE_DATASET_ERROR',
+      error: 'no errors'
+    })
   }
 }

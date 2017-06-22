@@ -17,7 +17,9 @@ function authReducer(state = initialState, action) {
       return {
         ...state,
         loggedIn: false,
-        username: ''
+        username: '',
+        firstName: '',
+        lastName: ''
       }
     case 'REQUEST_LOG_IN':
       return {

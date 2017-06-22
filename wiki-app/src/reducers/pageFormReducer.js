@@ -5,30 +5,40 @@ const initialState = {
   snippets: false,
   fontSize: 14,
   newSlug: '',
-  newName: ''
+  newName: '',
+  newSlugError: 'no errors',
+  newNameError: 'no errors',
+  jsonStatus: 'no errors'
 }
 
 function pageFormReducer(state = initialState, action) {
   switch (action.type) {
-    case 'TOGGLE_BOOLEAN':
+    case 'pageForm.TOGGLE_BOOLEAN':
       return {
         ...state,
         [action.name]: !state[action.name]
       }
-    case 'SET_FONT_SIZE':
+    case 'pageForm.SET_FONT_SIZE':
       return {
         ...state,
         fontSize: action.fontSize
       }
-    case 'SET_NEW_SLUG':
+    case 'pageForm.SET_NEW_SLUG':
       return {
         ...state,
-        newSlug: action.newSlug
+        newSlug: action.newSlug,
+        newSlugError: action.error
       }
-    case 'SET_NEW_TITLE':
+    case 'pageForm.SET_NEW_TITLE':
       return {
         ...state,
-        newName: action.newName
+        newName: action.newName,
+        newNameError: action.error
+      }
+    case 'pageForm.UPDATE_DATASET_ERROR':
+      return {
+        ...state,
+        jsonStatus: action.error
       }
     default:
       return state

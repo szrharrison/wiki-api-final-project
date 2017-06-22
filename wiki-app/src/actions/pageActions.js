@@ -1,11 +1,5 @@
 import { getPage, createPage, updatePage, deletePage, createWikiPage } from '../api'
 
-export function toggleJson() {
-  return {
-    type: 'TOGGLE_JSON'
-  }
-}
-
 export function fetchPage(relative_path) {
   return function (dispatch) {
     dispatch(requestPage())
@@ -24,13 +18,13 @@ export function fetchPage(relative_path) {
 
 function requestPage() {
   return {
-    type: 'REQUEST_PAGE'
+    type: 'page.REQUEST_PAGE'
   }
 }
 
 function fetchPageError(error) {
   return {
-    type: 'RECEIVE_PAGE_ERROR',
+    type: 'page.RECEIVE_PAGE_ERROR',
     status: 'error',
     error: error,
     receivedAt: Date.now()
@@ -39,7 +33,7 @@ function fetchPageError(error) {
 
 function receivePage(data) {
   return {
-    type: 'RECEIVE_PAGE',
+    type: 'page.RECEIVE_PAGE',
     name: data.name,
     datasetType: data.data_type,
     relativePath: data.relative_path,
@@ -68,13 +62,13 @@ export function fetchUpdatePage(page, relativePath) {
 
 function requestUpdatePage() {
   return {
-    type: 'REQUEST_UPDATE_PAGE'
+    type: 'page.REQUEST_UPDATE_PAGE'
   }
 }
 
 function fetchUpdatePageError(error) {
   return {
-    type: 'RECEIVE_UPDATE_PAGE_ERROR',
+    type: 'page.RECEIVE_UPDATE_PAGE_ERROR',
     status: 'error',
     error: error,
     receivedAt: Date.now()
@@ -83,7 +77,7 @@ function fetchUpdatePageError(error) {
 
 function receiveUpdatePage(data) {
   return {
-    type: 'RECEIVE_UPDATE_PAGE',
+    type: 'page.RECEIVE_UPDATE_PAGE',
     name: data.name,
     datasetType: data.data_type,
     relativePath: data.relative_path,
@@ -112,13 +106,13 @@ export function fetchCreatePage(page, relativePath) {
 
 function requestCreatePage() {
   return {
-    type: 'REQUEST_CREATE_PAGE'
+    type: 'page.REQUEST_CREATE_PAGE'
   }
 }
 
 function fetchCreatePageError(error) {
   return {
-    type: 'RECEIVE_CREATE_PAGE_ERROR',
+    type: 'page.RECEIVE_CREATE_PAGE_ERROR',
     status: 'error',
     error: error,
     receivedAt: Date.now()
@@ -127,7 +121,7 @@ function fetchCreatePageError(error) {
 
 function receiveCreatePage(data) {
   return {
-    type: 'RECEIVE_CREATE_PAGE',
+    type: 'page.RECEIVE_CREATE_PAGE',
     name: data.name,
     datasetType: data.data_type,
     relativePath: data.relative_path,
@@ -172,13 +166,13 @@ export function fetchDeletePage(relativePath) {
 
 function requestDeletePage() {
   return {
-    type: 'REQUEST_DELETE_PAGE'
+    type: 'page.REQUEST_DELETE_PAGE'
   }
 }
 
 function fetchDeletePageError(error) {
   return {
-    type: 'RECEIVE_DELETE_PAGE_ERROR',
+    type: 'page.RECEIVE_DELETE_PAGE_ERROR',
     status: 'error',
     error: error,
     receivedAt: Date.now()
@@ -187,7 +181,7 @@ function fetchDeletePageError(error) {
 
 function receiveDeletePage(data) {
   return {
-    type: 'RECEIVE_DELETE_PAGE',
+    type: 'page.RECEIVE_DELETE_PAGE',
     name: data.name,
     relativePath: data.relative_path,
     subPages: data.sub_pages,

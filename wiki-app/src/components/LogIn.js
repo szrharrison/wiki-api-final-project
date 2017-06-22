@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Message } from 'semantic-ui-react'
+import { Form, Message, Segment } from 'semantic-ui-react'
 
 import connectedWithRoutes from '../hocs/connectedWithRoutes'
 import { fetchLogIn } from '../actions/authActions'
@@ -33,18 +33,38 @@ class LogIn extends Component {
   render() {
     const { username, password } = this.state
     return (
-      <Form onSubmit={this.handleSubmit} error={this.props.status === 'error'} loading={this.props.loading}>
-        <Form.Group>
-          <Form.Input placeholder="Username" name="username" value={username} onChange={ this.handleChange } />
-          <Form.Input placeholder="Password" name="password" type="password" value={password} onChange={ this.handleChange } />
-          <Form.Button content="Login" />
-        </Form.Group>
-        <Message
-          error
-          header='Invalid Log In'
-          content={this.props.error}
-        />
-      </Form>
+      <Segment inverted color="black">
+        <Form
+          onSubmit={this.handleSubmit}
+          error={this.props.status === 'error'}
+        >
+          <Form.Group>
+            <Form.Input
+              placeholder="Username"
+              name="username" value={username}
+              onChange={ this.handleChange }
+            />
+            <Form.Input
+              placeholder="Password"
+              name="password"
+              type="password"
+              value={password}
+              onChange={ this.handleChange }
+            />
+            <Form.Button
+              content="Login"
+              icon="sign in"
+              loading={this.props.loading}
+              color="teal"
+            />
+          </Form.Group>
+          <Message
+            error
+            header='Invalid Log In'
+            content={this.props.error}
+          />
+        </Form>
+      </Segment>
     )
   }
 }

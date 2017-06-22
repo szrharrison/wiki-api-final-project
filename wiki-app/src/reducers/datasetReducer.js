@@ -1,7 +1,6 @@
 const initialState = {
   slug: '',
   dataset: {},
-  jsonStatus: 'no errors',
   parentPath: '',
   isFetching: false,
   isUpdating: false
@@ -9,19 +8,19 @@ const initialState = {
 
 function datasetReducer(state = initialState, action) {
   switch (action.type) {
-    case 'REQUEST_DATASET':
+    case 'dataset.REQUEST_DATASET':
       return {
         ...state,
         isFetching: true
       }
-    case 'RECEIVE_DATASET_ERROR':
+    case 'dataset.RECEIVE_DATASET_ERROR':
       return {
         ...state,
         errors: action.error,
         status: action.status,
         isFetching: false
       }
-    case 'RECEIVE_DATASET':
+    case 'dataset.RECEIVE_DATASET':
       return {
         ...state,
         dataset: action.dataset,
@@ -33,19 +32,19 @@ function datasetReducer(state = initialState, action) {
         name: action.name,
         isFetching: false
       }
-    case 'REQUEST_UPDATE_DATASET':
+    case 'dataset.REQUEST_UPDATE_DATASET':
       return {
         ...state,
         isUpdating: true
       }
-    case 'RECEIVE_UPDATE_DATASET_ERROR':
+    case 'dataset.RECEIVE_UPDATE_DATASET_ERROR':
       return {
         ...state,
         errors: action.error,
         status: action.status,
         isUpdating: false
       }
-    case 'RECEIVE_UPDATE_DATASET':
+    case 'dataset.RECEIVE_UPDATE_DATASET':
       return {
         ...state,
         dataset: action.dataset,
@@ -57,17 +56,10 @@ function datasetReducer(state = initialState, action) {
         name: action.name,
         isUpdating: false
       }
-    case 'UPDATE_DATASET_ERROR':
+    case 'dataset.UPDATE_DATASET':
       return {
         ...state,
-        jsonStatus: 'error in json',
-        error: action.error
-      }
-    case 'UPDATE_DATASET':
-      return {
-        ...state,
-        jsonStatus: 'no errors',
-        dataset: action.dataset,
+        dataset: action.dataset
       }
     default:
       return state

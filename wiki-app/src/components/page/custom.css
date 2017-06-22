@@ -245,3 +245,18 @@
 .ui.dropdown .menu>.item>.label, .ui.dropdown>.text>.label {
   min-width: 60px;
 }
+
+.page-sidebar .ui.labeled.button:not([class*="left labeled"])>.button {
+  padding: .78571429em;
+}
+
+.page-sidebar .ui.labeled.button:not([class*="left labeled"]):hover,
+.page-sidebar .ui.labeled.button:not([class*="left labeled"]):hover>.button {
+  cursor: not-allowed;
+}
+
+.page-sidebar .ui.labeled.button:not([class*="left labeled"])>.button>.icon {
+  opacity: .9;
+  margin: 0!important;
+  vertical-align: top;
+}

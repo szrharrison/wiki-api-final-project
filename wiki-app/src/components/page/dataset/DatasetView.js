@@ -34,7 +34,7 @@ function DatasetView(props) {
 
 function mapStateToProps(state) {
   return {
-    jsonView: state.page.jsonView,
+    jsonView: state.pageForm.jsonView,
     isFetching: state.page.isFetching || state.dataset.isFetching
   }
 }
