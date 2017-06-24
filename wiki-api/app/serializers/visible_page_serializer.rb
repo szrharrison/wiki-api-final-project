@@ -4,10 +4,10 @@ class VisiblePageSerializer < ActiveModel::Serializer
   def data
     data = {}
     if object.dataset
-      data = object.dataset.as_json.keys.each_with_object({}) do |key, obj|
+      object.dataset.as_json.keys.each_with_object(data) do |key, obj|
         if key == "_id"
         else
-          obj[key] = object[key]
+          obj[key] = object.dataset[key]
         end
       end
     end

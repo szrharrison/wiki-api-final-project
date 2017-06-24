@@ -23,7 +23,7 @@ const WikiPageDropdown = (props) => {
             label: {
               content:`/${slug}`,
               color: 'grey',
-              tag: true
+              icon: 'linkify'
             },
             value: slug
           }
