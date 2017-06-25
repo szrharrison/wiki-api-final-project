@@ -56,12 +56,12 @@ class NewDatasetJsonEditor extends Component {
 
 function mapStateToProps(state) {
   return {
-    data: state.dataset.dataset,
+    data: state.dataset.data,
     fontSize: state.pageForm.fontSize,
     basicAutocompletion: state.pageForm.basicAutocompletion,
     liveAutocompletion: state.pageForm.liveAutocompletion,
     snippets: state.pageForm.snippets,
-    isFetching: state.dataset.isFetching,
+    isFetching: state.dataset.fetchDataset.isFetching,
     isUpdating: state.dataset.isUpdating
   }
 }

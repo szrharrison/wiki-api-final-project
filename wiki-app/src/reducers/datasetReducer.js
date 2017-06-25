@@ -1,9 +1,11 @@
 const initialState = {
-  slug: '',
-  dataset: {},
-  parentPath: '',
-  isFetching: false,
-  isUpdating: false
+  data: {},
+  fetchDataset: {
+    isFetching: false
+  },
+  updateDataset: {
+    isUpdating: false
+  }
 }
 
 function datasetReducer(state = initialState, action) {
@@ -11,55 +13,61 @@ function datasetReducer(state = initialState, action) {
     case 'dataset.REQUEST_DATASET':
       return {
         ...state,
-        isFetching: true
+        fetchDataset: {
+          isFetching: true
+        }
       }
     case 'dataset.RECEIVE_DATASET_ERROR':
       return {
         ...state,
-        errors: action.error,
-        status: action.status,
-        isFetching: false
+        fetchDataset: {
+          errors: action.error,
+          status: action.status,
+          receivedAt: action.receivedAt,
+          isFetching: false
+        }
       }
     case 'dataset.RECEIVE_DATASET':
       return {
         ...state,
-        dataset: action.dataset,
-        status: action.status,
-        parentPath: action.parentPath,
-        parent: action.parent,
-        subPageSlugs: action.subPageSlugs,
-        datasetType: action.datasetType,
-        name: action.name,
-        isFetching: false
+        data: action.data,
+        fetchDataset: {
+          status: action.status,
+          receivedAt: action.receivedAt,
+          isFetching: false
+        }
       }
     case 'dataset.REQUEST_UPDATE_DATASET':
       return {
         ...state,
-        isUpdating: true
+        updateDataset: {
+          isUpdating: true
+        }
       }
     case 'dataset.RECEIVE_UPDATE_DATASET_ERROR':
       return {
         ...state,
-        errors: action.error,
-        status: action.status,
-        isUpdating: false
+        updateDataset: {
+          errors: action.error,
+          status: action.status,
+          receivedAt: action.receivedAt,
+          isUpdating: false
+        }
       }
     case 'dataset.RECEIVE_UPDATE_DATASET':
       return {
         ...state,
-        dataset: action.dataset,
-        status: action.status,
-        parentPath: action.parentPath,
-        parent: action.parent,
-        subPageSlugs: action.subPageSlugs,
-        datasetType: action.datasetType,
-        name: action.name,
-        isUpdating: false
+        data: action.data,
+        updateDataset: {
+          status: action.status,
+          receivedAt: action.receivedAt,
+          isUpdating: false
+        }
       }
     case 'dataset.UPDATE_DATASET':
       return {
         ...state,
-        dataset: action.dataset
+        data: action.data
       }
     default:
       return state

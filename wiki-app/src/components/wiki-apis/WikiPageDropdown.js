@@ -82,7 +82,7 @@ const WikiPageDropdown = (props) => {
 
 function mapStateToProps(state) {
   return {
-    username: state.auth.userInfo.username,
+    username: state.account.userInfo.username,
     slug: state.wikiApi.slug,
     pages: state.wikiApi.pages,
     name: state.wikiApi.name

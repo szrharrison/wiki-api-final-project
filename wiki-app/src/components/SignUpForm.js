@@ -101,9 +101,9 @@ class SignUpForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    status: state.account.status,
-    error: state.account.error,
-    loading: state.account.isPosting
+    status: state.account.postAccount.status,
+    error: state.account.postAccount.error,
+    loading: state.account.postAccount.isPosting
   }
 }
 

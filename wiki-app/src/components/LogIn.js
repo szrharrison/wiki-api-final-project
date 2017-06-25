@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Form, Message, Segment } from 'semantic-ui-react'
 
 import connectedWithRoutes from '../hocs/connectedWithRoutes'
-import { fetchLogIn } from '../actions/authActions'
+import { fetchLogIn } from '../actions/accountActions'
 
 class LogIn extends Component {
   constructor(props) {
@@ -71,9 +71,9 @@ class LogIn extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    status: state.auth.status,
-    error: state.auth.error,
-    loading: state.auth.isFetching
+    status: state.account.fetchAuth.status,
+    error: state.account.fetchAuth.error,
+    loading: state.account.fetchAuth.isFetching
   }
 }
 

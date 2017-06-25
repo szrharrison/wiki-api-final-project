@@ -1,12 +1,5 @@
 import { getWikiApis, getWikiApi  } from '../api'
 
-export function viewingWiki(boolean) {
-  return {
-    type: 'VIEWING_WIKI',
-    viewingWiki: boolean
-  }
-}
-
 export function fetchWikiApis() {
   return function (dispatch) {
     dispatch(requestWikiApis())
@@ -25,13 +18,13 @@ export function fetchWikiApis() {
 
 function requestWikiApis() {
   return {
-    type: 'REQUEST_WIKI_APIS'
+    type: 'wikiApi.REQUEST_WIKI_APIS'
   }
 }
 
 function fetchWikisError(error) {
   return {
-    type: 'RECEIVE_WIKI_APIS_ERROR',
+    type: 'wikiApi.RECEIVE_WIKI_APIS_ERROR',
     status: 'error',
     error
   }
@@ -39,7 +32,8 @@ function fetchWikisError(error) {
 
 function receiveWikiApis(wikiApis) {
   return {
-    type: 'RECEIVE_WIKI_APIS',
+    type: 'wikiApi.RECEIVE_WIKI_APIS',
+    status: 'success',
     wikiApis
   }
 }
@@ -62,13 +56,13 @@ export function fetchWikiApi(slug) {
 
 function requestWikiApi() {
   return {
-    type: 'REQUEST_WIKI_API'
+    type: 'wikiApi.REQUEST_WIKI_API'
   }
 }
 
 function fetchWikiError(error) {
   return {
-    type: 'RECEIVE_WIKI_API_ERROR',
+    type: 'wikiApi.RECEIVE_WIKI_API_ERROR',
     status: 'error',
     error
   }
@@ -76,7 +70,8 @@ function fetchWikiError(error) {
 
 function receiveWikiApi(wikiApi) {
   return {
-    type: 'RECEIVE_WIKI_API',
+    type: 'wikiApi.RECEIVE_WIKI_API',
+    status: 'success',
     name: wikiApi.name,
     slug: wikiApi.slug,
     pages: wikiApi.pages

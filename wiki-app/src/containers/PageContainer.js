@@ -87,8 +87,8 @@ class PageContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    isLoadingPage: state.page.isCreating || state.page.isUpdating || state.page.isFetching,
-    isLoadingWiki: state.wikiApi.isCreating || state.wikiApi.isUpdating || state.wikiApi.isFetching,
+    isLoadingPage: state.page.createPage.isCreating || state.page.updatePage.isUpdating || state.page.fetchPage.isFetching,
+    isLoadingWiki: state.wikiApi.isCreating || state.wikiApi.isUpdating || state.wikiApi.fetchWikiApi.isFetching,
     wikiSlug: state.wikiApi.slug,
     pagePath: state.page.relativePath
   }

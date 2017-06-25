@@ -3,7 +3,18 @@ const initialState = {
   slug: '',
   datasetType: '',
   relativePath: '',
-  isFetching: false
+  fetchPage: {
+    isFetching: false
+  },
+  updatePage: {
+    isUpdating: false,
+  },
+  createPage: {
+    isCreating: false,
+  },
+  deletePage: {
+    isDeleting: false
+  },
 }
 
 function pageReducer(state = initialState, action) {
@@ -11,14 +22,19 @@ function pageReducer(state = initialState, action) {
     case 'page.REQUEST_PAGE':
       return {
         ...state,
-        isFetching: true
+        fetchPage: {
+          isFetching: true
+        }
       }
     case 'page.RECEIVE_PAGE_ERROR':
       return {
         ...state,
-        errors: action.error,
-        status: action.status,
-        isFetching: false
+        fetchPage: {
+          errors: action.error,
+          status: action.status,
+          receivedAt: action.receivedAt,
+          isFetching: false
+        }
       }
     case 'page.RECEIVE_PAGE':
       return {
@@ -26,22 +42,30 @@ function pageReducer(state = initialState, action) {
         name: action.name,
         datasetType: action.datasetType,
         relativePath: action.relativePath,
-        status: action.status,
         slug: action.slug,
         subPages: action.subPages,
-        isFetching: false
+        fetchPage: {
+          status: action.status,
+          receivedAt: action.receivedAt,
+          isFetching: false
+        }
       }
     case 'page.REQUEST_UPDATE_PAGE':
       return {
         ...state,
-        isUpdating: true
+        updatePage: {
+          isUpdating: true
+        }
       }
     case 'page.RECEIVE_UPDATE_PAGE_ERROR':
       return {
         ...state,
-        errors: action.error,
-        status: action.status,
-        isUpdating: false
+        updatePage: {
+          errors: action.error,
+          status: action.status,
+          receivedAt: action.receivedAt,
+          isUpdating: false
+        }
       }
     case 'page.RECEIVE_UPDATE_PAGE':
       return {
@@ -49,22 +73,30 @@ function pageReducer(state = initialState, action) {
         name: action.name,
         datasetType: action.datasetType,
         relativePath: action.relativePath,
-        status: action.status,
         slug: action.slug,
         subPages: action.subPages,
-        isUpdating: false
+        updatePage: {
+          status: action.status,
+          receivedAt: action.receivedAt,
+          isUpdating: false
+        }
       }
     case 'page.REQUEST_CREATE_PAGE':
       return {
         ...state,
-        isCreating: true
+        createPage: {
+          isCreating: true
+        }
       }
     case 'page.RECEIVE_CREATE_PAGE_ERROR':
       return {
         ...state,
-        errors: action.error,
-        status: action.status,
-        isCreating: false
+        createPage: {
+          errors: action.error,
+          status: action.status,
+          receivedAt: action.receivedAt,
+          isCreating: false
+        }
       }
     case 'page.RECEIVE_CREATE_PAGE':
       return {
@@ -72,32 +104,43 @@ function pageReducer(state = initialState, action) {
         name: action.name,
         datasetType: action.datasetType,
         relativePath: action.relativePath,
-        status: action.status,
         slug: action.slug,
         subPages: action.subPages,
-        isCreating: false
+        createPage: {
+          status: action.status,
+          receivedAt: action.receivedAt,
+          isCreating: false
+        }
       }
     case 'page.REQUEST_DELETE_PAGE':
       return {
         ...state,
-        isDeleting: true
+        deletePage: {
+          isDeleting: true
+        }
       }
     case 'page.RECEIVE_DELETE_PAGE_ERROR':
       return {
         ...state,
-        errors: action.error,
-        status: action.status,
-        isDeleting: false
+        deletePage: {
+          errors: action.error,
+          status: action.status,
+          receivedAt: action.receivedAt,
+          isDeleting: false
+        }
       }
     case 'page.RECEIVE_DELETE_PAGE':
       return {
         ...state,
         name: action.name,
         relativePath: action.relativePath,
-        status: action.status,
         slug: action.slug,
         subPages: action.subPages,
-        isDeleting: false
+        deletePage: {
+          status: action.status,
+          receivedAt: action.receivedAt,
+          isDeleting: false
+        }
       }
     case 'page.SET_SLUG':
       return {

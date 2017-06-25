@@ -111,9 +111,9 @@ class AccountPage extends Component {
 
 function mapStateToProps(state) {
   return {
-    userInfo: state.auth.userInfo,
+    userInfo: state.account.userInfo,
     newUserInfo: state.account.newUserInfo,
-    areFetching: state.wikiApi.areFetching,
+    areFetching: state.wikiApi.fetchWikiApis.areFetching,
     wikiApis: state.wikiApi.wikiApis
   }
 }

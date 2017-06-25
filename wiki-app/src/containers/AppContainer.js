@@ -10,7 +10,7 @@ import PageContainer from './PageContainer'
 import WelcomePage from '../components/WelcomePage'
 import AccountPage from '../components/AccountPage'
 import SignUpForm from '../components/SignUpForm'
-import { logInAction, fetchAccountRefresh } from '../actions/authActions'
+import { fetchAccountRefresh } from '../actions/accountActions'
 
 
 class AppContainer extends Component {
@@ -38,13 +38,12 @@ class AppContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    userInfo: state.auth.userInfo
+    userInfo: state.account.userInfo
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loggedIn: () => dispatch(logInAction()),
     refreshAccount: () => dispatch(fetchAccountRefresh())
   }
 }

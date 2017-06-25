@@ -50,10 +50,10 @@ const ApiNav = (props) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     ...ownProps,
-    username: state.auth.userInfo.username,
-    loggedIn: state.auth.loggedIn,
+    username: state.account.userInfo.username,
+    loggedIn: state.account.loggedIn,
     apis: state.wikiApi.wikiApis,
-    apisLoading: state.wikiApi.areFetching
+    apisLoading: state.wikiApi.fetchWikiApis.areFetching
   }
 }
 

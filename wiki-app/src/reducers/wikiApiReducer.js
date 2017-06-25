@@ -3,57 +3,72 @@ const initialState = {
   pages: [],
   name: '',
   slug: '',
-  viewingWiki: true,
-  isFetching: false,
-  areFetching: false
+  fetchWikiApis: {
+    areFetching: false
+  },
+  fetchWikiApi: {
+    isFetching: false,
+  }
 }
 
 function wikiApiReducer(state = initialState, action) {
   switch (action.type) {
-    case 'VIEWING_WIKI':
+    case 'wikiApi.REQUEST_WIKI_APIS':
       return {
         ...state,
-        viewingWiki: action.viewingWiki
+        fetchWikiApis: {
+          areFetching: true
+        }
       }
-    case 'REQUEST_WIKI_APIS':
+    case 'wikiApi.RECEIVE_WIKI_APIS_ERROR':
       return {
         ...state,
-        areFetching: true
+        fetchWikiApis: {
+          status: action.status,
+          areFetching: false,
+          receivedAt: action.receivedAt,
+          error: action.error
+        }
       }
-    case 'RECEIVE_WIKI_APIS_ERROR':
-      return {
-        ...state,
-        status: 'error',
-        areFetching: false,
-        error: action.error
-      }
-    case 'RECEIVE_WIKI_APIS':
+    case 'wikiApi.RECEIVE_WIKI_APIS':
       return {
         ...state,
         wikiApis: action.wikiApis,
-        areFetching: false,
-        status: 'success'
+        fetchWikiApis: {
+          status: action.status,
+          receivedAt: action.receivedAt,
+          areFetching: false
+        }
       }
-    case 'REQUEST_WIKI_API':
+    case 'wikiApi.REQUEST_WIKI_API':
       return {
         ...state,
-        isFetching: true
+        fetchWikiApi: {
+          isFetching: true
+        }
       }
-    case 'RECEIVE_WIKI_API_ERROR':
+    case 'wikiApi.RECEIVE_WIKI_API_ERROR':
       return {
         ...state,
-        status: 'error',
-        isFetching: false,
-        error: action.error
+        fetchWikiApi: {
+          status: action.status,
+          isFetching: false,
+          receivedAt: action.receivedAt,
+          error: action.error
+        }
       }
-    case 'RECEIVE_WIKI_API':
+    case 'wikiApi.RECEIVE_WIKI_API':
       return {
         ...state,
         name: action.name,
         slug: action.slug,
         pages: action.pages,
-        isFetching: false,
-        status: 'success'
+        fetchWikiApi: {
+          status: action.status,
+          isFetching: false,
+          receivedAt: action.receivedAt,
+          error: action.error
+        }
       }
     default:
       return state

@@ -30,7 +30,7 @@ export function setNewSlug(newSlug) {
     .replace(/[-_]{2,}/g, '-')
     .replace(/^[-_]+/, "")
     .replace(/[-_]+$/, "")
-  if(slug !== newSlug) {
+  if(slug !== newSlug || slug === 'dataset' || slug === 'new') {
     error = 'Invalid slug'
   }
   if(slug === '') {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Menu, Dropdown, Icon } from 'semantic-ui-react'
 
 import connectedWithRoutes from '../../hocs/connectedWithRoutes'
-import { logOut } from '../../actions/authActions'
+import { logOut } from '../../actions/accountActions'
 
 const UserNav = (props) => {
   const trigger = (
@@ -45,8 +45,8 @@ const UserNav = (props) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     ...ownProps,
-    loggedIn: state.auth.loggedIn,
-    username: state.auth.userInfo.username
+    loggedIn: state.account.loggedIn,
+    username: state.account.userInfo.username
   }
 }
 

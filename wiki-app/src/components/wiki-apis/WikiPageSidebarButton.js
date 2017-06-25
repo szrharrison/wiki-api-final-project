@@ -25,12 +25,12 @@ function WikiPageSidebarButton(props)  {
 
 function mapStateToProps(state) {
   return {
-    username: state.auth.userInfo.username,
+    username: state.account.userInfo.username,
     wikiSlug: state.wikiApi.slug,
     jsonStatus: state.dataset.jsonStatus,
     newName: state.pageForm.newName,
     newSlug: state.pageForm.newSlug,
-    dataset: state.dataset.dataset
+    dataset: state.dataset.data
   }
 }
 

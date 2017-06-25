@@ -10,10 +10,8 @@ const SubPageDropdown = (props) => {
   const isNewPageForm = props.location.pathname.endsWith('new')
   if(props.subPages) {
     options = props.subPages.map( subPage => {
-      const subPagePath = `${props.relativePath}/${subPage.slug}`
-
       return {
-        key: subPagePath,
+        key: subPage.slug,
         icon: "file",
         text: subPage.name,
         label: {
@@ -50,7 +48,7 @@ const SubPageDropdown = (props) => {
         labeled
         className="icon"
         scrolling
-        noResultsMessage="No sub pages with that name or slug"
+        noResultsMessage="No sub pages found"
         search={(options,search) => options.filter(
           option => {
             const lSearch = search.toLowerCase()
@@ -75,7 +73,7 @@ const SubPageDropdown = (props) => {
 
 function mapStateToProps(state) {
   return {
-    username: state.auth.userInfo.username,
+    username: state.account.userInfo.username,
     relativePath: state.page.relativePath,
     subPages: state.page.subPages,
     name: state.page.name

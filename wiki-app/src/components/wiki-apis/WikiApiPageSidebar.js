@@ -41,7 +41,7 @@ function WikiApiPageSidebar(props)  {
 
 function mapStateToProps(state) {
   return {
-    username: state.auth.userInfo.username,
+    username: state.account.userInfo.username,
     name: state.wikiApi.name,
     slug: state.wikiApi.slug,
   }

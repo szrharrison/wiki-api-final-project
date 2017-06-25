@@ -23,7 +23,7 @@ function NavBar(props) {
 const mapStateToProps = (state, ownProps) => {
   return {
     ...ownProps,
-    loggedIn: state.auth.loggedIn
+    loggedIn: state.account.loggedIn
   }
 }
 

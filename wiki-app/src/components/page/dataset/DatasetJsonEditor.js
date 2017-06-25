@@ -74,7 +74,7 @@ function mapStateToProps(state) {
     basicAutocompletion: state.pageForm.basicAutocompletion,
     liveAutocompletion: state.pageForm.liveAutocompletion,
     fontSize: state.pageForm.fontSize,
-    data: state.dataset.dataset
+    data: state.dataset.data
   }
 }
 

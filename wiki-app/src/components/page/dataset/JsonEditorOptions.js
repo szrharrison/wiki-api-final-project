@@ -90,8 +90,8 @@ function mapStateToProps(state) {
     basicAutocompletion: state.pageForm.basicAutocompletion,
     liveAutocompletion: state.pageForm.liveAutocompletion,
     fontSize: state.pageForm.fontSize,
-    data: state.dataset.dataset,
-    isFetching: state.dataset.isFetching
+    data: state.dataset.data,
+    isFetching: state.dataset.fetchDataset.isFetching
   }
 }
 
