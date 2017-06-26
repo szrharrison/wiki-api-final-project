@@ -1,24 +1,25 @@
-# README
+# Wiki API (...API)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This README documents the necessary steps for getting the
+backend API up and running.
 
-Things you may want to cover:
+* Ruby version: `ruby-2.4.1`
+  * install with: `rvm install 2.4.1`
 
-* Ruby version
+* System dependencies: MongoDB
+  * to install MongoDB, follow the instructions [here](https://docs.mongodb.com/manual/administration/install-community/)
 
-* System dependencies
+* Configuration: make sure to run:
+  * `bundle install` after setting up Ruby and MongoDB
+  * `bundle exec figaro install`
+    * in your newly created `config/application.yml` file, generate 2 secrets(`rake secret`) and add these keys:
+```yml
+JWT_SECRET:
+JWT_ALGORITHM: 'HS256' #or one of the other options provided by JWT
+SECRET_KEY_BASE:
+```
+* Database seeding:
+  * For some sample data from the [pokémon api](https://pokeapi.co/), run `rake db:seed`
+  * You will be able to see the seeded API when logged in with username: `admin` and password: `asdf`
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* When ready, just run `rails s` and visit http://localhost:3000 to login or http://localhost:3000/pokemon-api to start looking at the seeded data.
