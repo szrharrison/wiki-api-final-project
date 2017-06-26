@@ -7,7 +7,7 @@ const initialState = {
   newPageInfo: {
     name: '',
     slug: '',
-    errors: [[null, null]]
+    errors: [['Name', null],['Slug', null]]
   },
   jsonStatus: 'no errors'
 }
@@ -28,6 +28,32 @@ function pageFormReducer(state = initialState, action) {
       return {
         ...state,
         newPageInfo: action.newPageInfo
+      }
+    case 'pageForm.SET_NEW_PAGE_NAME':
+      const nonNameErrors = state.newPageInfo.errors.filter( error => error[0] !== 'Name' )
+      return {
+        ...state,
+        newPageInfo: {
+          ...state.newPageInfo,
+          name: action.name,
+          errors: [
+            ...nonNameErrors,
+            ...action.errors
+          ]
+        }
+      }
+    case 'pageForm.SET_NEW_PAGE_SLUG':
+      const nonSlugErrors = state.newPageInfo.errors.filter( error => error[0] !== 'Slug' )
+      return {
+        ...state,
+        newPageInfo: {
+          ...state.newPageInfo,
+          slug: action.slug,
+          errors: [
+            ...nonSlugErrors,
+            ...action.errors
+          ]
+        }
       }
     case 'pageForm.UPDATE_DATASET_ERROR':
       return {

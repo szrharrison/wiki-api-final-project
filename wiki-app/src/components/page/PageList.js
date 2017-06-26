@@ -40,9 +40,9 @@ function PageList(props) {
 function mapStateToProps(state) {
   return {
     username: state.account.userInfo.username,
-    name: state.page.name,
+    name: state.page.pageInfo.name,
     subPages: state.page.subPages,
-    relativePath: state.page.relativePath
+    relativePath: state.page.pageInfo.relativePath
 
   }
 }

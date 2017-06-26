@@ -12,7 +12,8 @@ class NewDatasetView extends Component {
   componentDidMount() {
     this.props.setNewPageInfo({
       ...this.props.newPageInfo,
-      name: ''
+      name: '',
+      slug: ''
     }
     )
   }

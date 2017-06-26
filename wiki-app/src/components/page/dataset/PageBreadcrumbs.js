@@ -5,35 +5,29 @@ import { Link } from 'react-router-dom'
 
 import { fetchWikiApi } from '../../../actions/wikiApiActions'
 import { fetchPage } from '../../../actions/pageActions'
-import { setNewPageInfo } from '../../../actions/pageFormActions'
+import { setNewPageSlug } from '../../../actions/pageFormActions'
 import { fetchDataset } from '../../../actions/datasetActions'
 
 
 class PageBreadcrumbs extends Component {
   componentDidMount() {
-    if(this.props.slug) {
-      this.props.setNewPageInfo({
-        ...this.props.newPageInfo,
-        slug: this.props.slug
-      })
-      this.span.textContent = this.props.slug
+    if(this.props.pageSlug) {
+      this.props.setNewPageSlug(this.props.pageSlug)
+      this.span.textContent = this.props.pageSlug
       const inputSize = this.span.getBoundingClientRect().width + 8
       this.input.style.width = inputSize + 'px' // set the width based on the width of the span
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if(!nextProps.newPageInfo.slug && !this.props.newPageInfo.slug && (this.props.slug || nextProps.slug)) {
+    if(!nextProps.newPageSlug && !this.props.newPageSlug && (this.props.pageSlug || nextProps.pageSlug)) {
       let slug
-      if(this.props.slug) {
-        slug = this.props.slug
+      if(this.props.pageSlug) {
+        slug = this.props.pageSlug
       } else {
-        slug = nextProps.slug
+        slug = nextProps.pageSlug
       }
-      this.props.setNewPageInfo({
-        ...this.props.newPageInfo,
-        slug
-      })
+      this.props.setNewPageSlug(slug)
       this.span.textContent = slug
       const inputSize = this.span.getBoundingClientRect().width + 8
       this.input.style.width = inputSize + 'px'
@@ -42,10 +36,7 @@ class PageBreadcrumbs extends Component {
 
   onChange = (e) => {
     const slug = e.target.value
-    this.props.setNewPageInfo({
-      ...this.props.newPageInfo,
-      slug
-    })
+    this.props.setNewPageSlug(slug)
     this.span.textContent = slug
     const inputSize = this.span.getBoundingClientRect().width + 8
     this.input.style.width = inputSize + 'px'
@@ -93,15 +84,15 @@ class PageBreadcrumbs extends Component {
             >
               <input
                 onChange={this.onChange}
-                placeholder={this.props.slug}
+                placeholder={this.props.pageSlug}
                 type="text"
                 name="slug"
                 spellCheck={false}
                 ref={input => this.input = input}
-                value={this.props.newPageInfo.slug}
+                value={this.props.newPageSlug}
               />
               <span ref={span => this.span = span}>
-                {this.props.newPageInfo.slug}
+                {this.props.newPageSlug}
               </span>
             </Form.Field>
           </Form>
@@ -119,9 +110,9 @@ class PageBreadcrumbs extends Component {
 function mapStateToProps( state ) {
   return {
     username: state.account.userInfo.username,
-    relativePath: state.page.relativePath,
-    slug: state.page.slug,
-    newPageInfo: state.pageForm.newPageInfo,
+    relativePath: state.page.pageInfo.relativePath,
+    pageSlug: state.page.pageInfo.slug,
+    newPageSlug: state.pageForm.newPageInfo.slug,
     isFetching: state.page.fetchPage.isFetching
   }
 }
@@ -132,7 +123,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(fetchPage(relativePath))
       dispatch(fetchDataset(relativePath))
     },
-    setNewPageInfo: pageInfo => dispatch(setNewPageInfo(pageInfo)),
+    setNewPageSlug: slug => dispatch(setNewPageSlug(slug)),
     fetchWikiApi: slug => dispatch(fetchWikiApi(slug))
   }
 }

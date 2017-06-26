@@ -87,8 +87,8 @@ class PagePage extends Component {
 function mapStateToProps(state) {
   return {
     username: state.account.userInfo.username,
-    name: state.page.name,
-    relativePath: state.page.relativePath
+    name: state.page.pageInfo.name,
+    relativePath: state.page.pageInfo.relativePath
   }
 }
 

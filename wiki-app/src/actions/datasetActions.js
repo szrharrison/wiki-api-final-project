@@ -97,7 +97,6 @@ export function updateDataset(dataString) {
 }
 
 function updateDatasetError(error) {
-  console.log(error.message)
   return {
     type: 'pageForm.UPDATE_DATASET_ERROR',
     error: error.message.replace(/at position \d+$/,'')

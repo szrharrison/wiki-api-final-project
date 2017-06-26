@@ -1,8 +1,10 @@
 const initialState = {
-  name: '',
-  slug: '',
   datasetType: '',
-  relativePath: '',
+  pageInfo: {
+    name: '',
+    slug: '',
+    relativePath: ''
+  },
   fetchPage: {
     isFetching: false
   },
@@ -39,10 +41,12 @@ function pageReducer(state = initialState, action) {
     case 'page.RECEIVE_PAGE':
       return {
         ...state,
-        name: action.name,
+        pageInfo: {
+          name: action.name,
+          relativePath: action.relativePath,
+          slug: action.slug
+        },
         datasetType: action.datasetType,
-        relativePath: action.relativePath,
-        slug: action.slug,
         subPages: action.subPages,
         fetchPage: {
           status: action.status,
@@ -70,10 +74,12 @@ function pageReducer(state = initialState, action) {
     case 'page.RECEIVE_UPDATE_PAGE':
       return {
         ...state,
-        name: action.name,
+        pageInfo: {
+          name: action.name,
+          relativePath: action.relativePath,
+          slug: action.slug
+        },
         datasetType: action.datasetType,
-        relativePath: action.relativePath,
-        slug: action.slug,
         subPages: action.subPages,
         updatePage: {
           status: action.status,
@@ -101,10 +107,12 @@ function pageReducer(state = initialState, action) {
     case 'page.RECEIVE_CREATE_PAGE':
       return {
         ...state,
-        name: action.name,
         datasetType: action.datasetType,
-        relativePath: action.relativePath,
-        slug: action.slug,
+        pageInfo: {
+          name: action.name,
+          relativePath: action.relativePath,
+          slug: action.slug
+        },
         subPages: action.subPages,
         createPage: {
           status: action.status,
@@ -132,9 +140,11 @@ function pageReducer(state = initialState, action) {
     case 'page.RECEIVE_DELETE_PAGE':
       return {
         ...state,
-        name: action.name,
-        relativePath: action.relativePath,
-        slug: action.slug,
+        pageInfo: {
+          name: action.name,
+          relativePath: action.relativePath,
+          slug: action.slug
+        },
         subPages: action.subPages,
         deletePage: {
           status: action.status,
@@ -145,7 +155,10 @@ function pageReducer(state = initialState, action) {
     case 'page.SET_SLUG':
       return {
         ...state,
-        slug: action.slug
+        pageInfo: {
+          ...state.pageInfo,
+          slug: action.slug
+        }
       }
     default:
       return state

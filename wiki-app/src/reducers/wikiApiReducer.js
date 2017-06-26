@@ -145,13 +145,30 @@ function wikiApiReducer(state = initialState, action) {
           isCreating: false
         }
       }
-    case 'wikiApi.SET_NEW_WIKI_INFO':
+    case 'wikiApi.SET_NEW_WIKI_NAME':
+      const nonNameErrors = state.newWikiInfo.errors.filter( error => error[0] !== 'Name' )
       return {
         ...state,
         newWikiInfo: {
+          ...state.newWikiInfo,
           name: action.name,
+          errors: [
+            ...action.errors,
+            ...nonNameErrors
+          ]
+        }
+      }
+    case 'wikiApi.SET_NEW_WIKI_SLUG':
+      const nonSlugErrors = state.newWikiInfo.errors.filter( error => error[0] !== 'Slug' )
+      return {
+        ...state,
+        newWikiInfo: {
+          ...state.newWikiInfo,
           slug: action.slug,
-          errors: action.errors
+          errors: [
+            ...nonSlugErrors,
+            ...action.errors
+          ]
         }
       }
     default:

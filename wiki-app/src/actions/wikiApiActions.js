@@ -157,24 +157,56 @@ function receiveUpdateWikiApi(wikiApi) {
   }
 }
 
-export function setNewWikiInfo(wikiInfo) {
+
+export function setNewWikiInfo(newWikiInfo) {
+  return function(dispatch) {
+    dispatch(setNewWikiName(newWikiInfo.name))
+    dispatch(setNewWikiSlug(newWikiInfo.slug))
+  }
+}
+
+export function setNewWikiName(wikiName) {
   let errors = []
-  if(wikiInfo.name === '') {
+  if(wikiName === '') {
     errors.push(['Name', 'All wikis must have a name'])
   }
-  if(wikiInfo.slug === '') {
-    errors.push(['Slug', 'All wikis must have a slug'])
-  }
-  if(wikiInfo.slug === 'new' || wikiInfo.slug === 'dataset' || wikiInfo.slug === 'api') {
-    errors = [['Slug', `"${wikiInfo.slug}" is a reserved slug. If your new name results in that slug, then choose a different name for now and change the name of your wiki later.`]]
-  }
   if(!errors.length) {
-    errors = [[null, null]]
+    errors = [['Name', null]]
   }
   return {
-    type: 'wikiApi.SET_NEW_WIKI_INFO',
-    name: wikiInfo.name,
-    slug: wikiInfo.slug,
+    type: 'wikiApi.SET_NEW_WIKI_NAME',
+    name: wikiName,
+    errors
+  }
+}
+
+export function setNewWikiSlug(wikiSlug) {
+  const reservedSlugs = ['new', 'api']
+  let errors = []
+  const slug = wikiSlug.trim()
+  .toLowerCase()
+  .replace(/[\s./\\]/g, '-')
+  .replace(/[^\w-]/g, '')
+  .replace(/[-]{2,}/g, '-')
+  .replace(/[_]{2,}/g, '_')
+  .replace(/[-_]{2,}/g, '-')
+  .replace(/^[-_]+/, "")
+  .replace(/[-_]+$/, "")
+  if(slug === '') {
+    errors.push(['Slug', 'All wikis must have a slug'])
+  }
+  if(reservedSlugs.includes(slug)) {
+    errors.push(['Slug', `"${slug}" is a reserved slug.`])
+  }
+  if(slug !== wikiSlug) {
+    errors.push(['Slug', 'Invalid slug'])
+  }
+  if(!errors.length) {
+    errors = [['Slug', null]]
+  }
+  return {
+    type: 'wikiApi.SET_NEW_WIKI_SLUG',
+    slug: wikiSlug,
     errors
   }
 }

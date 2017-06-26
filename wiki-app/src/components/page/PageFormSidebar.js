@@ -11,29 +11,25 @@ import PageSidebarButton from './PageSidebarButton'
 import JsonEditorOptions from './dataset/JsonEditorOptions'
 
 function PageSidebar(props)  {
-  const location = props.location.pathname.replace(/^\/.+?\//, '')
-  const locationEnding = location.split('/').slice(-1)[0]
-  const relativePathArray = location.split('/')
-  let printedName = props.name
-  if( locationEnding === 'dataset' || locationEnding === 'new') {
-    relativePathArray.pop()
-    if( locationEnding === 'new' ) {
-      printedName = `New Page for ${props.name}`
+  let printedName = props.pageName
+  if( props.isNewForm ) {
+    if( props.isWiki ) {
+      printedName = `New Page for ${props.wikiName}`
+    } else {
+      printedName = `New Page for ${props.pageName}`
     }
   }
-  const relativePath = relativePathArray.join('/')
-  const parentPath = relativePathArray.slice(0, -1).join('/')
   let sidebarOptions
-  if( locationEnding === 'dataset' || locationEnding === 'new') {
+  if( props.isEditForm || props.isNewForm) {
     sidebarOptions = (
       <div>
-        { locationEnding === 'dataset'
+        { props.isEditForm
           ?
             <Menu.Item
               className="link"
               name="view-page"
               as={Link}
-              to={`/${props.username}/${relativePath}`}
+              to={`/${props.username}/${props.relativePath}`}
             >
               View Page
             </Menu.Item>
@@ -49,19 +45,19 @@ function PageSidebar(props)  {
     <Segment inverted color="black" className="page-sidebar">
       <Menu vertical inverted pointing secondary fluid >
         <Menu.Header>
-          { parentPath
+          { props.parentPath.length
             ?
               <Link
-                to={`/${props.username}/${parentPath}`}
+                to={`/${props.username}/${props.parentPath}`}
                 onClick={() => {
-                  if(parentPath.includes('/')) {
-                    props.fetchPage(parentPath)
+                  if(props.parentPath.includes('/')) {
+                    props.fetchPage(props.parentPath)
                   } else {
-                    props.fetchWikiApi(parentPath)
+                    props.fetchWikiApi(props.parentPath)
                   }
                 }}
               >
-                {parentPath}
+                {props.parentPath}
               </Link>
             :
               null
@@ -81,7 +77,8 @@ function PageSidebar(props)  {
 function mapStateToProps(state) {
   return {
     username: state.account.userInfo.username,
-    name: state.page.name
+    pageName: state.page.pageInfo.name,
+    wikiName: state.wikiApi.wikiInfo.name
   }
 }
 

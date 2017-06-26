@@ -11,7 +11,7 @@ import PageContainer from './PageContainer'
 import WelcomePage from '../components/WelcomePage'
 import AccountPage from '../components/AccountPage'
 import SignUpForm from '../components/SignUpForm'
-import WikiFormContainer from './WikiFormContainer'
+import WikiContainer from './WikiContainer'
 
 
 class AppContainer extends Component {
@@ -31,7 +31,9 @@ class AppContainer extends Component {
             <Route exact path="/" component={WelcomePage} />
             <Route exact path="/signup" component={SignUpForm} />
             <Route exact path="/account" component={AccountPage} />
-            <Route exact path="/:username/new" component={WikiFormContainer} />
+            <Route exact path="/:username/new" component={WikiContainer} />
+            <Route exact path="/:username/:slug" component={WikiContainer} />
+            <Route exact path="/:username/:slug/edit" component={WikiContainer} />
             <Route path="/:username/:relativePath+" component={PageContainer} />
           </Switch>
         </Container>

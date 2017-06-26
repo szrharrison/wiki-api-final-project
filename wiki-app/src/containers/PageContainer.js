@@ -16,46 +16,16 @@ import WikiApiPageSidebar from '../components/wiki-apis/WikiApiPageSidebar'
 class PageContainer extends Component {
 
   componentDidMount() {
-
-    let pagePath = this.props.match.params.relativePath
-    if( pagePath.split('/').length > 1 ) {
-      this.props.fetchPage(pagePath)
-      this.ShowComponent = PagePage
-      this.ShowComponentSidebar = PageFormSidebar
-    } else {
-      this.props.fetchWikiApi(pagePath)
-      this.ShowComponent = WikiApiPage
-      this.ShowComponentSidebar = WikiApiPageSidebar
+    if( !this.props.isWiki ) {
+      this.props.fetchPage(this.props.relativePath)
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const nextPagePath = nextProps.match.params.relativePath
-    let nextPageSlugArray = nextPagePath.split('/')
-    if(nextPagePath.endsWith('dataset') || nextPagePath.endsWith('new')) {
-      nextPageSlugArray.pop()
-    }
-    const nextPageSlug = nextPageSlugArray.join('/')
-    const isWiki = nextPageSlugArray.length === 1
-    const isPageAlreadyLoaded = nextPageSlug === nextProps.pagePath
-    const isWikiAlreadyLoaded = nextPageSlug === nextProps.wikiSlug
-    const pageShouldFetch = !isWiki && !isPageAlreadyLoaded && !nextProps.isLoadingPage
-    const wikiShouldFetch = isWiki && !isWikiAlreadyLoaded && !nextProps.isLoadingWiki
-    if( !isWiki ) {
-      this.ShowComponentSidebar = PageFormSidebar
-      this.ShowComponent = PagePage
-      if(nextPagePath.endsWith('new')) {
-        this.ShowComponent = PageFormContainer
-      }
-      if(pageShouldFetch) {
-        nextProps.fetchPage(nextPageSlug)
-      }
-    } else {
-      this.ShowComponentSidebar = WikiApiPageSidebar
-      this.ShowComponent = WikiApiPage
-      if (wikiShouldFetch) {
-        nextProps.fetchWikiApi(nextPageSlug)
-      }
+    const isPageAlreadyLoaded = nextProps.relativePath === nextProps.pagePath
+    const pageShouldFetch = !nextProps.isWiki && !isPageAlreadyLoaded && !nextProps.isLoadingPage
+    if(pageShouldFetch) {
+      nextProps.fetchPage(nextProps.relativePath)
     }
   }
 
@@ -65,16 +35,13 @@ class PageContainer extends Component {
     return (
       <Grid>
         <Grid.Column width={4}>
-          <Switch>
-            <Route exact path='/:username/:relativePath+' component={this.ShowComponentSidebar} />
-            <Route path="/:username/:relativePath+" component={PageFormSidebar} />
-          </Switch>
+          <PageFormSidebar />
         </Grid.Column>
         <Grid.Column width={12}>
           <Switch>
-            <Route exact path="/:username/:relativePath+/new" component={this.ShowComponent} />
+            <Route exact path="/:username/:relativePath+/new" component={PageFormContainer} />
             <Route exact path="/:username/:relativePath+/dataset" component={PageFormContainer} />
-            <Route path='/:username/:relativePath+' component={this.ShowComponent} />
+            <Route path='/:username/:relativePath+' component={PagePage} />
           </Switch>
         </Grid.Column>
       </Grid>
@@ -87,7 +54,7 @@ function mapStateToProps(state) {
     isLoadingPage: state.page.createPage.isCreating || state.page.updatePage.isUpdating || state.page.fetchPage.isFetching,
     isLoadingWiki: state.wikiApi.isCreating || state.wikiApi.isUpdating || state.wikiApi.fetchWikiApi.isFetching,
     wikiSlug: state.wikiApi.wikiInfo.slug,
-    pagePath: state.page.relativePath
+    pagePath: state.page.pageInfo.relativePath
   }
 }
 

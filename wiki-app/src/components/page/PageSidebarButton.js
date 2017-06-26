@@ -8,8 +8,8 @@ import { fetchCreatePage, fetchUpdatePage } from '../../actions/pageActions'
 
 function PageSidebarButton(props)  {
   let error = props.jsonStatus.replace(/^Unexpected token (.)/, 'Unexpected token \u2AA1\u00A0$1\u00A0\u2AA2')
-  const isNameError = !!props.newPageInfo.errors.filter( error => error[0] === 'Name').length
-  const isSlugError = !!props.newPageInfo.errors.filter( error => error[0] === 'Slug').length
+  const isNameError = !!props.newPageInfo.errors.filter( error => error[0] === 'Name').filter( error => error[1] ).length
+  const isSlugError = !!props.newPageInfo.errors.filter( error => error[0] === 'Slug').filter( error => error[1] ).length
   if( isNameError ) {
     error = props.newPageInfo.errors.filter( error => error[0] === 'Name' ).map(error => error[1])
   }
@@ -17,11 +17,7 @@ function PageSidebarButton(props)  {
     error = props.newPageInfo.errors.filter( error => error[0] === 'Slug' ).map(error => error[1])
   }
   const errors = error !== 'no errors'
-  let locationEnding = ''
-  const relativePathArray = props.location.pathname.replace(/^\/.*?\//, '').split('/')
-  if( props.location.pathname.endsWith('new') || props.location.pathname.endsWith('dataset') ) {
-    locationEnding = relativePathArray.pop()
-  } else {
+  if( !props.isNewForm && !props.isEditForm ) {
     return (
       <Button
         as={Link}
@@ -32,27 +28,24 @@ function PageSidebarButton(props)  {
       />
     )
   }
-  const relativePath = relativePathArray.join('/')
-  const parentPath = relativePathArray.slice(0, -1).join('/')
-  const locationSlug = relativePathArray.slice(-1)[0]
   const errorLabelProps = { basic: true, color: 'red', pointing: 'left', content: error }
   return (
     <Button
       color={ errors ? 'red' : 'green' }
-      content={ locationEnding === 'new' ? 'Create New Page' : 'Save' }
+      content={ props.isNewForm ? 'Create New Page' : 'Save' }
       icon='save'
       attached='bottom'
       label={ errors ? errorLabelProps : null }
       onClick={() => {
-        if(locationEnding === 'dataset' && !errors) {
-          props.updateDataset(props.dataset, relativePath)
-          props.updatePage(props.newPageInfo, relativePath)
-          if(locationSlug !== props.newPageInfo.slug) {
-            props.history.push(`/${props.username}/${parentPath}/${props.newPageInfo.slug}/${locationEnding}`)
+        if(props.isEditForm && !errors) {
+          props.updateDataset(props.dataset, props.relativePath)
+          props.updatePage(props.newPageInfo, props.relativePath)
+          if(props.slug !== props.newPageInfo.slug) {
+            props.history.push(`/${props.username}/${props.parentPath}/${props.newPageInfo.slug}/${props.locationEnding}`)
           }
-        } else if(locationEnding === 'new' && !errors) {
-          props.createPage({ name: props.newPageInfo.name}, relativePath)
-          props.history.push(`/${props.username}/${relativePath}/${props.newPageInfo.slug}`)
+        } else if(props.isNewForm && !errors) {
+          props.createPage({ name: props.newPageInfo.name}, props.relativePath)
+          props.history.push(`/${props.username}/${props.relativePath}/${props.newPageInfo.slug}`)
         }
       }}
     />
@@ -62,7 +55,7 @@ function PageSidebarButton(props)  {
 function mapStateToProps(state) {
   return {
     username: state.account.userInfo.username,
-    slug: state.page.slug,
+    pageSlug: state.page.pageInfo.slug,
     newPageInfo: state.pageForm.newPageInfo,
     jsonStatus: state.pageForm.jsonStatus,
     dataset: state.dataset.data

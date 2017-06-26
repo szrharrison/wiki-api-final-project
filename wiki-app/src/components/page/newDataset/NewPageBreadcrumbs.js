@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import connectedWithRoutes from '../../../hocs/connectedWithRoutes'
 import { fetchWikiApi } from '../../../actions/wikiApiActions'
 import { fetchPage } from '../../../actions/pageActions'
-import { setNewPageInfo } from '../../../actions/pageFormActions'
+import { setNewPageSlug } from '../../../actions/pageFormActions'
 import { fetchDataset } from '../../../actions/datasetActions'
 
 
@@ -14,10 +14,7 @@ class NewPagePageBreadcrumbs extends Component {
     value: ''
   }
   componentDidMount() {
-    this.props.setNewPageInfo({
-      ...this.props.newPageInfo,
-      slug: ''
-    })
+    this.props.setNewPageSlug('')
   }
 
   onChange = (e) => {
@@ -30,7 +27,7 @@ class NewPagePageBreadcrumbs extends Component {
   render() {
     const newPageSlugForm = {
       key: "new-page-slug-form",
-      content: this.props.newPageInfo.slug ? this.props.newPageInfo.slug : "Page Slug"
+      content: this.props.newPageSlug ? this.props.newPageSlug : "Page Slug"
     }
     const wikiSlug = this.props.match.params.relativePath.split('/')[0]
     const isBasePage = this.props.match.params.relativePath === wikiSlug
@@ -88,10 +85,10 @@ class NewPagePageBreadcrumbs extends Component {
 function mapStateToProps( state ) {
   return {
     username: state.account.userInfo.username,
-    relativePath: state.page.relativePath,
+    relativePath: state.page.pageInfo.relativePath,
     wikiSlug: state.wikiApi.wikiInfo.slug,
     isFetching: state.page.fetchPage.isFetching,
-    newPageInfo: state.pageForm.newPageInfo
+    newPageSlug: state.pageForm.newPageInfo.slug
   }
 }
 
@@ -102,7 +99,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(fetchDataset(relativePath))
     },
     fetchWikiApi: slug => dispatch(fetchWikiApi(slug)),
-    setNewPageInfo: pageInfo => dispatch(setNewPageInfo(pageInfo))
+    setNewPageSlug: slug => dispatch(setNewPageSlug(slug))
   }
 }
 export default connectedWithRoutes(mapStateToProps, mapDispatchToProps)(NewPagePageBreadcrumbs)

@@ -8,6 +8,7 @@ import WikiPageSidebarButton from './WikiPageSidebarButton'
 
 function WikiApiPageSidebar(props)  {
   const isNewWikiForm = props.location.pathname.endsWith('new')
+  const isEditWikiForm = props.location.pathname.endsWith('edit')
   const {name, slug} = isNewWikiForm ? props.newWikiInfo : props.wikiInfo
   return (
     <Segment inverted color="black">
@@ -15,7 +16,7 @@ function WikiApiPageSidebar(props)  {
         <Menu.Item active>
           { name }
         </Menu.Item>
-        { !isNewWikiForm || props.location.pathname.endsWith('dataset')
+        { isEditWikiForm
           ?
             <Menu.Item
               className="link"
@@ -28,12 +29,7 @@ function WikiApiPageSidebar(props)  {
           :
           null
         }
-        { isNewWikiForm
-          ?
-            <WikiPageSidebarButton />
-          :
-          null
-        }
+        <WikiPageSidebarButton />
       </Menu>
     </Segment>
   )
