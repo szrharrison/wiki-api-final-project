@@ -260,3 +260,15 @@
   margin: 0!important;
   vertical-align: top;
 }
+
+.ui.inverted.selection.list>.item:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.ui.inverted.list .list>.item .description, .ui.inverted.list>.item .description {
+  transition: .25s color ease .1s;
+}
+
+.ui.selection.list .list>.item, .ui.selection.list>.item {
+  border-radius: 0;
+}

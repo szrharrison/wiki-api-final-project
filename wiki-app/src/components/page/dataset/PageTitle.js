@@ -2,36 +2,48 @@ import React, { Component } from 'react'
 import { Form } from 'semantic-ui-react'
 
 import connectedWithRoutes from '../../../hocs/connectedWithRoutes'
-import { setNewName } from '../../../actions/pageFormActions'
+import { setNewPageInfo } from '../../../actions/pageFormActions'
 
 class PageTitle extends Component {
   componentDidMount() {
     if(this.props.location.pathname.endsWith('dataset')) {
-      this.props.setNewName(this.props.name)
+      this.props.setNewPageInfo({
+        ...this.props.newPageInfo,
+        name: this.props.pageInfo.name
+      })
     } else {
-      this.props.setNewName('')
+      this.props.setNewPageInfo({
+        ...this.props.newPageInfo,
+        name: ''
+      })
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if(!nextProps.newName && !this.props.newName && (this.props.name || nextProps.name)) {
-      const name = this.props.name ? this.props.name : nextProps.name
-      this.props.setNewName(name)
+    if(!nextProps.newPageInfo.name && !this.props.newPageInfo.name && (this.props.pageInfo.name || nextProps.pageInfo.name)) {
+      const name = this.props.pageInfo.name ? this.props.pageInfo.name : nextProps.pageInfo.name
+      this.props.setNewPageInfo({
+        ...this.props.newPageInfo,
+        name
+      })
     }
   }
 
   onChange = e => {
     const name = e.target.value
-    this.props.setNewName(name)
+    this.props.setNewPageInfo({
+      ...this.props.newPageInfo,
+      name
+    })
   }
 
   render() {
     return (
       <Form id="name-editor">
         <Form.Input
-          value={this.props.newName}
+          value={this.props.newPageInfo.name}
           onChange={this.onChange}
-          placeholder={this.props.name}
+          placeholder={this.props.pageInfo.name}
         />
       </Form>
     )
@@ -40,14 +52,14 @@ class PageTitle extends Component {
 
 function mapStateToProps(state) {
   return {
-    newName: state.pageForm.newName,
-    name: state.page.name
+    newPageInfo: state.pageForm.newPageInfo,
+    pageInfo: state.page.pageInfo
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    setNewName: name => dispatch(setNewName(name))
+    setNewPageInfo: pageInfo => dispatch(setNewPageInfo(pageInfo))
   }
 }
 

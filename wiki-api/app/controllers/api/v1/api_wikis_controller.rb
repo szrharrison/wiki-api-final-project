@@ -16,6 +16,7 @@ class Api::V1::ApiWikisController < ApplicationController
   def create
     @api_wiki = ApiWiki.new(api_wiki_params)
     @api_wiki.account = @current_account
+    @api_wiki.set_slug
     if @api_wiki.save
       render json: @api_wiki
     else
@@ -62,6 +63,6 @@ class Api::V1::ApiWikisController < ApplicationController
   end
 
   def api_wiki_params
-    params.require(:api_wiki).permit(:name, :documentation)
+    params.require(:api_wiki).permit(:name, :slug, :documentation)
   end
 end

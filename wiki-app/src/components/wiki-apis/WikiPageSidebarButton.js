@@ -1,42 +1,47 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Button } from 'semantic-ui-react'
 
 import connectedWithRoutes from '../../hocs/connectedWithRoutes'
-import { fetchCreateWikiPage } from '../../actions/pageActions'
+import { createWikiApi, fetchUpdateWikiApi } from '../../actions/wikiApiActions'
 
-function WikiPageSidebarButton(props)  {
-  const errors = props.jsonStatus !== 'no errors' || !props.newName
-  const errorLabelProps = { basic: true, color: 'red', pointing: 'left', content: 'error' }
-  return (
-    <Button
-      color={ errors ? 'red' : 'green' }
-      disabled={errors}
-      content='Create New Page'
-      icon='save'
-      attached='bottom'
-      label={ errors ? errorLabelProps : null }
-      onClick={() => {
-        props.createPage({ name: props.newName }, props.wikiSlug)
-        props.history.push(`/${props.username}/${props.wikiSlug}/${props.newSlug}`)
-      }}
-    />
-  )
+class WikiPageSidebarButton extends Component {
+
+  render() {
+    const { name, slug } = this.props.newWikiInfo
+    const isNewWikiForm = this.props.location.pathname.endsWith('new')
+    const errors = !!this.props.newWikiInfo.errors[0][0]
+    return (
+      <Button
+        color={ errors ? 'red' : 'green' }
+        disabled={errors}
+        content={isNewWikiForm ? 'Create New Wiki API' : 'Save Wiki API'}
+        icon='save'
+        attached='bottom'
+        onClick={() => {
+          if( isNewWikiForm ) {
+            this.props.createWikiApi(name)
+          } else {
+            this.props.updateWikiApi(this.props.newWikiInfo, this.props.wikiInfo.slug)
+          }
+          // this.props.history.push(`/${this.props.username}/${slug}`)
+        }}
+      />
+    )
+  }
 }
 
 function mapStateToProps(state) {
   return {
     username: state.account.userInfo.username,
-    wikiSlug: state.wikiApi.slug,
-    jsonStatus: state.dataset.jsonStatus,
-    newName: state.pageForm.newName,
-    newSlug: state.pageForm.newSlug,
-    dataset: state.dataset.data
+    wikiInfo: state.wikiApi.wikiInfo,
+    newWikiInfo: state.wikiApi.newWikiInfo
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    createPage: (page, relativePath) => dispatch(fetchCreateWikiPage(page, relativePath))
+    createWikiApi: name => dispatch(createWikiApi(name)),
+    updateWikiApi: (newWikiInfo, slug) => dispatch(fetchUpdateWikiApi(newWikiInfo, slug))
   }
 }
 

@@ -37,3 +37,10 @@ input::selection, textarea::selection {
 .ui[class*="vertically divided"].grid>.row>.column {
   margin: 0;
 }
+
+.inverted .ui.input input {
+  color: #fff;
+}
+.inverted .ui.input.error input {
+  color: #9f3a38;
+}

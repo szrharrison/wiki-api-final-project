@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Header, List, Grid, Button, Modal, Message, Icon } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import { Header, Grid, Button, Modal, Message } from 'semantic-ui-react'
 
 import { fetchPage, fetchDeletePage } from '../../actions/pageActions'
 import connectedWithRoutes from '../../hocs/connectedWithRoutes'
+
+import PageList from './PageList'
 
 class PagePage extends Component {
   state = {
@@ -21,23 +22,6 @@ class PagePage extends Component {
   }
 
   render() {
-    let pages = null
-    if(this.props.subPages) {
-      pages = this.props.subPages.map( subPage => (
-        <List.Item
-          key={subPage.slug}
-          as={Link}
-          to={`/${this.props.username}/${this.props.relativePath}/${subPage.slug}`}
-          onClick={() => this.props.fetchPage(`${this.props.relativePath}/${subPage.slug}`)}
-        >
-          <List.Icon name="file" verticalAlign="middle" />
-          <List.Content>
-            <List.Header>{subPage.name}</List.Header>
-            <List.Description><Icon name='linkify'/>{'/ ' + subPage.slug}</List.Description>
-          </List.Content>
-        </List.Item>
-        ))
-      }
       return (
         <Grid inverted divided="vertically" padded>
           <Grid.Row  color="black" verticalAlign="middle" columns="equal">
@@ -92,15 +76,7 @@ class PagePage extends Component {
           </Grid.Row>
           <Grid.Row color="black">
             <Grid.Column>
-              <List inverted animated selection verticalAlign="middle">
-                <List.Item as={Link} to={`/${this.props.username}/${this.props.relativePath}/new`}>
-                  <List.Icon name='add' />
-                  <List.Content>
-                    Add a page
-                  </List.Content>
-                </List.Item>
-                {pages}
-              </List>
+              <PageList />
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -112,9 +88,7 @@ function mapStateToProps(state) {
   return {
     username: state.account.userInfo.username,
     name: state.page.name,
-    subPages: state.page.subPages,
     relativePath: state.page.relativePath
-
   }
 }
 

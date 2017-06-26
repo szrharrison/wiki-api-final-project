@@ -6,9 +6,7 @@ class ApiWiki
   field :documentation, type: String
   field :slug, type: String
 
-  before_validation :set_slug
-
-  validates :slug, uniqueness: true, exclusion: { in: [ "api" ] }
+  validates :slug, uniqueness: {message: ': "%{value}" is already taken'}, exclusion: { in: [ "api", "new", "dataset" ], message: ': "%{value}" is a reserved slug' }
 
   index({slug: 1}, {unique: true})
 

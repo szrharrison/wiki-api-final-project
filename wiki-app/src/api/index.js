@@ -14,6 +14,32 @@ export function getWikiApi(slug) {
   }).then( resp => resp.json() )
 }
 
+export function createNewWikiApi(name) {
+  return fetch('http://localhost:3000/api/v1/api_wikis', {
+    method: 'POST',
+    headers: {
+      'Authorization': localStorage.getItem('jwt'),
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      api_wiki: { name }
+    })
+  }).then( resp => resp.json() )
+}
+
+export function updateWikiApi(wikiInfo, slug) {
+  return fetch(`http://localhost:3000/api/v1/api_wikis/${slug}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': localStorage.getItem('jwt'),
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ api_wiki: wikiInfo })
+  }).then( resp => resp.json() )
+}
+
 export function getPage(relativePath) {
   return fetch(`http://localhost:3000/api/v1/pages/${relativePath}`, {
     headers: {

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
       get '/api_wikis/:slug', to: 'api_wikis#show'
       post '/api_wikis', to: 'api_wikis#create'
+      patch '/api_wikis/:slug', to: 'api_wikis#update'
       post '/api_wikis/:slug/pages', to: 'api_wikis#create_page'
       patch '/api_wikis/:slug', to: 'api_wikis#update'
       delete '/api_wikis/:slug', to: 'api_wikis#delete'
@@ -24,6 +25,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/:slug', to: 'api_wikis#show'
   get '/*relative_path', to: 'pages#show'
 end
 

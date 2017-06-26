@@ -1,14 +1,27 @@
 const initialState = {
   wikiApis: [],
   pages: [],
-  name: '',
-  slug: '',
+  wikiInfo: {
+    name: '',
+    slug: ''
+  },
+  newWikiInfo: {
+    name: '',
+    slug: '',
+    errors: [[null, null]]
+  },
   fetchWikiApis: {
     areFetching: false
   },
   fetchWikiApi: {
     isFetching: false,
-  }
+  },
+  createWikiApi: {
+    isCreating: false,
+  },
+  updateWikiApi: {
+    isCreating: false,
+  },
 }
 
 function wikiApiReducer(state = initialState, action) {
@@ -25,9 +38,9 @@ function wikiApiReducer(state = initialState, action) {
         ...state,
         fetchWikiApis: {
           status: action.status,
-          areFetching: false,
+          error: action.error,
           receivedAt: action.receivedAt,
-          error: action.error
+          areFetching: false
         }
       }
     case 'wikiApi.RECEIVE_WIKI_APIS':
@@ -52,22 +65,93 @@ function wikiApiReducer(state = initialState, action) {
         ...state,
         fetchWikiApi: {
           status: action.status,
-          isFetching: false,
+          error: action.error,
           receivedAt: action.receivedAt,
-          error: action.error
+          isFetching: false
         }
       }
     case 'wikiApi.RECEIVE_WIKI_API':
       return {
         ...state,
-        name: action.name,
-        slug: action.slug,
         pages: action.pages,
+        wikiInfo: {
+          name: action.name,
+          slug: action.slug
+        },
         fetchWikiApi: {
           status: action.status,
-          isFetching: false,
           receivedAt: action.receivedAt,
-          error: action.error
+          isFetching: false
+        }
+      }
+    case 'wikiApi.REQUEST_CREATE_WIKI_API':
+      return {
+        ...state,
+        createWikiApi: {
+          isCreating: true
+        }
+      }
+    case 'wikiApi.CREATE_WIKI_API_ERROR':
+      return {
+        ...state,
+        createWikiApi: {
+          status: action.status,
+          error: action.error,
+          receivedAt: action.receivedAt,
+          isCreating: false
+        }
+      }
+    case 'wikiApi.RECEIVE_CREATE_WIKI_API':
+      return {
+        ...state,
+        wikiInfo: {
+          name: action.name,
+          slug: action.slug
+        },
+        createWikiApi: {
+          status: action.status,
+          receivedAt: action.receivedAt,
+          isCreating: false
+        }
+      }
+    case 'wikiApi.REQUEST_UPDATE_WIKI_API':
+      return {
+        ...state,
+        updateWikiApi: {
+          isCreating: true
+        }
+      }
+    case 'wikiApi.UPDATE_WIKI_API_ERROR':
+      return {
+        ...state,
+        updateWikiApi: {
+          status: action.status,
+          error: action.error,
+          receivedAt: action.receivedAt,
+          isCreating: false
+        }
+      }
+    case 'wikiApi.RECEIVE_UPDATE_WIKI_API':
+      return {
+        ...state,
+        pages: action.pages,
+        wikiInfo: {
+          name: action.name,
+          slug: action.slug
+        },
+        updateWikiApi: {
+          status: action.status,
+          receivedAt: action.receivedAt,
+          isCreating: false
+        }
+      }
+    case 'wikiApi.SET_NEW_WIKI_INFO':
+      return {
+        ...state,
+        newWikiInfo: {
+          name: action.name,
+          slug: action.slug,
+          errors: action.errors
         }
       }
     default:

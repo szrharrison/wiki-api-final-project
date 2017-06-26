@@ -4,18 +4,21 @@ import { connect } from 'react-redux'
 
 import '../custom.css'
 
-import { setNewSlug, setNewName } from '../../../actions/pageFormActions'
+import { setNewPageInfo } from '../../../actions/pageFormActions'
 import NewPageBreadcrumbs from './NewPageBreadcrumbs'
 import NewDatasetJsonEditor from './NewDatasetJsonEditor'
 
 class NewDatasetView extends Component {
   componentDidMount() {
-    this.props.setNewName('')
+    this.props.setNewPageInfo({
+      ...this.props.newPageInfo,
+      name: ''
+    }
+    )
   }
 
   onChange = (e) => {
     const name = e.target.value
-    this.props.setNewName(name)
     const slug = name
       .trim()
       .toLowerCase()
@@ -26,7 +29,12 @@ class NewDatasetView extends Component {
       .replace(/[-_]{2,}/g, '-')
       .replace(/^[-_]+/, "")
       .replace(/[-_]+$/, "")
-    this.props.setNewSlug(slug)
+
+    this.props.setNewPageInfo({
+      ...this.props.newPageInfo,
+      name,
+      slug
+    })
   }
 
   render() {
@@ -37,7 +45,7 @@ class NewDatasetView extends Component {
         </Dimmer>
         <Form id="name-editor">
           <Form.Input
-            value={this.props.newName}
+            value={this.props.newPageInfo.name}
             onChange={this.onChange}
             placeholder="Page Title"
           />
@@ -64,14 +72,13 @@ class NewDatasetView extends Component {
 function mapStateToProps(state) {
   return {
     jsonView: state.page.jsonView,
-    newName: state.pageForm.newName
+    newPageInfo: state.pageForm.newPageInfo
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    setNewSlug: slug => dispatch(setNewSlug(slug)),
-    setNewName: name => dispatch(setNewName(name))
+    setNewPageInfo: pageInfo => dispatch(setNewPageInfo(pageInfo))
   }
 }
 

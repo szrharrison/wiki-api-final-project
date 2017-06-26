@@ -7,28 +7,28 @@ import WikiPageDropdown from './WikiPageDropdown'
 import WikiPageSidebarButton from './WikiPageSidebarButton'
 
 function WikiApiPageSidebar(props)  {
-  const isNewPageForm = props.location.pathname.endsWith('new')
+  const isNewWikiForm = props.location.pathname.endsWith('new')
+  const {name, slug} = isNewWikiForm ? props.newWikiInfo : props.wikiInfo
   return (
     <Segment inverted color="black">
       <Menu vertical inverted pointing secondary >
-        <Menu.Item name='name' active>
-          { props.name }
+        <Menu.Item active>
+          { name }
         </Menu.Item>
-        { isNewPageForm || props.location.pathname.endsWith('dataset')
+        { !isNewWikiForm || props.location.pathname.endsWith('dataset')
           ?
             <Menu.Item
               className="link"
               name="view-wiki"
               as={Link}
-              to={`/${props.username}/${props.slug}`}
+              to={`/${props.username}/${slug}`}
             >
               {/* <DatasetViewSwitcher /> */}
             </Menu.Item>
           :
           null
         }
-        <WikiPageDropdown />
-        { isNewPageForm
+        { isNewWikiForm
           ?
             <WikiPageSidebarButton />
           :
@@ -42,8 +42,8 @@ function WikiApiPageSidebar(props)  {
 function mapStateToProps(state) {
   return {
     username: state.account.userInfo.username,
-    name: state.wikiApi.name,
-    slug: state.wikiApi.slug,
+    wikiInfo: state.wikiApi.wikiInfo,
+    newWikiInfo: state.wikiApi.newWikiInfo
   }
 }
 

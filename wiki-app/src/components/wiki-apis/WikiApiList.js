@@ -1,5 +1,6 @@
 import React from 'react'
-import { Accordion } from 'semantic-ui-react'
+import { Accordion, List } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 import connectedWithRoutes from '../../hocs/connectedWithRoutes'
 import { fetchWikiApis, fetchWikiApi } from '../../actions/wikiApiActions'
@@ -35,7 +36,13 @@ function WikiApiList(props) {
   const { wikiApi } = props
   const pages = constructNestedPages(wikiApi.pages)
   return (
-    <div>
+    <List inverted animated selection verticalAlign="middle">
+      <List.Item as={Link} to={`/${props.username}/${wikiApi.slug}/new`}>
+        <List.Icon name='add' />
+        <List.Content>
+          Add a page
+        </List.Content>
+      </List.Item>
       { pages && Object.keys(pages).length
         ?
           <Accordion inverted>
@@ -49,7 +56,7 @@ function WikiApiList(props) {
         :
         null
       }
-    </div>
+    </List>
   )
 }
 

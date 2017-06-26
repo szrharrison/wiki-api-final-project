@@ -4,10 +4,11 @@ const initialState = {
   liveAutocompletion: false,
   snippets: false,
   fontSize: 14,
-  newSlug: '',
-  newName: '',
-  newSlugError: 'no errors',
-  newNameError: 'no errors',
+  newPageInfo: {
+    name: '',
+    slug: '',
+    errors: [[null, null]]
+  },
   jsonStatus: 'no errors'
 }
 
@@ -23,17 +24,10 @@ function pageFormReducer(state = initialState, action) {
         ...state,
         fontSize: action.fontSize
       }
-    case 'pageForm.SET_NEW_SLUG':
+    case 'pageForm.SET_NEW_PAGE_INFO':
       return {
         ...state,
-        newSlug: action.newSlug,
-        newSlugError: action.error
-      }
-    case 'pageForm.SET_NEW_TITLE':
-      return {
-        ...state,
-        newName: action.newName,
-        newNameError: action.error
+        newPageInfo: action.newPageInfo
       }
     case 'pageForm.UPDATE_DATASET_ERROR':
       return {

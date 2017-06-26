@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Item, Icon, Accordion } from 'semantic-ui-react'
+import { Item, Icon, Accordion, List } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 import { fetchPage } from '../../actions/pageActions'
@@ -8,7 +8,7 @@ import { fetchPage } from '../../actions/pageActions'
 class WikiApiListItem extends Component {
   state = { active: false }
 
-  toggleVisibility = () => this.setState({ active: !this.state.active })
+  toggleVisibility = () => this.setState(prevState => ({ active: !prevState.active }))
 
   render() {
     const { active } = this.state
@@ -40,18 +40,16 @@ class WikiApiListItem extends Component {
     }
 
     return (
-      <div>
+      <List.Item>
         <Accordion.Title>
           <Item>
             {itemHeader}
-            <Item.Extra>
-              <Link
-                to={`/${username}/${page.relative_path}`}
-                onClick={() => this.props.fetchPage(page.relative_path)}
-              >
-                <Icon name='linkify' />{' ' + page.relative_path}
-              </Link>
-            </Item.Extra>
+            <Item.Extra
+              as={Link}
+              to={`/${username}/${page.relative_path}`}
+              onClick={() => this.props.fetchPage(page.relative_path)}
+              icon='linkify'
+            />
           </Item>
         </Accordion.Title>
         { Object.keys(page.subPages).length
@@ -69,7 +67,7 @@ class WikiApiListItem extends Component {
           :
             null
         }
-      </div>
+      </List.Item>
     )
   }
 }

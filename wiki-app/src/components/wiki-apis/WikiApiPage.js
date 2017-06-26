@@ -10,7 +10,7 @@ const WikiApiPage = (props) => {
   return (
     <Segment color="black" inverted>
       <Header as="h2" content={name} />
-      { props.pages.length && !props.isFetching
+      { slug && !props.isFetching
         ?
           <WikiApiList wikiApi={wikiApi} />
         :
@@ -25,8 +25,8 @@ const WikiApiPage = (props) => {
 function mapStateToProps(state) {
   return {
     username: state.account.userInfo.username,
-    name: state.wikiApi.name,
-    slug: state.wikiApi.slug,
+    name: state.wikiApi.wikiInfo.name,
+    slug: state.wikiApi.wikiInfo.slug,
     pages: state.wikiApi.pages,
     isFetching: state.wikiApi.fetchWikiApi.isFetching
   }

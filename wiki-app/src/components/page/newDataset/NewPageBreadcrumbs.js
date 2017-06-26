@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import connectedWithRoutes from '../../../hocs/connectedWithRoutes'
 import { fetchWikiApi } from '../../../actions/wikiApiActions'
 import { fetchPage } from '../../../actions/pageActions'
-import { setNewSlug } from '../../../actions/pageFormActions'
+import { setNewPageInfo } from '../../../actions/pageFormActions'
 import { fetchDataset } from '../../../actions/datasetActions'
 
 
@@ -14,7 +14,10 @@ class NewPagePageBreadcrumbs extends Component {
     value: ''
   }
   componentDidMount() {
-    this.props.setNewSlug('')
+    this.props.setNewPageInfo({
+      ...this.props.newPageInfo,
+      slug: ''
+    })
   }
 
   onChange = (e) => {
@@ -27,18 +30,19 @@ class NewPagePageBreadcrumbs extends Component {
   render() {
     const newPageSlugForm = {
       key: "new-page-slug-form",
-      content: this.props.newSlug ? this.props.newSlug : "Page Slug"
+      content: this.props.newPageInfo.slug ? this.props.newPageInfo.slug : "Page Slug"
     }
-    const isBasePage = this.props.match.params.relativePath === this.props.wikiSlug
+    const wikiSlug = this.props.match.params.relativePath.split('/')[0]
+    const isBasePage = this.props.match.params.relativePath === wikiSlug
     if(isBasePage) {
       let breadcrumbs = [{
-        key: this.props.wikiSlug,
+        key: wikiSlug,
         content: (
           <Link
-            to={`/${this.props.username}/${this.props.wikiSlug}`}
-            onClick={() => this.props.fetchWikiApi(this.props.wikiSlug)}
+            to={`/${this.props.username}/${wikiSlug}`}
+            onClick={() => this.props.fetchWikiApi(wikiSlug)}
           >
-            {this.props.wikiSlug}
+            {wikiSlug}
           </Link>
         )
       }]
@@ -46,18 +50,24 @@ class NewPagePageBreadcrumbs extends Component {
       return (
         <Breadcrumb icon='caret right' sections={breadcrumbs} />
       )
-    }
-    if( !!this.props.relativePath && !this.props.isFetching ) {
+    } else if( !!this.props.match.params.relativePath && !this.props.isFetching ) {
       let splitPath = this.props.relativePath.split('/')
       let breadcrumbs = splitPath.map( (path,i) => {
         const relativePath = splitPath.slice(0, i + 1 ).join('/')
         let url = `/${this.props.username}/${relativePath}`
+
         return {
           key: relativePath,
           content: (
             <Link
               to={url}
-              onClick={() => this.props.fetchPageData(relativePath)}
+              onClick={() => {
+                if( i === 0 ) {
+                  this.props.fetchWikiApi(wikiSlug)
+                } else {
+                  this.props.fetchPageData(relativePath)
+                }
+              }}
             >
               {path}
             </Link>
@@ -79,9 +89,9 @@ function mapStateToProps( state ) {
   return {
     username: state.account.userInfo.username,
     relativePath: state.page.relativePath,
-    wikiSlug: state.wikiApi.slug,
+    wikiSlug: state.wikiApi.wikiInfo.slug,
     isFetching: state.page.fetchPage.isFetching,
-    newSlug: state.pageForm.newSlug
+    newPageInfo: state.pageForm.newPageInfo
   }
 }
 
@@ -92,7 +102,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(fetchDataset(relativePath))
     },
     fetchWikiApi: slug => dispatch(fetchWikiApi(slug)),
-    setNewSlug: slug => dispatch(setNewSlug(slug))
+    setNewPageInfo: pageInfo => dispatch(setNewPageInfo(pageInfo))
   }
 }
 export default connectedWithRoutes(mapStateToProps, mapDispatchToProps)(NewPagePageBreadcrumbs)

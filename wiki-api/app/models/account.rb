@@ -9,7 +9,7 @@ class Account
   field :username, type: String
   field :password_digest, type: String
 
-  validates :username, uniqueness: { message: "Username already exists"}, presence: true
+  validates :username, uniqueness: { message: ': "%{value}" is already taken'}, presence: {message: ': You must have a username'}
   validates :password_digest, presence: true
 
   index({username: 1}, {unique: true})

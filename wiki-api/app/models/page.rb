@@ -11,8 +11,8 @@ class Page
   validates :name, :slug, :relative_path, presence: true
   validates :api_wiki, presence: true, if: :has_no_parent?
   validates :parent_page, presence: true, if: :has_no_api_wiki?
-  validates :relative_path, uniqueness: true
-  validates :slug, exclusion: { in: [ "dataset", "new" ] }
+  validates :relative_path, uniqueness: {message: ': That page already exists'}
+  validates :slug, exclusion: { in: [ "dataset", "new" ], message: ': "%{value}" is a reserved slug' }
 
 
   before_validation :set_relative_path

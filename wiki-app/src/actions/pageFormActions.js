@@ -19,9 +19,9 @@ export function setSlug(slug) {
   }
 }
 
-export function setNewSlug(newSlug) {
-  let error = 'no errors'
-  const slug = newSlug
+export function setNewPageInfo(newPageInfo) {
+  let errors = []
+  const slug = newPageInfo.slug
     .trim()
     .replace(/[\s./\\]/g, '-')
     .replace(/[^\w-]/g, '')
@@ -30,27 +30,26 @@ export function setNewSlug(newSlug) {
     .replace(/[-_]{2,}/g, '-')
     .replace(/^[-_]+/, "")
     .replace(/[-_]+$/, "")
-  if(slug !== newSlug || slug === 'dataset' || slug === 'new') {
-    error = 'Invalid slug'
+  if(slug !== newPageInfo.slug) {
+    errors.push(['Slug', 'Invalid slug'])
+  }
+  if(slug === 'dataset' || slug === 'new') {
+    errors.push(['Slug', `${slug} is a reserved slug`])
   }
   if(slug === '') {
-    error = 'Page must have a slug'
+    errors.push(['Slug', 'Page must have a slug'])
+  }
+  if(newPageInfo.name === '') {
+    errors.push(['Name', 'Page must have a name'])
+  }
+  if(!errors.length) {
+    errors = [[null, null]]
   }
   return {
-    type: 'pageForm.SET_NEW_SLUG',
-    newSlug,
-    error
-  }
-}
-
-export function setNewName(newName) {
-  let error = 'no errors'
-  if(newName === '') {
-    error = 'Page must have a name'
-  }
-  return {
-    type: 'pageForm.SET_NEW_TITLE',
-    newName,
-    error
+    type: 'pageForm.SET_NEW_PAGE_INFO',
+    newPageInfo: {
+      ...newPageInfo,
+      errors
+    }
   }
 }

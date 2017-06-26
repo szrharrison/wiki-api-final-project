@@ -54,12 +54,12 @@ class AccountPage extends Component {
                   </Dimmer>
                 :
                 <List selection inverted animated>
-                  {/* <List.Item
+                  <List.Item
                     as={Link}
                     to={`/${username}/new`}
                     content="Create a New Wiki"
                     icon="add"
-                  /> */}
+                  />
                   {this.props.wikiApis.map( wikiApi => (
                     <List.Item
                       key={wikiApi.slug}

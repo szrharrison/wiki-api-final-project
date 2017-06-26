@@ -53,9 +53,6 @@ class PageContainer extends Component {
     } else {
       this.ShowComponentSidebar = WikiApiPageSidebar
       this.ShowComponent = WikiApiPage
-      if(nextPagePath.endsWith('new')) {
-        this.ShowComponent = PageFormContainer
-      }
       if (wikiShouldFetch) {
         nextProps.fetchWikiApi(nextPageSlug)
       }
@@ -89,7 +86,7 @@ function mapStateToProps(state) {
   return {
     isLoadingPage: state.page.createPage.isCreating || state.page.updatePage.isUpdating || state.page.fetchPage.isFetching,
     isLoadingWiki: state.wikiApi.isCreating || state.wikiApi.isUpdating || state.wikiApi.fetchWikiApi.isFetching,
-    wikiSlug: state.wikiApi.slug,
+    wikiSlug: state.wikiApi.wikiInfo.slug,
     pagePath: state.page.relativePath
   }
 }
