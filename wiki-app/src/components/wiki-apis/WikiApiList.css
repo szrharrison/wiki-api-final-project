@@ -18,24 +18,20 @@
   color: rgba(255,255,255,.4);
 }
 
-.ui.list .list>.item .ui.accordion .title>i.icon+.content,
-.ui.list .list>.item .ui.accordion .title>.image+.content,
-.ui.list>.item .ui.accordion .title>i.icon+.content,
-.ui.list>.item .ui.accordion .title>.image+.content {
+#wiki-api-pages-list.ui.list .list>.item .ui.accordion .title>i.icon+.content,
+#wiki-api-pages-list.ui.list .list>.item .ui.accordion .title>.image+.content,
+#wiki-api-pages-list.ui.list>.item .ui.accordion .title>i.icon+.content,
+#wiki-api-pages-list.ui.list>.item .ui.accordion .title>.image+.content {
   display: table-cell;
   padding: 0 0 0 .5em;
   vertical-align: top;
 }
 
-/*.ui.accordion .accordion .title~.content:not(.active), .ui.accordion .title~.content:not(.active) {
-  display: none!important;
-}*/
-
 .inverted .ui.list .list .item i.icon, .inverted .ui.list .item i.icon {
   color: rgba(255,255,255,.4);
   transition: .25s color ease .1s, .25s padding ease .1s;
 }
-.ui.inverted.selection.list>.item:not(:first-child) {
+#wiki-api-pages-list.ui.inverted.selection.list>.item:not(:first-child) {
   padding: 0;
 }
 
@@ -60,22 +56,22 @@
 }
 
 .ui.inverted.list .item a:not(.ui):hover {
-    color: rgba(127,200,200,.5)!important;
+  color: rgba(127,200,200,.5)!important;
 }
 
 .inverted .ui.list .list .item .ui.accordion .accordion .title>i.icon{
   color: rgba(255,255,255,.4);
 }
 
-.ui.accordion:not(.styled) .title~.content:not(.ui) {
+#wiki-api-pages-list .ui.accordion:not(.styled) .title~.content:not(.ui) {
   width: 100%;
 }
 
-.ui.accordion .title~.content:not(.ui):not(.active) {
+#wiki-api-pages-list .ui.accordion .title~.content:not(.ui):not(.active) {
   display: none;
 }
 
-.ui.accordion .title~.content:not(.ui).active {
+#wiki-api-pages-list .ui.accordion .title~.content:not(.ui).active {
   animation: accordionIn 0.45s normal ease both 1;
 }
 

@@ -53,7 +53,7 @@ function WikiApiList(props) {
     </List.Item>
   )
   return (
-    <List inverted verticalAlign="top">
+    <List inverted verticalAlign="top" id="wiki-api-pages-list">
       {pagesList}
     </List>
   )
