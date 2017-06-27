@@ -6,12 +6,30 @@ import isAuthenticated from '../hocs/isAuthenticated'
 import connectedWithRoutes from '../hocs/connectedWithRoutes'
 import { fetchPage } from '../actions/pageActions'
 import { fetchWikiApi } from '../actions/wikiApiActions'
-
-import PageFormContainer from './PageFormContainer'
-import PagePage from '../components/page/PagePage'
 import PageFormSidebar from '../components/page/PageFormSidebar'
-import WikiApiPage from '../components/wiki-apis/WikiApiPage'
-import WikiApiPageSidebar from '../components/wiki-apis/WikiApiPageSidebar'
+
+class PageFormContainer extends Component {
+  componentWillMount = () => {
+    import('./PageFormContainer').then( Component => {
+      this.Component = Component
+      this.forceUpdate()
+    })
+  }
+  render = () => (
+    this.Component? <this.Component.default /> : null
+  )
+}
+class PagePage extends Component {
+  componentWillMount = () => {
+    import('../components/page/PagePage').then( Component => {
+      this.Component = Component
+      this.forceUpdate()
+    })
+  }
+  render = () => (
+    this.Component? <this.Component.default /> : null
+  )
+}
 
 class PageContainer extends Component {
 

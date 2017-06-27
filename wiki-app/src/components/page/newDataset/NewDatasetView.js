@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { Segment, Dimmer, Loader, Form } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-import '../custom.css'
-
 import { setNewPageInfo } from '../../../actions/pageFormActions'
 import NewPageBreadcrumbs from './NewPageBreadcrumbs'
 import NewDatasetJsonEditor from './NewDatasetJsonEditor'
@@ -14,8 +12,8 @@ class NewDatasetView extends Component {
       ...this.props.newPageInfo,
       name: '',
       slug: ''
-    }
-    )
+    })
+    import('../custom.css')
   }
 
   onChange = (e) => {

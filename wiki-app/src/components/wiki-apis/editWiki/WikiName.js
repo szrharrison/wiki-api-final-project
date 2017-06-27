@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form } from 'semantic-ui-react'
+import { Input, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import { setNewWikiName } from '../../../actions/wikiApiActions'
@@ -22,14 +22,31 @@ class WikiName extends Component {
   }
 
   render() {
+    const isNameError = !!this.props.newWikiErrors.filter( error => error[0] === 'Name' ).filter( error => error[1] ).length
+    const nameErrors = this.props.newWikiErrors.filter( error => error[0] === 'Name' )
     return (
-      <Form id="name-editor">
-        <Form.Input
+      <div>
+        <Input
+          id='name'
+          transparent
+          fluid
+          size='huge'
+          error={isNameError}
           value={this.props.newWikiName}
           onChange={this.onChange}
           placeholder={this.props.wikiName}
+          icon={ isNameError ? { name: 'exclamation', color: 'red'} : null }
+          iconPosition='left'
         />
-      </Form>
+        <Message
+          attached='bottom'
+          error
+          hidden={!isNameError}
+          icon='exclamation circle'
+          header={'Error with Name:'}
+          content={nameErrors.map( (error, i) => `${i+1}. ${error[1]}\n`)}
+        />
+      </div>
     )
   }
 }
@@ -37,6 +54,7 @@ class WikiName extends Component {
 function mapStateToProps(state) {
   return {
     newWikiName: state.wikiApi.newWikiInfo.name,
+    newWikiErrors: state.wikiApi.newWikiInfo.errors,
     wikiName: state.wikiApi.wikiInfo.name
   }
 }

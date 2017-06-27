@@ -1,7 +1,11 @@
 import React from 'react'
 
+function getDisplayName(WrappedComponent) {
+  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+}
+
 function knowsOwnPath(WrappedComponent) {
-  return props => {
+  const KnowsOwnPath = props => {
     const locationArray = props.location.pathname.split('/')
     locationArray.shift()
     const locationEnding = locationArray.slice(-1)[0]
@@ -20,6 +24,7 @@ function knowsOwnPath(WrappedComponent) {
     const isWiki = relativePath.length === 1
     const parentPath = relativePath.slice(0,-1).join('/')
     relativePath = relativePath.join('/')
+    const { match, ...passThroughProps } = props
     return (
       <WrappedComponent
         locationArray={locationArray}
@@ -30,10 +35,12 @@ function knowsOwnPath(WrappedComponent) {
         relativePath={relativePath}
         slug={slug}
         parentPath={parentPath}
-        {...props}
+        {...passThroughProps}
       />
     )
   }
+  KnowsOwnPath.displayName = `KnowsOwnPath(${getDisplayName(WrappedComponent)})`
+  return KnowsOwnPath
 }
 
 export default knowsOwnPath

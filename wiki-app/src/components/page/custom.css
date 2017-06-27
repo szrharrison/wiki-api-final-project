@@ -1,5 +1,5 @@
 .inverted .ui.selection.dropdown {
-  background-color: #1B1C1D;
+  background-color: #1b1c1d;
   color: #fff;
   border-color: #fff;
 }
@@ -9,9 +9,10 @@
 }
 
 .ui.dropdown .menu {
-  background-color: #1B1C1D;
+  background-color: #1b1c1d;
   color: #fff;
 }
+
 .inverted .ui.selection.visible.dropdown>.text:not(.default) {
   color: #fff;
 }
@@ -138,7 +139,7 @@
   text-align: center;
 }
 .page-sidebar .ui.vertical.menu .item.page-name:hover {
-  background: #1B1C1D
+  background: #1b1c1d;
 }
 
 .ui.secondary.inverted.pointing.menu .item.search.selection {

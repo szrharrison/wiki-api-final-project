@@ -1,0 +1,14 @@
+#wiki-slug-form + span {
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+  width: auto;
+  white-space: pre;
+  margin: 0 .85714286em 0 0;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 1em;
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  line-height: 1.21428571em;
+  padding-left: 2em;
+}

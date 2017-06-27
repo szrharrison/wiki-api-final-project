@@ -6,6 +6,8 @@ import connectedWithRoutes from '../../hocs/connectedWithRoutes'
 import UserNav from './UserNav'
 import ApiNav from './ApiNav'
 
+import './NavBar.css'
+
 function NavBar(props) {
   return (
     <Segment inverted color="black" className="nav">

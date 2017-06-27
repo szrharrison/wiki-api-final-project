@@ -1,17 +1,76 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom'
 import { Container } from 'semantic-ui-react'
-import './App.css';
 
 import connectedWithRoutes from '../hocs/connectedWithRoutes'
 import { fetchAccountRefresh } from '../actions/accountActions'
 
-import NavBar from '../components/nav/NavBar'
-import PageContainer from './PageContainer'
-import WelcomePage from '../components/WelcomePage'
-import AccountPage from '../components/AccountPage'
-import SignUpForm from '../components/SignUpForm'
-import WikiContainer from './WikiContainer'
+class NavBar extends Component {
+  componentWillMount = () => {
+    import('../components/nav/NavBar').then(Component => {
+      this.Component = Component
+      this.forceUpdate()
+    })
+  }
+  render = () => (
+    this.Component ? <this.Component.default /> : null
+  )
+}
+class PageContainer extends Component {
+  componentWillMount = () => {
+    import('./PageContainer').then(Component => {
+      this.Component = Component
+      this.forceUpdate()
+    })
+  }
+  render = () => (
+    this.Component ? <this.Component.default /> : null
+  )
+}
+class WelcomePage extends Component {
+  componentWillMount = () => {
+    import('../components/WelcomePage').then(Component => {
+      this.Component = Component
+      this.forceUpdate()
+    })
+  }
+  render = () => (
+    this.Component ? <this.Component.default /> : null
+  )
+}
+class AccountPage extends Component {
+  componentWillMount = () => {
+    import('../components/AccountPage').then(Component => {
+      this.Component = Component
+      this.forceUpdate()
+    })
+  }
+  render = () => (
+    this.Component ? <this.Component.default /> : null
+  )
+}
+class SignUpForm extends Component {
+  componentWillMount = () => {
+    import('../components/SignUpForm').then(Component => {
+      this.Component = Component
+      this.forceUpdate()
+    })
+  }
+  render = () => (
+    this.Component ? <this.Component.default /> : null
+  )
+}
+class WikiContainer extends Component {
+  componentWillMount = () => {
+    import('./WikiContainer').then(Component => {
+      this.Component = Component
+      this.forceUpdate()
+    })
+  }
+  render = () => (
+    this.Component ? <this.Component.default /> : null
+  )
+}
 
 
 class AppContainer extends Component {
@@ -20,6 +79,7 @@ class AppContainer extends Component {
     if(!!localStorage.jwt) {
       this.props.refreshAccount()
     }
+    import('./App.css')
   }
 
   render() {

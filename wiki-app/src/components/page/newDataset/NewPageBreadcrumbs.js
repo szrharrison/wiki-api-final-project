@@ -29,17 +29,16 @@ class NewPagePageBreadcrumbs extends Component {
       key: "new-page-slug-form",
       content: this.props.newPageSlug ? this.props.newPageSlug : "Page Slug"
     }
-    const wikiSlug = this.props.match.params.relativePath.split('/')[0]
-    const isBasePage = this.props.match.params.relativePath === wikiSlug
+    const isBasePage = this.props.relativePath === this.props.slug
     if(isBasePage) {
       let breadcrumbs = [{
-        key: wikiSlug,
+        key: this.props.slug,
         content: (
           <Link
-            to={`/${this.props.username}/${wikiSlug}`}
-            onClick={() => this.props.fetchWikiApi(wikiSlug)}
+            to={`/${this.props.username}/${this.props.slug}`}
+            onClick={() => this.props.fetchWikiApi(this.props.slug)}
           >
-            {wikiSlug}
+            {this.props.slug}
           </Link>
         )
       }]
@@ -47,7 +46,7 @@ class NewPagePageBreadcrumbs extends Component {
       return (
         <Breadcrumb icon='caret right' sections={breadcrumbs} />
       )
-    } else if( !!this.props.match.params.relativePath && !this.props.isFetching ) {
+    } else if( !!this.props.relativePath && !this.props.isFetching ) {
       let splitPath = this.props.relativePath.split('/')
       let breadcrumbs = splitPath.map( (path,i) => {
         const relativePath = splitPath.slice(0, i + 1 ).join('/')
@@ -60,7 +59,7 @@ class NewPagePageBreadcrumbs extends Component {
               to={url}
               onClick={() => {
                 if( i === 0 ) {
-                  this.props.fetchWikiApi(wikiSlug)
+                  this.props.fetchWikiApi(this.props.slug)
                 } else {
                   this.props.fetchPageData(relativePath)
                 }

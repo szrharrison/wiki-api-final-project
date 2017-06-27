@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Item, Icon, Accordion, List } from 'semantic-ui-react'
+import { Icon, Accordion, List } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 import { fetchPage } from '../../actions/pageActions'
@@ -13,61 +13,53 @@ class WikiApiListItem extends Component {
   render() {
     const { active } = this.state
     const { page, username } = this.props
-    let itemHeader
-    if(Object.keys(page.subPages).length) {
+    const hasSubPages = !!Object.keys(page.subPages).length
+    let icon
+    let subPages = null
+    if(hasSubPages) {
+      subPages = Object.keys(page.subPages).map( key => (
+        <WikiApiListItem
+          key={page.subPages[key].relative_path}
+          page={page.subPages[key]}
+        />
+      ))
       if(active) {
-        itemHeader = (
-          <Item.Header onClick={this.toggleVisibility}>
-            <Icon name='folder open'/>
-            {page.name}
-          </Item.Header>
+        icon = (
+          <Icon onClick={this.toggleVisibility} name='folder open'/>
         )
       } else {
-        itemHeader = (
-          <Item.Header onClick={this.toggleVisibility}>
-            <Icon name='folder'/>
-            {page.name}
-          </Item.Header>
+        icon = (
+          <Icon onClick={this.toggleVisibility} name='folder'/>
         )
       }
     } else {
-      itemHeader = (
-        <Item.Header>
-          <Icon name='file'/>
-          {page.name}
-        </Item.Header>
+      icon = (
+        <Icon name='file'/>
       )
     }
 
     return (
-      <List.Item>
+      <Accordion>
         <Accordion.Title>
-          <Item>
-            {itemHeader}
-            <Item.Extra
-              as={Link}
-              to={`/${username}/${page.relative_path}`}
-              onClick={() => this.props.fetchPage(page.relative_path)}
-              icon='linkify'
-            />
-          </Item>
+          {icon}
+          <List.Content>
+            <List.Header>
+              {page.name}
+            </List.Header>
+            <List.Description as={Link} to={`/${username}/${page.relative_path}`}>
+              <Icon name='linkify'/>{' /' + page.relative_path}
+            </List.Description>
+          </List.Content>
         </Accordion.Title>
-        { Object.keys(page.subPages).length
+        { hasSubPages
           ?
             <Accordion.Content active={active}>
-              <Accordion>
-                {Object.keys(page.subPages).map( key => (
-                  <WikiApiListItem
-                    key={page.subPages[key].relative_path}
-                    page={page.subPages[key]}
-                  />
-                ))}
-              </Accordion>
+              {subPages}
             </Accordion.Content>
           :
-            null
+          <Accordion.Content active={false} />
         }
-      </List.Item>
+      </Accordion>
     )
   }
 }

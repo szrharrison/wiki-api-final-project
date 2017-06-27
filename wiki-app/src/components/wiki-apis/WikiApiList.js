@@ -1,10 +1,11 @@
 import React from 'react'
-import { Accordion, List } from 'semantic-ui-react'
+import { List } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 import connectedWithRoutes from '../../hocs/connectedWithRoutes'
 import { fetchWikiApis, fetchWikiApi } from '../../actions/wikiApiActions'
 import WikiApiListItem from './WikiApiListItem'
+import './WikiApiList.css'
 
 function constructNestedPages(pages, accumulator = {}) {
   pages.forEach( page => {
@@ -35,27 +36,25 @@ function recursivelyNestPage(page, accumulator) {
 function WikiApiList(props) {
   const { wikiApi } = props
   const pages = constructNestedPages(wikiApi.pages)
+  let pagesList = Object.keys(pages)
+  pagesList = pagesList.map( key => (
+    <List.Item key={`base-list-${key}`}>
+      <WikiApiListItem
+        page={pages[key]}
+      />
+    </List.Item>
+  ))
+  pagesList.unshift(
+    <List.Item key='add-a-page' as={Link} to={`/${props.username}/${wikiApi.slug}/new`}>
+      <List.Icon name='add' />
+      <List.Content>
+        Add a page
+      </List.Content>
+    </List.Item>
+  )
   return (
-    <List inverted animated selection verticalAlign="middle">
-      <List.Item as={Link} to={`/${props.username}/${wikiApi.slug}/new`}>
-        <List.Icon name='add' />
-        <List.Content>
-          Add a page
-        </List.Content>
-      </List.Item>
-      { pages && Object.keys(pages).length
-        ?
-          <Accordion inverted>
-            {Object.keys(pages).map( key => (
-              <WikiApiListItem
-                key={`base-list-${key}`}
-                page={pages[key]}
-              />
-            ))}
-          </Accordion>
-        :
-        null
-      }
+    <List inverted verticalAlign="top">
+      {pagesList}
     </List>
   )
 }

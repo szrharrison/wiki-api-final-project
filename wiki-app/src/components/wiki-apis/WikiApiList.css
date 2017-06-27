@@ -1,0 +1,92 @@
+.ui.list [class*="top aligned"],
+.ui.list[class*="top aligned"] .content,
+.ui.list[class*="top aligned"] .image {
+  display: inline-block;
+}
+
+.ui.accordion .title:not(.ui) {
+  padding-top: 0;
+}
+
+.inverted .ui.list .list>.item .ui.accordion .title>i.icon,
+.inverted .ui.list>.item .ui.accordion .title>i.icon {
+  display: table-cell;
+  margin: 0;
+  padding-top: .07142857em;
+  padding-right: .28571429em;
+  vertical-align: top;
+  color: rgba(255,255,255,.4);
+}
+
+.ui.list .list>.item .ui.accordion .title>i.icon+.content,
+.ui.list .list>.item .ui.accordion .title>.image+.content,
+.ui.list>.item .ui.accordion .title>i.icon+.content,
+.ui.list>.item .ui.accordion .title>.image+.content {
+  display: table-cell;
+  padding: 0 0 0 .5em;
+  vertical-align: top;
+}
+
+/*.ui.accordion .accordion .title~.content:not(.active), .ui.accordion .title~.content:not(.active) {
+  display: none!important;
+}*/
+
+.inverted .ui.list .list .item i.icon, .inverted .ui.list .item i.icon {
+  color: rgba(255,255,255,.4);
+  transition: .25s color ease .1s, .25s padding ease .1s;
+}
+.ui.inverted.selection.list>.item:not(:first-child) {
+  padding: 0;
+}
+
+.inverted .ui.list .list .item .ui.accordion:hover>.title>i.icon,
+.inverted .ui.list .item .ui.accordion:hover>.title>i.icon {
+  color: rgba(127,200,200,.25);
+  padding-left: 1em;
+}
+
+.inverted .ui.list .list .item .ui.accordion:hover>.title,
+.inverted .ui.list .item .ui.accordion:hover>.title {
+  background-color: rgba(255,255,255,0.05);
+}
+
+.inverted .ui.list .list .item .ui.accordion>.title,
+.inverted .ui.list .item .ui.accordion>.title {
+  padding: 0.5em;
+}
+
+.ui.inverted.list .list .item .description, .ui.inverted.list .item .description {
+  transition: .25s color ease .1s;
+}
+
+.ui.inverted.list .item a:not(.ui):hover {
+    color: rgba(127,200,200,.5)!important;
+}
+
+.inverted .ui.list .list .item .ui.accordion .accordion .title>i.icon{
+  color: rgba(255,255,255,.4);
+}
+
+.ui.accordion:not(.styled) .title~.content:not(.ui) {
+  width: 100%;
+}
+
+.ui.accordion .title~.content:not(.ui):not(.active) {
+  display: none;
+}
+
+.ui.accordion .title~.content:not(.ui).active {
+  animation: accordionIn 0.45s normal ease both 1;
+}
+
+@keyframes accordionIn {
+  0% {
+    opacity: 0;
+    transform:scale(0.9) rotateX(-60deg);
+    transform-origin: 50% 0;
+  }
+  100% {
+    opacity:1;
+    transform:scale(1);
+  }
+}

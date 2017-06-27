@@ -7,16 +7,15 @@ import WikiPageDropdown from './WikiPageDropdown'
 import WikiPageSidebarButton from './WikiPageSidebarButton'
 
 function WikiApiPageSidebar(props)  {
-  const isNewWikiForm = props.location.pathname.endsWith('new')
-  const isEditWikiForm = props.location.pathname.endsWith('edit')
-  const {name, slug} = isNewWikiForm ? props.newWikiInfo : props.wikiInfo
+  const {name, slug} = props.isNewForm ? props.newWikiInfo : props.wikiInfo
   return (
     <Segment inverted color="black">
       <Menu vertical inverted pointing secondary >
         <Menu.Item active>
-          { name }
+          { !props.isNewForm ? name : 'Create a New Wiki API' }
         </Menu.Item>
-        { isEditWikiForm
+        { !props.isNewForm ? <WikiPageDropdown /> : null }
+        { props.isEditForm
           ?
             <Menu.Item
               className="link"

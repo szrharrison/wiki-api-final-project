@@ -2,8 +2,7 @@ import React from 'react'
 import { Segment, Dimmer, Loader } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-
-import EditWikiBreadcrumbs from './NewWikiBreadcrumbs'
+import EditWikiBreadcrumbs from './EditWikiBreadcrumbs'
 import WikiName from './WikiName'
 
 const EditWikiView = props => {

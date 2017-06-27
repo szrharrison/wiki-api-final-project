@@ -1,0 +1,28 @@
+.ui.secondary.inverted.pointing.menu .active.item {
+  color: #fff!important;
+}
+
+.ui.secondary.inverted.pointing.menu .active.selection.item {
+  border-left: 1px solid;
+  border-bottom: 1px solid;
+}
+
+.ui.dropdown .menu {
+  background-color: #1b1c1d;
+  color: #fff;
+}
+
+.ui.secondary.inverted.pointing.menu .item.search.selection {
+  margin-top: 10px;
+}
+
+.ui.secondary.inverted.pointing.menu .item {
+  color: rgba(255,255,255,.9)!important;
+}
+
+.ui.secondary.inverted.pointing.menu a.item {
+  transition: .25s color ease!important;
+}
+.ui.secondary.inverted.pointing.menu a.item:hover {
+  color: rgba(127,200,200,.5)!important;
+}
