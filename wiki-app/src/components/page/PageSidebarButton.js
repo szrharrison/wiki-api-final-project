@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import connectedWithRoutes from '../../hocs/connectedWithRoutes'
 import { fetchUpdateDataset } from '../../actions/datasetActions'
-import { fetchCreatePage, fetchUpdatePage } from '../../actions/pageActions'
+import { fetchCreatePage, fetchUpdatePage, fetchCreateWikiPage } from '../../actions/pageActions'
 
 function PageSidebarButton(props)  {
   let error = props.jsonStatus.replace(/^Unexpected token (.)/, 'Unexpected token \u2AA1\u00A0$1\u00A0\u2AA2')
@@ -43,9 +43,12 @@ function PageSidebarButton(props)  {
           if(props.slug !== props.newPageInfo.slug) {
             props.history.push(`/${props.username}/${props.parentPath}/${props.newPageInfo.slug}/${props.locationEnding}`)
           }
-        } else if(props.isNewForm && !errors) {
+        } else if(props.isNewForm && !errors && !props.isWiki) {
           props.createPage({ name: props.newPageInfo.name}, props.relativePath)
           props.history.push(`/${props.username}/${props.relativePath}/${props.newPageInfo.slug}`)
+        } else if(props.isNewForm && !errors) {
+          props.createWikiPage({ name: props.newPageInfo.name }, props.slug)
+          props.history.push(`/${props.username}/${props.slug}/${props.newPageInfo.slug}`)
         }
       }}
     />
@@ -66,7 +69,8 @@ function mapDispatchToProps(dispatch) {
   return {
     updateDataset: (dataset, relativePath) => dispatch(fetchUpdateDataset(dataset, relativePath)),
     updatePage:  (page, relativePath) => dispatch(fetchUpdatePage(page, relativePath)),
-    createPage: (page, relativePath) => dispatch(fetchCreatePage(page, relativePath))
+    createPage: (page, relativePath) => dispatch(fetchCreatePage(page, relativePath)),
+    createWikiPage: (page, slug) => dispatch(fetchCreateWikiPage(page, slug))
   }
 }
 

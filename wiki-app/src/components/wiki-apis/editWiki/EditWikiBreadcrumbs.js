@@ -3,6 +3,7 @@ import { Breadcrumb, Input, Message, Icon } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import { setNewWikiSlug } from '../../../actions/wikiApiActions'
+import './EditWikiBreadcrumbs.css'
 
 
 class EditWikiBreadcrumbs extends Component {
@@ -63,7 +64,7 @@ class EditWikiBreadcrumbs extends Component {
             ?
               <Icon name='exclamation' color='red' />
             :
-              null
+            <Icon name='check' color='green' />
           }
           <input
             ref={input => this.input = input}

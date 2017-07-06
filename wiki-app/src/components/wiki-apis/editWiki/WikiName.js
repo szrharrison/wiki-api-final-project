@@ -35,7 +35,7 @@ class WikiName extends Component {
           value={this.props.newWikiName}
           onChange={this.onChange}
           placeholder={this.props.wikiName}
-          icon={ isNameError ? { name: 'exclamation', color: 'red'} : null }
+          icon={ isNameError ? { name: 'exclamation', color: 'red'} : { name: 'check', color: 'green' } }
           iconPosition='left'
         />
         <Message
